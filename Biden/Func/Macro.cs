@@ -547,19 +547,19 @@ namespace Biden.Func
         private static void rejoin()
         {
 
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             User32.API.SetCursorPos(1718, 246);
             MouseClick();
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             User32.API.SetCursorPos(1724, 326);
             MouseClick();
-            Thread.Sleep(1000);
+            Thread.Sleep(1500);
             User32.API.SetCursorPos(791, 615);
             MouseClick();
-            Thread.Sleep(20000);
+            Thread.Sleep(46000);
             User32.API.SetCursorPos(960, 633);
             MouseClick();
-            Thread.Sleep(6000);
+            Thread.Sleep(7000);
         }
 
         private static void MouseClick()
@@ -1206,9 +1206,8 @@ namespace Biden.Func
             Macro.getInstance.Flag_F8 = false;
 
             Macro.getInstance.Flag_F9 = false;
-            Macro.getInstance.Flag_F10 = false;
+            //Macro.getInstance.Flag_F10 = false;
             Macro.getInstance.Flag_F11 = false;
-
             //Macro.getInstance.Flag_F12 = false;
 
         }
