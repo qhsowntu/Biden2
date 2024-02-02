@@ -1367,7 +1367,7 @@ namespace Biden.Func
                 if (curColorLeft.R == 255 && curColorLeft.G == 255)
                 {
                     lastPosX = rightX;
-                    MainWindow.getInstance.SetStateString(lastPosX, 271, curColorLeft);
+                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorLeft);
                     if (lastPosX <= 25)
                     {
                         SK.sendkeyRight(50);
@@ -1383,7 +1383,7 @@ namespace Biden.Func
                 else if (curColorRight.R == 255 && curColorRight.G == 255)
                 {
                     lastPosX = leftX;
-                    MainWindow.getInstance.SetStateString(lastPosX, 271, curColorRight);
+                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorRight);
                     if (lastPosX <= 25)
                     {
                         SK.sendkeyRight(50);
@@ -1477,7 +1477,7 @@ namespace Biden.Func
         }
         private void dongbasan_left_attack()
         {
-            int curIndex = (int)(lastPosX - 24 * 8.53);
+            int curIndex = (int)((lastPosX - 25) * 13.15);
             //int curIndex = (int)(lastPosX - 25 * 12);
 
             bool attackFlag = false;
@@ -1495,7 +1495,7 @@ namespace Biden.Func
                 }
                 if (leftX < 0)
                 {
-                    leftX = 0;
+                    leftX = 1;
                 }
 
                 Color tempColor = GetColorAt(leftX, 675);
@@ -1518,32 +1518,32 @@ namespace Biden.Func
                     (tempColor.R == 4 && tempColor.G == 3 && tempColor.B == 3) ||
                     (tempColor.R == 15 && tempColor.G == 7 && tempColor.B == 6))
                 {
-                    MainWindow.getInstance.SetStateString(-i, 271, tempColor);
+                    MainWindow.getInstance.SetStateString(curIndex, -i, tempColor);
                     LR = "L";
-                    SK.sendkeyLeft(i / 2);
+                    SK.sendkeyLeft(i * 2 / 3);
                     attackFlag = true;
                     break;
                 }
-                if ((tempColor.R >= 99 && tempColor.R <= 115 && tempColor.G >= 48 && tempColor.G <= 53 && tempColor.B >= 29 && tempColor.B <= 38) ||
-                    (tempColor.R == 99 && tempColor.G == 84 && tempColor.B == 68) ||
-                    (tempColor.R == 104 && tempColor.G == 89 && tempColor.B == 66) ||
-                    (tempColor.R == 27 && tempColor.G == 20 && tempColor.B == 16) ||
-                    (tempColor.R == 99 && tempColor.G == 88 && tempColor.B == 68) ||
-                    (tempColor.R == 86 && tempColor.G == 76 && tempColor.B == 58) ||
-                    (tempColor.R == 140 && tempColor.G == 121 && tempColor.B == 90) ||
-                    (tempColor.R == 100 && tempColor.G == 86 && tempColor.B == 67) ||
-                    (tempColor.R == 137 && tempColor.G == 122 && tempColor.B == 88) ||
-                    (tempColor.R == 57 && tempColor.G == 52 && tempColor.B == 33) ||
-                    (tempColor.R == 33 && tempColor.G == 16 && tempColor.B == 16) ||
-                    (tempColor.R == 8 && tempColor.G == 0 && tempColor.B == 0) ||
-                    (tempColor.R == 75 && tempColor.G == 66 && tempColor.B == 51) ||
-                    (tempColor.R == 0 && tempColor.G == 4 && tempColor.B == 0) ||
-                    (tempColor.R == 4 && tempColor.G == 3 && tempColor.B == 3) ||
-                    (tempColor.R == 15 && tempColor.G == 7 && tempColor.B == 6))
+                if ((tempColor2.R >= 99 && tempColor2.R <= 115 && tempColor2.G >= 48 && tempColor2.G <= 53 && tempColor2.B >= 29 && tempColor2.B <= 38) ||
+                    (tempColor2.R == 99 && tempColor2.G == 84 && tempColor2.B == 68) ||
+                    (tempColor2.R == 104 && tempColor2.G == 89 && tempColor2.B == 66) ||
+                    (tempColor2.R == 27 && tempColor2.G == 20 && tempColor2.B == 16) ||
+                    (tempColor2.R == 99 && tempColor2.G == 88 && tempColor2.B == 68) ||
+                    (tempColor2.R == 86 && tempColor2.G == 76 && tempColor2.B == 58) ||
+                    (tempColor2.R == 140 && tempColor2.G == 121 && tempColor2.B == 90) ||
+                    (tempColor2.R == 100 && tempColor2.G == 86 && tempColor2.B == 67) ||
+                    (tempColor2.R == 137 && tempColor2.G == 122 && tempColor2.B == 88) ||
+                    (tempColor2.R == 57 && tempColor2.G == 52 && tempColor2.B == 33) ||
+                    (tempColor2.R == 33 && tempColor2.G == 16 && tempColor2.B == 16) ||
+                    (tempColor2.R == 8 && tempColor2.G == 0 && tempColor2.B == 0) ||
+                    (tempColor2.R == 75 && tempColor2.G == 66 && tempColor2.B == 51) ||
+                    (tempColor2.R == 0 && tempColor2.G == 4 && tempColor2.B == 0) ||
+                    (tempColor2.R == 4 && tempColor2.G == 3 && tempColor2.B == 3) ||
+                    (tempColor2.R == 15 && tempColor2.G == 7 && tempColor2.B == 6))
                 {
-                    MainWindow.getInstance.SetStateString(i, 271, tempColor);
+                    MainWindow.getInstance.SetStateString(curIndex, -i, tempColor);
                     LR = "R";
-                    SK.sendkeyRight(i / 2);
+                    SK.sendkeyRight(i * 2 / 3);
                     attackFlag = true;
                     break;
                 }
@@ -1629,22 +1629,22 @@ namespace Biden.Func
                     attackFlag = true;
                     break;
                 }
-                if ((tempColor.R >= 99 && tempColor.R <= 115 && tempColor.G >= 48 && tempColor.G <= 53 && tempColor.B >= 29 && tempColor.B <= 38) ||
-                    (tempColor.R == 99 && tempColor.G == 84 && tempColor.B == 68) ||
-                    (tempColor.R == 104 && tempColor.G == 89 && tempColor.B == 66) ||
-                    (tempColor.R == 27 && tempColor.G == 20 && tempColor.B == 16) ||
-                    (tempColor.R == 99 && tempColor.G == 88 && tempColor.B == 68) ||
-                    (tempColor.R == 86 && tempColor.G == 76 && tempColor.B == 58) ||
-                    (tempColor.R == 140 && tempColor.G == 121 && tempColor.B == 90) ||
-                    (tempColor.R == 100 && tempColor.G == 86 && tempColor.B == 67) ||
-                    (tempColor.R == 137 && tempColor.G == 122 && tempColor.B == 88) ||
-                    (tempColor.R == 57 && tempColor.G == 52 && tempColor.B == 33) ||
-                    (tempColor.R == 33 && tempColor.G == 16 && tempColor.B == 16) ||
-                    (tempColor.R == 8 && tempColor.G == 0 && tempColor.B == 0) ||
-                    (tempColor.R == 75 && tempColor.G == 66 && tempColor.B == 51) ||
-                    (tempColor.R == 0 && tempColor.G == 4 && tempColor.B == 0) ||
-                    (tempColor.R == 4 && tempColor.G == 3 && tempColor.B == 3) ||
-                    (tempColor.R == 15 && tempColor.G == 7 && tempColor.B == 6))
+                if ((tempColor2.R >= 99 && tempColor2.R <= 115 && tempColor2.G >= 48 && tempColor2.G <= 53 && tempColor2.B >= 29 && tempColor2.B <= 38) ||
+                    (tempColor2.R == 99 && tempColor2.G == 84 && tempColor2.B == 68) ||
+                    (tempColor2.R == 104 && tempColor2.G == 89 && tempColor2.B == 66) ||
+                    (tempColor2.R == 27 && tempColor2.G == 20 && tempColor2.B == 16) ||
+                    (tempColor2.R == 99 && tempColor2.G == 88 && tempColor2.B == 68) ||
+                    (tempColor2.R == 86 && tempColor2.G == 76 && tempColor2.B == 58) ||
+                    (tempColor2.R == 140 && tempColor2.G == 121 && tempColor2.B == 90) ||
+                    (tempColor2.R == 100 && tempColor2.G == 86 && tempColor2.B == 67) ||
+                    (tempColor2.R == 137 && tempColor2.G == 122 && tempColor2.B == 88) ||
+                    (tempColor2.R == 57 && tempColor2.G == 52 && tempColor2.B == 33) ||
+                    (tempColor2.R == 33 && tempColor2.G == 16 && tempColor2.B == 16) ||
+                    (tempColor2.R == 8 && tempColor2.G == 0 && tempColor2.B == 0) ||
+                    (tempColor2.R == 75 && tempColor2.G == 66 && tempColor2.B == 51) ||
+                    (tempColor2.R == 0 && tempColor2.G == 4 && tempColor2.B == 0) ||
+                    (tempColor2.R == 4 && tempColor2.G == 3 && tempColor2.B == 3) ||
+                    (tempColor2.R == 15 && tempColor2.G == 7 && tempColor2.B == 6))
                 {
                     //MainWindow.getInstance.SetStateString(i, 271, tempColor);
                     LR = "R";
