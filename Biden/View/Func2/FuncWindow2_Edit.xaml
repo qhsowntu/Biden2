@@ -1,0 +1,164 @@
+﻿<local:BaseWindow x:Class="Biden.View.FuncWindow2_Edit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Biden.View"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:ViewModel="clr-namespace:Biden.ViewModel" 
+        mc:Ignorable="d"
+        Title="FuncWindow2_Add" Width="430" Height="500" ResizeMode="NoResize" Background="Transparent"
+                   WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="True" Topmost="True">
+    <Window.DataContext>
+        <ViewModel:ViewModelFunc2_Edit/>
+    </Window.DataContext>
+    <Window.Resources>
+        <local:BaseWindow x:Key="vm"/>
+
+        <DataTemplate x:Key="NameColumnTemplate">
+            <ContentPresenter x:Name="ButtonPresenter"
+                        Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Content}"  
+                        ContentTemplate="{StaticResource NextRowTemplate1}"/>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding Add}" Value="True">
+                    <Setter TargetName="ButtonPresenter"  
+                  Property="ContentTemplate"            
+                  Value="{StaticResource FirstRowTemplate1}"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Add}" Value="False">
+                    <Setter TargetName="ButtonPresenter"
+                  Property="ContentTemplate"         
+                  Value="{StaticResource NextRowTemplate1}"/>
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
+    </Window.Resources>
+    
+    <Border Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}">
+        <Border.OpacityMask>
+            <VisualBrush>
+                <VisualBrush.Visual>
+                    <Border Background="Red"
+                            SnapsToDevicePixels="True"
+                            CornerRadius="10"
+                            Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}"
+                            Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor,AncestorType=Border}}"/>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Border.OpacityMask>
+        <Canvas x:Name="mainCanvas" MouseLeftButtonDown="OnMouseLeftDown" Width="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}" Height="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualHeight}" Background="#FFE6EFF8">
+            <Label Content="Edit Rules" Height="32" Canvas.Left="14" Canvas.Top="5" Width="230" FontWeight="Bold" FontSize="16"/>
+            <Button x:Name="closeButton" Content="X" Width="14" Height="14" Click="CloseButton_Click"  FontWeight="Bold" FontFamily="Corbel"
+                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Top"  Canvas.Right ="5" Canvas.Top ="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Foreground="#FF4A4A4A" />
+            <Button x:Name="maxButton" Content="ㅁ" Width="14" Height="14" Click="MaxButton_Click"  FontWeight="Bold" FontFamily="Corbel"
+                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Top"  Canvas.Right ="19" Canvas.Top ="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Foreground="#FF4A4A4A"/>
+            <Button x:Name="minButton" Content="―" Width="14" Height="14" Click="MinButton_Click"  FontWeight="Bold" FontFamily="Corbel"
+                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Top"  Canvas.Right ="33" Canvas.Top ="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Foreground="#FF4A4A4A"/>
+            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1" VerticalAlignment="Bottom"
+                    Height="35" Width="180" BorderBrush="White" Canvas.Left="24" Canvas.Bottom="20" BorderThickness="0" SnapsToDevicePixels="True">
+                <Button.Resources>
+                    <Style TargetType="Border">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                <Button.BitmapEffect>
+                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
+                </Button.BitmapEffect>
+            </Button>
+            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1_Copy" VerticalAlignment="Bottom"
+                Height="35" Width="180" BorderBrush="White" Canvas.Left="231" Canvas.Bottom="20" BorderThickness="0" SnapsToDevicePixels="True">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                <Button.BitmapEffect>
+                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
+                </Button.BitmapEffect>
+            </Button>
+            <Button Content="Ok" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="35" Width="180" Command="{Binding CmdFuncBtn01_EditOK}"
+                    BorderThickness="0" SnapsToDevicePixels="True" BorderBrush="Transparent"
+                    Panel.ZIndex="10" FontSize="20" FontWeight="Bold" Background="#FFE6EFF8" Foreground="Black" Canvas.Left="25" Canvas.Bottom="20">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                <Button.BitmapEffect>
+                    <DropShadowBitmapEffect Color="White" Direction="135" Softness="0.3" ShadowDepth="5" Opacity="0.6" />
+                </Button.BitmapEffect>
+            </Button>
+            <Button Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="35" Width="180" Command="{Binding CmdFuncBtn01_EditCancel}"
+                BorderThickness="0" SnapsToDevicePixels="True" BorderBrush="Transparent"
+                Panel.ZIndex="10" FontSize="20" FontWeight="Bold" Background="#FFE6EFF8" Foreground="Black" Canvas.Left="231" Canvas.Bottom="20">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="10"/>
+                    </Style>
+                </Button.Resources>
+                <Button.BitmapEffect>
+                    <DropShadowBitmapEffect Color="White" Direction="135" Softness="0.3" ShadowDepth="5" Opacity="0.6" />
+                </Button.BitmapEffect>
+            </Button>
+            <Label Content="Find (all string is bound by '&amp;')" Canvas.Left="25" Canvas.Top="117" Width="372"/>
+            <Separator Height="31" Canvas.Left="25" Margin="0" Canvas.Top="95" Width="386"/>
+            <TextBox Height="20" Canvas.Left="24" TextWrapping="Wrap" Text="{Binding nameStr, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="77" Width="387" BorderBrush="White"/>
+            <Label Content="Name" Canvas.Left="25" Canvas.Top="48"/>
+            <TextBox Height="152" Canvas.Left="265" TextWrapping="Wrap" Text="{Binding addStr, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="148" Width="145" BorderBrush="White"/>
+            <Label Content="Alert Message" Canvas.Left="24" Canvas.Top="369" Width="372"/>
+            <Separator Height="31" Canvas.Left="25" Margin="0" Canvas.Top="295" Width="386"/>
+            <CheckBox  Content="Treat uppercase and lowercase the same" Canvas.Left="27" Canvas.Top="317" Height="16" Width="250" IsChecked="{Binding isCheckedOpt01}" CommandParameter="{Binding isCheckedOpt01}"/>
+            <CheckBox  Content="Ignore spaces" Canvas.Left="27" Canvas.Top="340" Height="16" Width="100" IsChecked="{Binding isCheckedOpt02}" CommandParameter="{Binding isCheckedOpt02}"/>
+            <Separator Height="31" Canvas.Left="24" Margin="0" Canvas.Top="347" Width="386"/>
+            <TextBox Height="30" Canvas.Left="23" TextWrapping="Wrap" Text="{Binding alertStr, UpdateSourceTrigger=PropertyChanged}" Canvas.Top="395" Width="387" BorderBrush="White"/>
+
+            <ListView ItemsSource="{Binding StrObjectCollection}"  IsSynchronizedWithCurrentItem="True"
+                     Height="152" Canvas.Left="25" Canvas.Top="148" Width="168" Background="#FFF4F8FF" BorderBrush="#FFF4F8FF" BorderThickness="0">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Width="30" Header="No" DisplayMemberBinding="{Binding No}"/>
+                        <GridViewColumn Width="90" Header="String" DisplayMemberBinding="{Binding Str}"  CellTemplate="{StaticResource NameColumnTemplate}"/>
+                        <!--<GridViewColumn Width="80" Header="Edit / Delete" CellTemplate="{StaticResource AddDelItemTemplate}"/> -->
+
+                        <GridViewColumn Header="Del" Width="36">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Content="-" Grid.Column="1" Margin="4,0,0,0" Width="19"
+                                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, 
+                                                                                      AncestorType={x:Type ItemsControl}},
+                                                                      Path=DataContext.CmdDeleteStrBtn}" CommandParameter="{Binding Str}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1_Copy1" VerticalAlignment="Bottom"
+                Height="32" Width="54" BorderBrush="White" Canvas.Left="202" Canvas.Bottom="20" BorderThickness="0" SnapsToDevicePixels="True" Canvas.Top="148">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+                <Button.BitmapEffect>
+                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
+                </Button.BitmapEffect>
+            </Button>
+            <Button Content="〈Add" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="32" Width="54" Command="{Binding CmdFuncBtn01_EditStr}"
+                BorderThickness="0" SnapsToDevicePixels="True" BorderBrush="Transparent"
+                Panel.ZIndex="10" FontSize="16" FontWeight="Bold" Background="#FFE6EFF8" Foreground="Black" Canvas.Left="202" Canvas.Bottom="20" Canvas.Top="148">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="5"/>
+                    </Style>
+                </Button.Resources>
+                <Button.BitmapEffect>
+                    <DropShadowBitmapEffect Color="White" Direction="135" Softness="0.3" ShadowDepth="5" Opacity="0.6" />
+                </Button.BitmapEffect>
+            </Button>
+        </Canvas>
+    </Border>
+</local:BaseWindow>
