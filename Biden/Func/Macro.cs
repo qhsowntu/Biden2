@@ -1478,7 +1478,7 @@ namespace Biden.Func
         private void dongbasan_left_attack()
         {
             int curIndex = (int)((lastPosX - 25) * 13);
-            //int curIndex = (int)(lastPosX - 25 * 12);
+            int randomNum1to100 = randomNum.Next(1, 100);
 
             bool attackFlag = false;
 
@@ -1547,11 +1547,19 @@ namespace Biden.Func
                     attackFlag = true;
                     break;
                 }
+                if (i > mobDistMax - 10)
+                {
+                    if (lastPosX > 50)
+                    {
+                        SK.sendkeyLeft(100);
+                    }
+                    else
+                    {
+                        SK.sendkeyRight(100);
+                    }
+                }
             }
 
-
-
-            int randomNum1to100 = randomNum.Next(1, 100);
 
             if (attackFlag)
             {
