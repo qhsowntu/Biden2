@@ -605,7 +605,6 @@ namespace Biden.Func
                 else
                 {
                     Macro.getInstance.Flag_F8 = true;
-                    Macro_F8();
                 }
             }
             else if (tempKey.ToString().ToUpper() == "F9")
@@ -617,7 +616,6 @@ namespace Biden.Func
                 else
                 {
                     Macro.getInstance.Flag_F9 = true;
-                    Macro_F9();
                 }
             }
             else if (tempKey.ToString().ToUpper() == "F10")
@@ -629,7 +627,6 @@ namespace Biden.Func
                 else
                 {
                     Macro.getInstance.Flag_F10 = true;
-                    Macro_F10();
                 }
             }
             else if (tempKey.ToString().ToUpper() == "F11")
@@ -641,7 +638,6 @@ namespace Biden.Func
                 else
                 {
                     Macro.getInstance.Flag_F11 = true;
-                    Macro_F11();
                 }
             }
             else if (tempKey.ToString().ToUpper() == "F12")
@@ -653,7 +649,6 @@ namespace Biden.Func
                 else
                 {
                     Macro.getInstance.Flag_F12 = true;
-                    Macro_F12();
                 }
             }
             else
@@ -1483,7 +1478,7 @@ namespace Biden.Func
         }
         private void dongbasan_left_attack()
         {
-            int curIndex = (int)(lastPosX * 6.53);
+            int curIndex = (int)(lastPosX - 25 * 13.15);
 
             bool attackFlag = false;
 
