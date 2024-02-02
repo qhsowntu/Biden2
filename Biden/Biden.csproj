@@ -96,11 +96,9 @@
     <Compile Include="Func\AcquisitionParameters.cs" />
     <Compile Include="Func\ClipboardMonitor.cs" />
     <Compile Include="Func\Clone\ObjectCopier.cs" />
-    <Compile Include="Func\CopyPasteMacro.cs" />
     <Compile Include="Func\CorrectString.cs" />
     <Compile Include="Func\DispatcherService.cs" />
     <Compile Include="Func\FindAndAlert.cs" />
-    <Compile Include="Func\Macro_Backup.cs" />
     <Compile Include="Func\Macro.cs" />
     <Compile Include="Func\MultiClipboard.cs" />
     <Compile Include="Func\ObservableClass\ObservableQueue.cs" />
@@ -109,6 +107,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Func\PasteMonitor\TextCompositionManager.cs" />
+    <Compile Include="Func\SendKeyInput.cs" />
     <Compile Include="Func\SpellCheck\SpellCheck.cs" />
     <Compile Include="Func\WindowAPI\Shell32.cs" />
     <Compile Include="Func\WindowAPI\User32.cs" />

@@ -179,18 +179,18 @@ namespace Biden.ViewModel
             {
                 if (Macro.getInstance.IsInit == false)
                 {
-                    Macro.getInstance.IsInit = true;
-                    Macro.create();
+                    macro.IsInit = true;
+                    macro.create();
                     macro.start();
                     macro.start2();
                 }
-                Macro.getInstance.ModeOn1 = true;
+                macro.ModeOn1 = true;
                 IsChecked01 = true;
             }
             else
             {
                 IsChecked01 = false;
-                Macro.getInstance.ModeOn1 = false;
+                macro.ModeOn1 = false;
             }
             MainWindow.getInstance.SetSyncCheckBox();
             DoSpin();

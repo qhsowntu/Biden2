@@ -112,18 +112,18 @@ namespace Biden.ViewModel
             {
                 if (Macro.getInstance.IsInit == false)
                 {
-                    Macro.getInstance.IsInit = true;
-                    Macro.create();
+                    macro.IsInit = true;
+                    macro.create();
                     macro.start();
                     macro.start2();
                 }
                 IsChecked01 = true;
-                Macro.getInstance.ModeOn1 = true;
+                macro.ModeOn1 = true;
             }
             else
             {
                 IsChecked01 = false;
-                Macro.getInstance.ModeOn1 = false;
+                macro.ModeOn1 = false;
             }
             FuncWindow1.getInstance.SetCheckBox01();
         }
@@ -134,17 +134,17 @@ namespace Biden.ViewModel
             {
                 if (Macro.getInstance.IsInit == false)
                 {
-                    Macro.getInstance.IsInit = true;
-                    Macro.create();
+                    macro.IsInit = true;
+                    macro.create();
                     macro.start();
                 }
                 IsChecked02 = true;
-                Macro.getInstance.ModeOn2 = true;
+                macro.ModeOn2 = true;
             }
             else
             {
                 IsChecked02 = false;
-                Macro.getInstance.ModeOn2 = false;
+                macro.ModeOn2 = false;
             }
             FuncWindow2.getInstance.SetCheckBox02();
         }
@@ -154,20 +154,20 @@ namespace Biden.ViewModel
             if (obj + "" == "True")
             {
                 Macro.setClipBoardText("");
-                if (Macro.getInstance.IsInit == false)
+                if (macro.IsInit == false)
                 {
-                    Macro.getInstance.IsInit = true;
-                    Macro.create();
+                    macro.IsInit = true;
+                    macro.create();
                     macro.start();
                 }
                 Macro.doublePasteFlag = true;
                 IsChecked03 = true;
-                Macro.getInstance.ModeOn3 = true;
+                macro.ModeOn3 = true;
             }
             else
             {
                 IsChecked03 = false;
-                Macro.getInstance.ModeOn3 = false;
+                macro.ModeOn3 = false;
             }
             //FuncWindow3.getInstance.SetCheckBox03();
         }

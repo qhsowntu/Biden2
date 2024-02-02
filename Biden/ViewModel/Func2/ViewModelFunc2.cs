@@ -220,8 +220,8 @@ namespace Biden.ViewModel
             {
                 if (Macro.getInstance.IsInit == false)
                 {
-                    Macro.getInstance.IsInit = true;
-                    Macro.create();
+                    macro.IsInit = true;
+                    macro.create();
                     macro.start();
                 }
                 Macro.getInstance.ModeOn2 = true;
