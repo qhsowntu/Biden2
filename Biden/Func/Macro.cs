@@ -1660,6 +1660,18 @@ namespace Biden.Func
                     attackFlag = true;
                     break;
                 }
+
+                if (i > mobDistMax - 10)
+                {
+                    if (lastPosX > 210)
+                    {
+                        SK.sendkeyLeft(100);
+                    }
+                    else
+                    {
+                        SK.sendkeyRight(100);
+                    }
+                }
             }
 
 
