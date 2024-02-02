@@ -1072,9 +1072,9 @@ namespace Biden.Func
                             dongbasan_left_attack();
                             //dongbasan_mid_attack();
                             //dongbasan_right_attack();
-                            yellen_buff();
+                            //yellen_buff();
                             //volker_buff();
-                            //reagan_buff();
+                            reagan_buff();
                         }
                     }
                     catch
@@ -1477,7 +1477,7 @@ namespace Biden.Func
         }
         private void dongbasan_left_attack()
         {
-            int curIndex = (int)(lastPosX * 6.53);
+            int curIndex = (int)(lastPosX - 24 * 8.53);
             //int curIndex = (int)(lastPosX - 25 * 12);
 
             bool attackFlag = false;
