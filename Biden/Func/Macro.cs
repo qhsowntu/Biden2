@@ -1400,7 +1400,7 @@ namespace Biden.Func
                 {
                     if (rightX > 80)
                     {
-                        SK.sendkeyLeft(850);
+                        SK.sendkeyLeft(650);
                     }
                 }
             }
@@ -1477,7 +1477,7 @@ namespace Biden.Func
         }
         private void dongbasan_left_attack()
         {
-            int curIndex = (int)((lastPosX - 25) * 13.15);
+            int curIndex = (int)((lastPosX - 25) * 13);
             //int curIndex = (int)(lastPosX - 25 * 12);
 
             bool attackFlag = false;
