@@ -1414,7 +1414,7 @@ namespace Biden.Func
 
             for (int i = 0; i <= 250; i = i + 2)
             {
-                sendkeyZ(5);
+                SK.sendkeyZ(5);
                 int leftX = lastPosX - i;
                 int rightX = lastPosX + i;
                 if (leftX < 92)
@@ -1443,12 +1443,12 @@ namespace Biden.Func
                     //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorLeft);
                     if (lastPosX <= 115)
                     {
-                        sendkeyRight(50);
+                        SK.sendkeyRight(50);
                         LR = "R";
                     }
                     else if (lastPosX >= 175)
                     {
-                        sendkeyLeft(50);
+                        SK.sendkeyLeft(50);
                         LR = "L";
                     }
                     break;
@@ -1460,19 +1460,19 @@ namespace Biden.Func
                     //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorRight);
                     if (lastPosX <= 115)
                     {
-                        sendkeyRight(50);
+                        SK.sendkeyRight(50);
                         LR = "R";
                     }
                     else if (lastPosX >= 175)
                     {
-                        sendkeyLeft(50);
+                        SK.sendkeyLeft(50);
                         LR = "L";
                     }
                     break;
                 }
                 else if (curColorWall.R == 255 && curColorWall.G == 255)
                 {
-                    sendkeyRight(2050);
+                    SK.sendkeyRight(2050);
                     LR = "R";
                 }
             }
@@ -1682,9 +1682,9 @@ namespace Biden.Func
                     (tempColor.R == 4 && tempColor.G == 3 && tempColor.B == 3) ||
                     (tempColor.R == 15 && tempColor.G == 7 && tempColor.B == 6))
                     {
-                        MainWindow.getInstance.SetStateString(-i, 271, tempColor);
+                        //MainWindow.getInstance.SetStateString(-i, 271, tempColor);
                         LR = "L";
-                        sendkeyLeft(i * 2 / 3);
+                        SK.sendkeyLeft(i * 2 / 3);
                         attackFlag = true;
                         break;
                     }
@@ -1705,9 +1705,9 @@ namespace Biden.Func
                     (tempColor2.R == 4 && tempColor2.G == 3 && tempColor2.B == 3) ||
                     (tempColor2.R == 15 && tempColor2.G == 7 && tempColor2.B == 6))
                     {
-                        MainWindow.getInstance.SetStateString(i, 271, tempColor);
+                        //MainWindow.getInstance.SetStateString(i, 271, tempColor);
                         LR = "R";
-                        sendkeyRight(i * 2 / 3);
+                        SK.sendkeyRight(i * 2 / 3);
                         attackFlag = true;
                         break;
                     }
@@ -1715,11 +1715,11 @@ namespace Biden.Func
                     {
                         if (lastPosX < 145)
                         {
-                            sendkeyRight(200);
+                            SK.sendkeyRight(200);
                         }
                         else
                         {
-                            sendkeyLeft(200);
+                            SK.sendkeyLeft(200);
                         }
                     }
                 }
@@ -1732,16 +1732,16 @@ namespace Biden.Func
                 if (randomNum1to100 < 14)
                 {
                     Thread.Sleep(100);
-                    sendkeyDelete(20);
+                    SK.sendkeyDelete(20);
                     Thread.Sleep(600);
-                    sendkeyControl(20);
+                    SK.sendkeyControl(20);
                 }
                 else
                 {
                     Thread.Sleep(100);
-                    sendkeyControl(20);
+                    SK.sendkeyControl(20);
                     Thread.Sleep(600);
-                    sendkeyControl(20);
+                    SK.sendkeyControl(20);
                     Thread.Sleep(100);
                 }
             }
@@ -1970,23 +1970,23 @@ namespace Biden.Func
 
             if (!((curColor4.R == 85 && curColor4.G == 85 && curColor4.B == 85) || (curColor5.R == 85 && curColor5.G == 85 && curColor5.B == 85) || (curColor6.R == 85 && curColor6.G == 85 && curColor6.B == 85)))
             {
-                sendkeyHome(40);
+                SK.sendkeyHome(40);
             }
 
             if (!((curColor1.R == 208 && curColor1.G == 208 && curColor1.B == 191) || (curColor2.R == 208 && curColor2.G == 208 && curColor2.B == 191) || (curColor3.R == 208 && curColor3.G == 208 && curColor3.B == 191)))
             {
-                sendkeyInsert(40);
+                SK.sendkeyInsert(40);
             }
 
             Color curColorRed = GetColorAt(510, 1054);
             Color curColorBlue = GetColorAt(725, 1054);
             if (!(curColorRed.R == 238 && curColorRed.G == 0 && curColorRed.B == 0))
             {
-                sendkeyPageUp(10);
+                SK.sendkeyPageUp(10);
             }
             if (!(curColorBlue.R == 0 && curColorBlue.G == 143 && curColorBlue.B == 238))
             {
-                sendkeyPageDown(10);
+                SK.sendkeyPageDown(10);
             }
 
         }
