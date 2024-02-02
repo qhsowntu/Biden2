@@ -100,6 +100,13 @@ namespace Biden.Func
             Thread.Sleep(time * 5);
             User32.API.keybd_event(0XA2, 0, KEYEVENTF_KEYUP, 0);
         }
+        public void sendkeyAlt(int time)
+        {
+            User32.API.keybd_event(0XA4, 0, 0, 0);
+            Thread.Sleep(time * 5);
+            User32.API.keybd_event(0XA4, 0, KEYEVENTF_KEYUP, 0);
+        }
+
 
         public void sendkeyZ(int time)
         {
@@ -107,7 +114,6 @@ namespace Biden.Func
             Thread.Sleep(time * 5);
             User32.API.keybd_event(0X5A, 0, KEYEVENTF_KEYUP, 0);
         }
-
 
         public enum VK
         {
