@@ -1744,6 +1744,7 @@ namespace Biden.Func
             if (!(curColorBlue.R == 0 && curColorBlue.G == 143 && curColorBlue.B == 238))
             {
                 SK.sendkeyPageDown(20);
+
             }
         }
 
