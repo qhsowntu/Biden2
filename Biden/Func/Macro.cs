@@ -1081,11 +1081,11 @@ namespace Biden.Func
                             //yellen_buff();
                             //volker_buff();
                             //reagan_buff();
-                            //Bernanke_buff();
+                            Bernanke_buff();
                         }
                         if (Macro.getInstance.Flag_F11)
                         {
-                            reagan_buff_fury();
+                            //reagan_buff_fury();
                         }
                     }
                     catch
