@@ -2144,11 +2144,12 @@ namespace Biden.Func
                 sendkey("/vkxlcheo qjsodzl");
                 Thread.Sleep(100);
                 SK.sendkeyEnter(100);
-                Thread.Sleep(900);
-                SK.sendkeyEnter(100);
+                Thread.Sleep(700);
+                SK.sendkeyEsc(50);
+                SK.sendkeyEsc(50);
                 Thread.Sleep(100);
                 SK.sendkeyShift(100);
-                Thread.Sleep(400);
+                Thread.Sleep(800);
                 SK.sendkeyEnter(100);
                 Thread.Sleep(100);
                 sendkey("/vkxlrkdxhl qjsodzl");
