@@ -2004,17 +2004,16 @@ namespace Biden.Func
 
         private void reagan_buff_fury()
         {
-            Color curColor1 = GetColorAt(70, 922);
+            Color curColor1 = GetColorAt(70, 925);
             if (curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0)
             {
-
                 Thread.Sleep(200);
                 sendkey("{ENTER}");
                 Thread.Sleep(200);
                 sendkey("/vkxlcheo qjsodzl");
                 Thread.Sleep(200);
                 sendkey("{ENTER}");
-                Thread.Sleep(200);
+                Thread.Sleep(2000);
                 SK.sendkeyShift(100);
                 Thread.Sleep(200);
                 sendkey("{ENTER}");
@@ -2022,8 +2021,8 @@ namespace Biden.Func
                 sendkey("/vkxlrkdxhl qjsodzl");
                 Thread.Sleep(200);
                 sendkey("{ENTER}");
+                Thread.Sleep(5000);
             }
-            Thread.Sleep(5000);
 
         }
 
