@@ -1081,11 +1081,11 @@ namespace Biden.Func
                             //yellen_buff();
                             //volker_buff();
                             //reagan_buff();
-                            Bernanke_buff();
+                            //Bernanke_buff();
                         }
                         if (Macro.getInstance.Flag_F11)
                         {
-                            //reagan_buff_fury();
+                            reagan_buff_fury();
                         }
                     }
                     catch
@@ -2026,7 +2026,7 @@ namespace Biden.Func
                 }
                 if (i == buffStackCount - 1)
                 {
-                    SK.sendkeyInsert(40);
+                    SK.sendkeyHome(40);
                 }
             }
             for (int i = 0; i < buffStackCount; i++)
@@ -2037,7 +2037,7 @@ namespace Biden.Func
                 }
                 if (i == buffStackCount - 1)
                 {
-                    SK.sendkeyHome(40);
+                    SK.sendkeyInsert(40);
                 }
             }
 
@@ -2067,13 +2067,13 @@ namespace Biden.Func
             if (curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0)
             {
                 Thread.Sleep(100);
-                SK.sendkeyEnter(100);
+                SK.sendkeyEnter(150);
                 Thread.Sleep(100);
                 sendkey("/vkxlcheo qjsodzl");
-                Thread.Sleep(200);
-                SK.sendkeyEnter(100);
+                Thread.Sleep(500);
+                SK.sendkeyEnter(150);
                 Thread.Sleep(2000);
-                SK.sendkeyEnter(100);
+                SK.sendkeyEnter(150);
                 Thread.Sleep(100);
                 SK.sendkeyShift(100);
                 Thread.Sleep(100);
