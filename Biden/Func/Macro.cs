@@ -1729,7 +1729,7 @@ namespace Biden.Func
 
             if (attackFlag)
             {
-                if (randomNum1to100 < 14)
+                if (randomNum1to100 < 10)
                 {
                     Thread.Sleep(100);
                     SK.sendkeyDelete(20);
