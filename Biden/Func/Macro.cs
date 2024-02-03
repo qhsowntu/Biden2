@@ -2007,20 +2007,22 @@ namespace Biden.Func
             Color curColor1 = GetColorAt(70, 925);
             if (curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0)
             {
-                Thread.Sleep(200);
-                SK.sendkeyEnter(200);
-                Thread.Sleep(200);
+                Thread.Sleep(100);
+                SK.sendkeyEnter(100);
+                Thread.Sleep(100);
                 sendkey("/vkxlcheo qjsodzl");
                 Thread.Sleep(200);
-                SK.sendkeyEnter(200);
+                SK.sendkeyEnter(100);
                 Thread.Sleep(2000);
+                SK.sendkeyEnter(100);
+                Thread.Sleep(100);
                 SK.sendkeyShift(100);
-                Thread.Sleep(2000);
-                SK.sendkeyEnter(200);
-                Thread.Sleep(200);
+                Thread.Sleep(100);
+                SK.sendkeyEnter(100);
+                Thread.Sleep(100);
                 sendkey("/vkxlrkdxhl qjsodzl");
-                Thread.Sleep(200);
-                SK.sendkeyEnter(200);
+                Thread.Sleep(100);
+                SK.sendkeyEnter(100);
                 Thread.Sleep(5000);
             }
 
