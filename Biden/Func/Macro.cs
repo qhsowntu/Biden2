@@ -1081,11 +1081,11 @@ namespace Biden.Func
                             //yellen_buff();
                             //volker_buff();
                             //reagan_buff();
-
+                            Bernanke_buff();
                         }
                         if (Macro.getInstance.Flag_F11)
                         {
-                            reagan_buff_fury();
+                            //reagan_buff_fury();
                         }
                     }
                     catch
@@ -2001,6 +2001,64 @@ namespace Biden.Func
             }
 
         }
+
+        private void Bernanke_buff()
+        {
+            int buffStackCount = 5;
+            Color curColor1 = GetColorAt(1876, 145);
+            List<Color> colorList1 = new List<Color>();
+            List<Color> colorList2 = new List<Color>();
+            for (int i = 0; i < buffStackCount; i++)
+            {
+                colorList1.Add(GetColorAt(1876 - (68 * i), 145));
+            }
+            for (int i = 0; i < buffStackCount; i++)
+            {
+                colorList2.Add(GetColorAt(1872 - (68 * i), 145));
+            }
+
+            for (int i = 0; i < buffStackCount; i++)
+            {
+                if ((colorList1[i].R == 182 && colorList1[i].G == 195 && colorList1[i].B == 203))
+                {
+                    break;
+                }
+                if (i == buffStackCount)
+                {
+                    SK.sendkeyInsert(40);
+                }
+            }
+            for (int i = 0; i < buffStackCount; i++)
+            {
+                if ((colorList2[i].R == 38 && colorList2[i].G == 38 && colorList2[i].B == 38))
+                {
+                    break;
+                }
+                if (i == buffStackCount)
+                {
+                    SK.sendkeyHome(40);
+                }
+            }
+
+
+            Color curColorRed = GetColorAt(510, 1054);
+            Color curColorBlue = GetColorAt(725, 1054);
+            if (!(curColorRed.R == 238 && curColorRed.G == 0 && curColorRed.B == 0))
+            {
+                SK.sendkeyPageUp(10);
+            }
+            if (!(curColorBlue.R == 0 && curColorBlue.G == 143 && curColorBlue.B == 238))
+            {
+                SK.sendkeyPageDown(10);
+            }
+
+        }
+
+
+
+
+
+
 
         private void reagan_buff_fury()
         {
