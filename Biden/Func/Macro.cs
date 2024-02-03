@@ -1042,6 +1042,10 @@ namespace Biden.Func
                         //dongbasan_right_getPos(tokenSource2);
 
                     }
+                    if (Macro.getInstance.Flag_F11)
+                    {
+                        dongbasan_rest_getPos(tokenSource2);
+                    }
                     Task.Delay(5);
                     if (ct.IsCancellationRequested)
                     {
@@ -1081,11 +1085,11 @@ namespace Biden.Func
                             //yellen_buff();
                             //volker_buff();
                             //reagan_buff();
-                            Bernanke_buff();
+                            //Bernanke_buff();
                         }
                         if (Macro.getInstance.Flag_F11)
                         {
-                            //reagan_buff_fury();
+                            reagan_buff_fury();
                         }
                     }
                     catch
@@ -1556,6 +1560,73 @@ namespace Biden.Func
                     LR = "R";
                     break;
                 }
+            }
+        }
+
+        private void dongbasan_rest_getPos(CancellationTokenSource ct)
+        {
+            Thread.Sleep(250);
+            Color curColorLeft = new Color();
+            Color curColorRight = new Color();
+
+
+            for (int i = 0; i <= 250; i = i + 1)
+            {
+                int leftX = lastPosX - i;
+                int rightX = lastPosX + i;
+                if (leftX <= 150)
+                {
+                    leftX = 150;
+                    lastPosX = 150;
+                }
+                if (rightX >= 158)
+                {
+                    rightX = 158;
+                    lastPosX = 158;
+                }
+                curColorLeft = GetColorAt(rightX, 235);
+                curColorRight = GetColorAt(leftX, 235);
+
+                MainWindow.getInstance.SetStateString(lastPosX, 235, curColorLeft);
+
+                if (curColorLeft.R == 255 && curColorLeft.G == 255)
+                {
+                    lastPosX = rightX;
+                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorLeft);
+                    if (lastPosX <= 152)
+                    {
+                        LR = "R";
+                    }
+                    else if (lastPosX >= 156)
+                    {
+                        LR = "L";
+                    }
+                    break;
+                }
+                else if (curColorRight.R == 255 && curColorRight.G == 255)
+                {
+                    lastPosX = leftX;
+                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorRight);
+                    if (lastPosX <= 152)
+                    {
+                        SK.sendkeyRight(1);
+                        LR = "R";
+                    }
+                    else if (lastPosX >= 156)
+                    {
+                        SK.sendkeyLeft(1);
+                        LR = "L";
+                    }
+                    break;
+                }
+            }
+
+            if (LR == "L")
+            {
+                SK.sendkeyLeft(1);
+            }else if (LR == "R")
+            {
+                SK.sendkeyRight(1);
             }
         }
 
@@ -2064,7 +2135,8 @@ namespace Biden.Func
         private void reagan_buff_fury()
         {
             Color curColor1 = GetColorAt(70, 925);
-            if (curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0)
+            Color curColor2 = GetColorAt(48, 925);
+            if ((curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0) || (curColor2.R == 0 && curColor2.G == 255 && curColor2.B == 0))
             {
                 Thread.Sleep(100);
                 SK.sendkeyEnter(150);
@@ -2072,7 +2144,7 @@ namespace Biden.Func
                 sendkey("/vkxlcheo qjsodzl");
                 Thread.Sleep(500);
                 SK.sendkeyEnter(150);
-                Thread.Sleep(2000);
+                Thread.Sleep(1200);
                 SK.sendkeyEnter(150);
                 Thread.Sleep(100);
                 SK.sendkeyShift(100);
