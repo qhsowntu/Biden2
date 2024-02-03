@@ -2014,8 +2014,8 @@ namespace Biden.Func
                 Thread.Sleep(200);
                 sendkey("{ENTER}");
                 Thread.Sleep(2000);
-                SK.sendkeyShift(100);
-                Thread.Sleep(200);
+                SK.sendkeyShift(200);
+                Thread.Sleep(1000);
                 sendkey("{ENTER}");
                 Thread.Sleep(200);
                 sendkey("/vkxlrkdxhl qjsodzl");

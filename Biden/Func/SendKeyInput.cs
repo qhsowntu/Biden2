@@ -89,9 +89,9 @@ namespace Biden.Func
 
         public void sendkeyShift(int time)
         {
-            User32.API.keybd_event(0X22, 0, 0, 0);
+            User32.API.keybd_event(0XA0, 0, 0, 0);
             Thread.Sleep(time * 5);
-            User32.API.keybd_event(0X22, 0, KEYEVENTF_KEYUP, 0);
+            User32.API.keybd_event(0XA0, 0, KEYEVENTF_KEYUP, 0);
         }
 
         public void sendkeyControl(int time)
