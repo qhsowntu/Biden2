@@ -2085,6 +2085,18 @@ namespace Biden.Func
                 Thread.Sleep(5000);
             }
 
+
+            Color curColorRed = GetColorAt(510, 1054);
+            Color curColorBlue = GetColorAt(725, 1054);
+            if (!(curColorRed.R == 238 && curColorRed.G == 0 && curColorRed.B == 0))
+            {
+                SK.sendkeyPageUp(20);
+            }
+            if (!(curColorBlue.R == 0 && curColorBlue.G == 143 && curColorBlue.B == 238))
+            {
+                SK.sendkeyPageDown(20);
+
+            }
         }
 
         private static void sendkey(string str)
