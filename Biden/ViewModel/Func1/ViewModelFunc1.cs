@@ -181,6 +181,7 @@ namespace Biden.ViewModel
                 {
                     macro.IsInit = true;
                     macro.create();
+
                     macro.start();
                     macro.start2();
                 }

@@ -90,6 +90,11 @@ namespace Biden.Func
         private static int lastPosX = 0;
         private static System.Random randomNum = new System.Random((int)DateTime.Now.Ticks);
 
+        private static List<Task> allTasks = new List<Task>();
+        private static ManualResetEvent pauseEvent = new ManualResetEvent(true);
+
+
+
         private static List<String> list;
         private static List<String> parameterList;
         private static List<stopPoint> stopPointList;
@@ -166,7 +171,7 @@ namespace Biden.Func
         public bool Flag_F41 { get => Flag_F4; set => Flag_F4 = value; }
         public bool MovingFlag { get => movingFlag; set => movingFlag = value; }
 
-        
+
         //There are detailed explanations for these functions on MSDNAA and implementations.
         public delegate IntPtr HookDel(
             int nCode,
@@ -1033,8 +1038,9 @@ namespace Biden.Func
                     if (Macro.getInstance.Flag_F12)
                     {
                         //dongbasan_left_getPos(tokenSource2);
-                        dongbasan_mid_getPos(tokenSource2);
+                        //dongbasan_mid_getPos(tokenSource2);
                         //dongbasan_right_getPos(tokenSource2);
+
                     }
                     Task.Delay(5);
                     if (ct.IsCancellationRequested)
@@ -1070,11 +1076,16 @@ namespace Biden.Func
                         {
                             //rr4();
                             //dongbasan_left_attack();
-                            dongbasan_mid_attack();
+                            //dongbasan_mid_attack();
                             //dongbasan_right_attack();
                             //yellen_buff();
-                            volker_buff();
+                            //volker_buff();
                             //reagan_buff();
+
+                        }
+                        if (Macro.getInstance.Flag_F11)
+                        {
+                            reagan_buff_fury();
                         }
                     }
                     catch
@@ -1207,7 +1218,7 @@ namespace Biden.Func
 
             Macro.getInstance.Flag_F9 = false;
             //Macro.getInstance.Flag_F10 = false;
-            Macro.getInstance.Flag_F11 = false;
+            //Macro.getInstance.Flag_F11 = false;
             //Macro.getInstance.Flag_F12 = false;
 
         }
@@ -1508,7 +1519,7 @@ namespace Biden.Func
                 curColorLeft = GetColorAt(rightX, 266);
                 curColorRight = GetColorAt(leftX, 266);
                 curColorWall = GetColorAt(26, 263);
-                
+
                 if (curColorLeft.R == 255 && curColorLeft.G == 255)
                 {
                     lastPosX = rightX;
@@ -1547,7 +1558,7 @@ namespace Biden.Func
                 }
             }
         }
-        
+
         private void dongbasan_left_attack()
         {
             int curIndex = (int)((lastPosX - 25) * 13);
@@ -1752,11 +1763,11 @@ namespace Biden.Func
                 //random_F1toF5();
             }
 
-            
+
         }
         private void dongbasan_right_attack()
         {
-            
+
             int curIndex = 0;
             if (lastPosX < 170)
             {
@@ -1777,7 +1788,7 @@ namespace Biden.Func
             {
                 int leftX = curIndex - i;
                 int rightX = curIndex + i;
-                    
+
                 if (rightX > 1919)
                 {
                     rightX = 1919;
@@ -1875,7 +1886,7 @@ namespace Biden.Func
                 //random_F1toF5();
             }
         }
-        
+
         private void yellen_buff()
         {
             Color curColor1 = GetColorAt(1738, 147);
@@ -1991,6 +2002,22 @@ namespace Biden.Func
 
         }
 
+        private void reagan_buff_fury()
+        {
+            Color curColor1 = GetColorAt(48, 923);
+            if (curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0)
+            {
+
+                Thread.Sleep(200);
+                sendkey("{ENTER}");
+                Thread.Sleep(200);
+                sendkey("/vkxlcheo qjsodzl");
+                Thread.Sleep(200);
+                sendkey("{ENTER}");
+                Thread.Sleep(200);
+
+            }
+        }
 
         private static void sendkey(string str)
         {
@@ -2004,16 +2031,8 @@ namespace Biden.Func
             {
 
             }
-            
+
         }
-
-
-
-
-
-
-
-
 
     }
 
