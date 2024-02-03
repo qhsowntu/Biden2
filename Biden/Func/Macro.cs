@@ -2008,19 +2008,19 @@ namespace Biden.Func
             if (curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0)
             {
                 Thread.Sleep(200);
-                sendkey("{ENTER}");
+                SK.sendkeyEnter(200);
                 Thread.Sleep(200);
                 sendkey("/vkxlcheo qjsodzl");
                 Thread.Sleep(200);
-                sendkey("{ENTER}");
+                SK.sendkeyEnter(200);
                 Thread.Sleep(2000);
-                SK.sendkeyShift(200);
-                Thread.Sleep(1000);
-                sendkey("{ENTER}");
+                SK.sendkeyShift(100);
+                Thread.Sleep(2000);
+                SK.sendkeyEnter(200);
                 Thread.Sleep(200);
                 sendkey("/vkxlrkdxhl qjsodzl");
                 Thread.Sleep(200);
-                sendkey("{ENTER}");
+                SK.sendkeyEnter(200);
                 Thread.Sleep(5000);
             }
 
