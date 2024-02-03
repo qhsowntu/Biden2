@@ -2008,6 +2008,7 @@ namespace Biden.Func
             Color curColor1 = GetColorAt(1876, 145);
             List<Color> colorList1 = new List<Color>();
             List<Color> colorList2 = new List<Color>();
+
             for (int i = 0; i < buffStackCount; i++)
             {
                 colorList1.Add(GetColorAt(1876 - (68 * i), 145));
@@ -2023,7 +2024,7 @@ namespace Biden.Func
                 {
                     break;
                 }
-                if (i == buffStackCount)
+                if (i == buffStackCount - 1)
                 {
                     SK.sendkeyInsert(40);
                 }
@@ -2034,7 +2035,7 @@ namespace Biden.Func
                 {
                     break;
                 }
-                if (i == buffStackCount)
+                if (i == buffStackCount - 1)
                 {
                     SK.sendkeyHome(40);
                 }
