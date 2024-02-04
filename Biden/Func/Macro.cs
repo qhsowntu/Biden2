@@ -642,7 +642,7 @@ namespace Biden.Func
                 }
                 else
                 {
-                    Thread.Sleep(10000);
+                    Thread.Sleep(15000);
                     Macro.getInstance.Flag_F11 = true;
                 }
             }
@@ -1610,12 +1610,10 @@ namespace Biden.Func
                     //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorRight);
                     if (lastPosX <= 152)
                     {
-                        SK.sendkeyRight(1);
                         LR = "R";
                     }
                     else if (lastPosX >= 156)
                     {
-                        SK.sendkeyLeft(1);
                         LR = "L";
                     }
                     break;
@@ -2141,9 +2139,14 @@ namespace Biden.Func
         {
             Color curColor1 = GetColorAt(70, 925);
             Color curColor2 = GetColorAt(48, 925);
+            string tempLR = LR;
+
             if ((curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0) || (curColor2.R == 0 && curColor2.G == 255 && curColor2.B == 0))
             {
-                string tempLR = LR;
+                User32.API.keybd_event(0X25, 0, 0x0002, 0);
+                User32.API.keybd_event(0X27, 0, 0x0002, 0);
+                
+                tempLR = LR;
                 LR = "STOP";
                 Thread.Sleep(100);
                 SK.sendkeyEnter(100);
@@ -2169,13 +2172,14 @@ namespace Biden.Func
                 Thread.Sleep(100);
                 SK.sendkeyEnter(100);
                 Thread.Sleep(4000);
-                LR = tempLR;
+                
             }
 
 
             SK.sendkeyEsc(10);
             SK.sendkeyEsc(10);
 
+            LR = tempLR;
 
             Color curColorRed = GetColorAt(510, 1054);
             Color curColorBlue = GetColorAt(689, 1054);
