@@ -1629,6 +1629,10 @@ namespace Biden.Func
             {
                 SK.sendkeyRight(1);
             }
+            else
+            {
+
+            }
         }
 
         private void dongbasan_left_attack()
@@ -2139,6 +2143,7 @@ namespace Biden.Func
             Color curColor2 = GetColorAt(48, 925);
             if ((curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0) || (curColor2.R == 0 && curColor2.G == 255 && curColor2.B == 0))
             {
+                LR = "STOP";
                 Thread.Sleep(100);
                 SK.sendkeyEnter(100);
                 Thread.Sleep(100);
