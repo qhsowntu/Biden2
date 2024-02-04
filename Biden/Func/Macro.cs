@@ -642,6 +642,7 @@ namespace Biden.Func
                 }
                 else
                 {
+                    Thread.Sleep(10000);
                     Macro.getInstance.Flag_F11 = true;
                 }
             }
@@ -1038,13 +1039,13 @@ namespace Biden.Func
                     if (Macro.getInstance.Flag_F12)
                     {
                         //dongbasan_left_getPos(tokenSource2);
-                        dongbasan_mid_getPos(tokenSource2);
+                        //dongbasan_mid_getPos(tokenSource2);
                         //dongbasan_right_getPos(tokenSource2);
 
                     }
                     if (Macro.getInstance.Flag_F11)
                     {
-                        //dongbasan_rest_getPos(tokenSource2);
+                        dongbasan_rest_getPos(tokenSource2);
                     }
                     Task.Delay(5);
                     if (ct.IsCancellationRequested)
@@ -1079,17 +1080,17 @@ namespace Biden.Func
                         if (Macro.getInstance.Flag_F12)
                         {
                             //dongbasan_left_attack();
-                            dongbasan_mid_attack();
+                            //dongbasan_mid_attack();
                             //dongbasan_right_attack();
 
                             //yellen_buff();
-                            volker_buff();
+                            //volker_buff();
                             //reagan_buff();
                             //Bernanke_buff();
                         }
                         if (Macro.getInstance.Flag_F11)
                         {
-                            //reagan_buff_fury();
+                            reagan_buff_fury();
                         }
                     }
                     catch
@@ -1361,22 +1362,18 @@ namespace Biden.Func
                 if (leftX < 25)
                 {
                     leftX = 25;
-                    lastPosX = 25;
                 }
                 else if (leftX > 249)
                 {
                     leftX = 249;
-                    lastPosX = 249;
                 }
                 if (rightX < 25)
                 {
                     rightX = 25;
-                    lastPosX = 25;
                 }
                 else if (rightX > 249)
                 {
                     rightX = 249;
-                    lastPosX = 249;
                 }
                 curColorLeft = GetColorAt(rightX, 258);
                 curColorRight = GetColorAt(leftX, 258);
@@ -1591,7 +1588,7 @@ namespace Biden.Func
                 curColorLeft = GetColorAt(rightX, 235);
                 curColorRight = GetColorAt(leftX, 235);
 
-                MainWindow.getInstance.SetStateString(lastPosX, 235, curColorLeft);
+                //MainWindow.getInstance.SetStateString(lastPosX, 235, curColorLeft);
 
                 if (curColorLeft.R == 255 && curColorLeft.G == 255)
                 {
@@ -2173,12 +2170,12 @@ namespace Biden.Func
 
 
             Color curColorRed = GetColorAt(510, 1054);
-            Color curColorBlue = GetColorAt(725, 1054);
+            Color curColorBlue = GetColorAt(689, 1054);
             if (!(curColorRed.R == 238 && curColorRed.G == 0 && curColorRed.B == 0))
             {
                 SK.sendkeyPageUp(20);
             }
-            if (!(curColorBlue.R == 0 && curColorBlue.G == 143 && curColorBlue.B == 238))
+            if (!(curColorBlue.R == 0 && curColorBlue.G == 159 && curColorBlue.B == 238))
             {
                 SK.sendkeyPageDown(20);
 
