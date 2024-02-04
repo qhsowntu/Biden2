@@ -1037,8 +1037,8 @@ namespace Biden.Func
                     sendKeyInput(tokenSource2);
                     if (Macro.getInstance.Flag_F12)
                     {
-                        dongbasan_left_getPos(tokenSource2);
-                        //dongbasan_mid_getPos(tokenSource2);
+                        //dongbasan_left_getPos(tokenSource2);
+                        dongbasan_mid_getPos(tokenSource2);
                         //dongbasan_right_getPos(tokenSource2);
 
                     }
@@ -1078,13 +1078,13 @@ namespace Biden.Func
                     {
                         if (Macro.getInstance.Flag_F12)
                         {
-                            dongbasan_left_attack();
-                            //dongbasan_mid_attack();
+                            //dongbasan_left_attack();
+                            dongbasan_mid_attack();
                             //dongbasan_right_attack();
 
                             //yellen_buff();
-                            //volker_buff();
-                            reagan_buff();
+                            volker_buff();
+                            //reagan_buff();
                             //Bernanke_buff();
                         }
                         if (Macro.getInstance.Flag_F11)
@@ -1801,7 +1801,7 @@ namespace Biden.Func
                     {
                         if (lastPosX < 145)
                         {
-                            SK.sendkeyRight(200);
+                            SK.sendkeyRight(230);
                         }
                         else
                         {
