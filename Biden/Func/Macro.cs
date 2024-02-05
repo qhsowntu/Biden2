@@ -2110,7 +2110,7 @@ namespace Biden.Func
                 SK.sendkeyInsert(20);
             }
 
-            Color curColorRed = GetColorAt(510, 1054);
+            Color curColorRed = GetColorAt(550, 1054);
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
@@ -2145,7 +2145,7 @@ namespace Biden.Func
                 SK.sendkeyInsert(20);
             }
 
-            Color curColorRed = GetColorAt(510, 1054);
+            Color curColorRed = GetColorAt(550, 1054);
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
@@ -2192,7 +2192,7 @@ namespace Biden.Func
                 SK.sendkeyInsert(40);
             }
 
-            Color curColorRed = GetColorAt(510, 1054);
+            Color curColorRed = GetColorAt(550, 1054);
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
@@ -2245,7 +2245,7 @@ namespace Biden.Func
             }
 
 
-            Color curColorRed = GetColorAt(510, 1054);
+            Color curColorRed = GetColorAt(550, 1054);
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
@@ -2324,7 +2324,7 @@ namespace Biden.Func
 
             LR = tempLR;
 
-            Color curColorRed = GetColorAt(510, 1054);
+            Color curColorRed = GetColorAt(550, 1054);
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
