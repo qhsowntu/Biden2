@@ -1710,6 +1710,8 @@ namespace Biden.Func
             Color curColorLeft4 = new Color();
             Color curColorLeft5 = new Color();
             Color curColorLeft6 = new Color();
+            Color curColorLeft7 = new Color();
+            Color curColorLeft8 = new Color();
             Color curColorRight1 = new Color();
             Color curColorRight2 = new Color();
             Color curColorRight3 = new Color();
@@ -1725,6 +1727,8 @@ namespace Biden.Func
             curColorLeft4 = GetColorAt(100, 269);
             curColorLeft5 = GetColorAt(105, 269);
             curColorLeft6 = GetColorAt(110, 269);
+            curColorLeft7 = GetColorAt(115, 269);
+            curColorLeft8 = GetColorAt(120, 269);
             curColorRight1 = GetColorAt(250, 269);
             curColorRight2 = GetColorAt(245, 269);
             curColorRight3 = GetColorAt(240, 269);
@@ -1739,7 +1743,9 @@ namespace Biden.Func
                 (curColorLeft3.R == 255 && curColorLeft3.G == 255) ||
                 (curColorLeft4.R == 255 && curColorLeft4.G == 255) ||
                 (curColorLeft5.R == 255 && curColorLeft5.G == 255) ||
-                (curColorLeft6.R == 255 && curColorLeft6.G == 255))
+                (curColorLeft6.R == 255 && curColorLeft6.G == 255) ||
+                (curColorLeft7.R == 255 && curColorLeft7.G == 255) ||
+                (curColorLeft8.R == 255 && curColorLeft8.G == 255))
             {
                 LR = "R";
             }
@@ -2394,7 +2400,7 @@ namespace Biden.Func
                     sleepCount = 0;
                     intervalCount++;
                 }
-                if (intervalCount > 15)
+                if (intervalCount > 13)
                 {
                     intervalCount = 0;
                     User32.API.keybd_event(0X27, 0, 0x0002, 0);
@@ -2411,7 +2417,7 @@ namespace Biden.Func
                     sleepCount = 0;
                     intervalCount++;
                 }
-                if (intervalCount > 15)
+                if (intervalCount > 13)
                 {
                     intervalCount = 0;
                     User32.API.keybd_event(0X25, 0, 0x0002, 0);
