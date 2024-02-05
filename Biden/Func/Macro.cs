@@ -1045,7 +1045,7 @@ namespace Biden.Func
                     }
                     if (Macro.getInstance.Flag_F11)
                     {
-                        dongbasan_rest_getPos(tokenSource2);
+                        //dongbasan_rest_getPos(tokenSource2);
                     }
                     Task.Delay(5);
                     if (ct.IsCancellationRequested)
@@ -1086,11 +1086,11 @@ namespace Biden.Func
                             //yellen_buff();
                             //volker_buff();
                             //reagan_buff();
-                            //Bernanke_buff();
+                            Bernanke_buff();
                         }
                         if (Macro.getInstance.Flag_F11)
                         {
-                            reagan_buff_fury();
+                            //reagan_buff_fury();
                         }
                     }
                     catch
@@ -1106,19 +1106,11 @@ namespace Biden.Func
                         ct.ThrowIfCancellationRequested();
                     }
                 }
-            }, tokenSource2.Token); // Pass same token to Task.Run.
+            }, tokenSource2.Token); // Pass same token to Task.Run.370
 
             tokenSource2.Cancel();
             tokenSource2.Dispose();
         }
-
-
-
-
-
-
-
-
 
 
         public void reset()
@@ -1566,7 +1558,7 @@ namespace Biden.Func
 
         private void dongbasan_rest_getPos(CancellationTokenSource ct)
         {
-            Thread.Sleep(250);
+            Thread.Sleep(500);
             Color curColorLeft = new Color();
             Color curColorRight = new Color();
 
@@ -1622,10 +1614,10 @@ namespace Biden.Func
 
             if (LR == "L")
             {
-                SK.sendkeyLeft(1);
+                SK.sendkeyLeft(0.2);
             }else if (LR == "R")
             {
-                SK.sendkeyRight(1);
+                SK.sendkeyRight(0.2);
             }
             else
             {

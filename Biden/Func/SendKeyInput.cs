@@ -23,14 +23,16 @@ namespace Biden.Func
 
         }
 
-        public void sendkeyLeft(int time)
+        public void sendkeyLeft(double timeDouble)
         {
+            int time = (int)timeDouble;
             User32.API.keybd_event(0X25, 0, 0, 0);
             Thread.Sleep(time * 5);
             User32.API.keybd_event(0X25, 0, KEYEVENTF_KEYUP, 0);
         }
-        public void sendkeyRight(int time)
+        public void sendkeyRight(double timeDouble)
         {
+            int time = (int)timeDouble;
             User32.API.keybd_event(0X27, 0, 0, 0);
             Thread.Sleep(time * 5);
             User32.API.keybd_event(0X27, 0, KEYEVENTF_KEYUP, 0);
