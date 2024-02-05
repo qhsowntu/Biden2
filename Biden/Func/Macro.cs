@@ -86,9 +86,10 @@ namespace Biden.Func
         private static int B2 = 0;
 
         private static int sleepCount = 0;
+        private static int intervalCount = 0;
         private static int sleepCountMax = 0;
 
-        private static string last_LR = "L";
+        private static string last_LR = "R";
 
         private static int lastPosX = 0;
         private static System.Random randomNum = new System.Random((int)DateTime.Now.Ticks);
@@ -2246,7 +2247,7 @@ namespace Biden.Func
 
             Color curColorRed = GetColorAt(510, 1054);
             Color curColorBlue = GetColorAt(725, 1054);
-            if (!(curColorRed.R == 238 && curColorRed.G == 0 && curColorRed.B == 0))
+            if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
                 SK.sendkeyPageUp(10);
             }
@@ -2255,11 +2256,9 @@ namespace Biden.Func
                 SK.sendkeyPageDown(10);
             }
 
-            Color curColorRed2 = GetColorAt(447, 1054);
-            Color curColorBlue2 = GetColorAt(725, 1054);
-            if (!(curColorRed.R == 238 && curColorRed.G == 0 && curColorRed.B == 0))
+            Color curColorRedWarning = GetColorAt(462, 1054);
+            if ((curColorRedWarning.R == 190 && curColorRedWarning.G == 190 && curColorRedWarning.B == 190))
             {
-
                 Thread.Sleep(100);
                 User32.API.keybd_event(0XA4, 0, 0, 0);
                 Thread.Sleep(100);
@@ -2269,8 +2268,6 @@ namespace Biden.Func
                 Thread.Sleep(100);
                 User32.API.keybd_event(0XA4, 0, 0x0002, 0);
                 Thread.Sleep(100);
-
-
             }
 
         }
@@ -2385,7 +2382,7 @@ namespace Biden.Func
                 User32.API.keybd_event(0X27, 0, 0, 0);
             }*/
 
-            if (sleepCount % 6 == 0)
+            if (sleepCount % 6 == 0 && intervalCount == 0)
             {
                 AltAndDelete();
             }
@@ -2395,20 +2392,32 @@ namespace Biden.Func
                 if (last_LR == "R")
                 {
                     sleepCount = 0;
+                    intervalCount++;
                 }
-                User32.API.keybd_event(0X27, 0, 0x0002, 0);
-                User32.API.keybd_event(0X25, 0, 0, 0);
-                last_LR = "L";
+                if (intervalCount > 15)
+                {
+                    intervalCount = 0;
+                    User32.API.keybd_event(0X27, 0, 0x0002, 0);
+                    User32.API.keybd_event(0X25, 0, 0, 0);
+                    last_LR = "L";
+                }
+                
             }
             else if (LR == "R")
             {
+                
                 if (last_LR == "L")
                 {
                     sleepCount = 0;
+                    intervalCount++;
                 }
-                User32.API.keybd_event(0X25, 0, 0x0002, 0);
-                User32.API.keybd_event(0X27, 0, 0, 0);
-                last_LR = "R";
+                if (intervalCount > 15)
+                {
+                    intervalCount = 0;
+                    User32.API.keybd_event(0X25, 0, 0x0002, 0);
+                    User32.API.keybd_event(0X27, 0, 0, 0);
+                    last_LR = "R";
+                }
             }
             else
             {
