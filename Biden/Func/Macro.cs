@@ -2087,11 +2087,11 @@ namespace Biden.Func
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
-                SK.sendkeyPageUp(20);
+                SK.sendkeyPageUp(10);
             }
             if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
             {
-                SK.sendkeyPageDown(20);
+                SK.sendkeyPageDown(10);
             }
         }
         private void reagan_buff()
@@ -2122,11 +2122,11 @@ namespace Biden.Func
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
-                SK.sendkeyPageUp(20);
+                SK.sendkeyPageUp(10);
             }
             if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
             {
-                SK.sendkeyPageDown(20);
+                SK.sendkeyPageDown(10);
 
             }
         }
@@ -2202,7 +2202,7 @@ namespace Biden.Func
                 }
                 if (i == buffStackCount - 1)
                 {
-                    SK.sendkeyHome(40);
+                    SK.sendkeyHome(30);
                 }
             }
             for (int i = 0; i < buffStackCount; i++)
@@ -2213,7 +2213,7 @@ namespace Biden.Func
                 }
                 if (i == buffStackCount - 1)
                 {
-                    SK.sendkeyInsert(40);
+                    SK.sendkeyInsert(30);
                 }
             }
 
@@ -2301,11 +2301,11 @@ namespace Biden.Func
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
-                SK.sendkeyPageUp(20);
+                SK.sendkeyPageUp(10);
             }
             if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
             {
-                SK.sendkeyPageDown(20);
+                SK.sendkeyPageDown(10);
 
             }
         }
@@ -2367,7 +2367,7 @@ namespace Biden.Func
                     sleepCount = 0;
                     intervalCount++;
                 }
-                if (intervalCount > 13)
+                if (intervalCount > 15)
                 {
                     intervalCount = 0;
                     User32.API.keybd_event(0X27, 0, 0x0002, 0);
@@ -2384,7 +2384,7 @@ namespace Biden.Func
                     sleepCount = 0;
                     intervalCount++;
                 }
-                if (intervalCount > 13)
+                if (intervalCount > 14)
                 {
                     intervalCount = 0;
                     User32.API.keybd_event(0X25, 0, 0x0002, 0);
