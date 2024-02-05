@@ -88,8 +88,7 @@ namespace Biden.Func
         private static int sleepCount = 0;
         private static int sleepCountMax = 0;
 
-        private static bool L_Flag = false;
-        private static bool R_Flag = false;
+        private static string last_LR = "L";
 
         private static int lastPosX = 0;
         private static System.Random randomNum = new System.Random((int)DateTime.Now.Ticks);
@@ -1052,6 +1051,8 @@ namespace Biden.Func
                         //dongbasan_mid_getPos(tokenSource2);
                         //dongbasan_right_getPos(tokenSource2);
 
+                        dongbasan_bernanke_getPos(tokenSource2);
+
                     }
                     if (Macro.getInstance.Flag_F11)
                     {
@@ -1636,6 +1637,127 @@ namespace Biden.Func
             }
         }
 
+
+
+        private void dongbasan_bernanke_getPos(CancellationTokenSource ct)
+        {
+            /*
+            Color curColorLeft = new Color();
+            Color curColorRight = new Color();
+
+            for (int i = 0; i <= 250; i = i + 4)
+            {
+                SK.sendkeyZ(5);
+                int leftX = lastPosX - i;
+                int rightX = lastPosX + i;
+                if (leftX < 25)
+                {
+                    leftX = 25;
+                }
+                else if (leftX > 249)
+                {
+                    leftX = 249;
+                }
+                if (rightX < 25)
+                {
+                    rightX = 25;
+                }
+                else if (rightX > 249)
+                {
+                    rightX = 249;
+                }
+
+                curColorLeft = GetColorAt(rightX, 269);
+                curColorRight = GetColorAt(leftX, 269);
+
+                if (curColorLeft.R == 255 && curColorLeft.G == 255)
+                {
+                    lastPosX = rightX;
+                    if (lastPosX <= 120)
+                    {
+                        LR = "R";
+                    }
+                    else if (lastPosX >= 230)
+                    {
+                        LR = "L";
+                    }
+                    break;
+                }
+                else if (curColorRight.R == 255 && curColorRight.G == 255)
+                {
+                    lastPosX = leftX;
+                    if (lastPosX <= 120)
+                    {
+                        LR = "R";
+                    }
+                    else if (lastPosX >= 230)
+                    {
+                        LR = "L";
+                    }
+                    break;
+                }
+                if (i == 250)
+                {
+                    lastPosX = 180;
+                }
+            }
+            */
+
+            Color curColorLeft1 = new Color();
+            Color curColorLeft2 = new Color();
+            Color curColorLeft3 = new Color();
+            Color curColorLeft4 = new Color();
+            Color curColorLeft5 = new Color();
+            Color curColorLeft6 = new Color();
+            Color curColorRight1 = new Color();
+            Color curColorRight2 = new Color();
+            Color curColorRight3 = new Color();
+            Color curColorRight4 = new Color();
+            Color curColorRight5 = new Color();
+            Color curColorRight6 = new Color();
+            Color curColorRight7 = new Color();
+            Color curColorRight8 = new Color();
+
+            curColorLeft1 = GetColorAt(85, 269);
+            curColorLeft2 = GetColorAt(90, 269);
+            curColorLeft3 = GetColorAt(95, 269);
+            curColorLeft4 = GetColorAt(100, 269);
+            curColorLeft5 = GetColorAt(105, 269);
+            curColorLeft6 = GetColorAt(110, 269);
+            curColorRight1 = GetColorAt(250, 269);
+            curColorRight2 = GetColorAt(245, 269);
+            curColorRight3 = GetColorAt(240, 269);
+            curColorRight4 = GetColorAt(235, 269);
+            curColorRight5 = GetColorAt(230, 269);
+            curColorRight6 = GetColorAt(225, 269);
+            curColorRight7 = GetColorAt(220, 269);
+            curColorRight8 = GetColorAt(215, 269);
+
+            if ((curColorLeft1.R == 255 && curColorLeft1.G == 255) ||
+                (curColorLeft2.R == 255 && curColorLeft2.G == 255) ||
+                (curColorLeft3.R == 255 && curColorLeft3.G == 255) ||
+                (curColorLeft4.R == 255 && curColorLeft4.G == 255) ||
+                (curColorLeft5.R == 255 && curColorLeft5.G == 255) ||
+                (curColorLeft6.R == 255 && curColorLeft6.G == 255))
+            {
+                LR = "R";
+            }
+            else if ((curColorRight1.R == 255 && curColorRight1.G == 255) ||
+               (curColorRight2.R == 255 && curColorRight2.G == 255) ||
+               (curColorRight3.R == 255 && curColorRight3.G == 255) ||
+               (curColorRight4.R == 255 && curColorRight4.G == 255) ||
+               (curColorRight5.R == 255 && curColorRight5.G == 255) ||
+               (curColorRight6.R == 255 && curColorRight6.G == 255) ||
+               (curColorRight7.R == 255 && curColorRight7.G == 255) ||
+               (curColorRight8.R == 255 && curColorRight8.G == 255))
+            {
+                LR = "L";
+            }
+        }
+
+
+
+
         private void dongbasan_left_attack()
         {
             int curIndex = (int)((lastPosX - 25) * 13);
@@ -1964,6 +2086,9 @@ namespace Biden.Func
             }
         }
 
+
+
+
         private void yellen_buff()
         {
             Color curColor1 = GetColorAt(1738, 147);
@@ -2130,6 +2255,24 @@ namespace Biden.Func
                 SK.sendkeyPageDown(10);
             }
 
+            Color curColorRed2 = GetColorAt(447, 1054);
+            Color curColorBlue2 = GetColorAt(725, 1054);
+            if (!(curColorRed.R == 238 && curColorRed.G == 0 && curColorRed.B == 0))
+            {
+
+                Thread.Sleep(100);
+                User32.API.keybd_event(0XA4, 0, 0, 0);
+                Thread.Sleep(100);
+                User32.API.keybd_event(0X73, 0, 0, 0);
+                Thread.Sleep(100);
+                User32.API.keybd_event(0X73, 0, 0x0002, 0);
+                Thread.Sleep(100);
+                User32.API.keybd_event(0XA4, 0, 0x0002, 0);
+                Thread.Sleep(100);
+
+
+            }
+
         }
 
 
@@ -2223,33 +2366,71 @@ namespace Biden.Func
 
         private void Bernanke_mid_attack()
         {
-            int changeNum = 28;
+            int changeNum = 90;
             sleepCount++;
-            
-            if(sleepCount <= changeNum && L_Flag == false)
+            SK.sendkeyZ(1);
+            /*
+            if(sleepCount < changeNum && L_Flag == false)
             {
                 L_Flag = true;
                 User32.API.keybd_event(0X27, 0, 0x0002, 0);
                 User32.API.keybd_event(0X25, 0, 0, 0);
                 R_Flag = false;
             }
-            else if (sleepCount > changeNum && R_Flag == false)
+            else if (sleepCount >= changeNum && R_Flag == false)
             {
                 L_Flag = false;
                 R_Flag = true;
                 User32.API.keybd_event(0X25, 0, 0x0002, 0);
                 User32.API.keybd_event(0X27, 0, 0, 0);
-            }
+            }*/
 
-
-            if (sleepCount % 7 == 0)
+            if (sleepCount % 6 == 0)
             {
                 AltAndDelete();
             }
 
-            if(sleepCount >= changeNum*2)
+            if (LR == "L")
+            {
+                if (last_LR == "R")
+                {
+                    sleepCount = 0;
+                }
+                User32.API.keybd_event(0X27, 0, 0x0002, 0);
+                User32.API.keybd_event(0X25, 0, 0, 0);
+                last_LR = "L";
+            }
+            else if (LR == "R")
+            {
+                if (last_LR == "L")
+                {
+                    sleepCount = 0;
+                }
+                User32.API.keybd_event(0X25, 0, 0x0002, 0);
+                User32.API.keybd_event(0X27, 0, 0, 0);
+                last_LR = "R";
+            }
+            else
+            {
+                User32.API.keybd_event(0X25, 0, 0, 0);
+                User32.API.keybd_event(0X27, 0, 0, 0);
+            }
+
+
+
+            
+
+            if (sleepCount > changeNum)
             {
                 sleepCount = 0;
+                if (LR == "L")
+                {
+                    LR = "R";
+                }
+                else if (LR == "L")
+                {
+                    LR = "L";
+                }
             }
         }
 
