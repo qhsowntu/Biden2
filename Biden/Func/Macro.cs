@@ -1703,64 +1703,28 @@ namespace Biden.Func
                 }
             }
             */
-
-            Color curColorLeft1 = new Color();
-            Color curColorLeft2 = new Color();
-            Color curColorLeft3 = new Color();
-            Color curColorLeft4 = new Color();
-            Color curColorLeft5 = new Color();
-            Color curColorLeft6 = new Color();
-            Color curColorLeft7 = new Color();
-            Color curColorLeft8 = new Color();
-            Color curColorRight1 = new Color();
-            Color curColorRight2 = new Color();
-            Color curColorRight3 = new Color();
-            Color curColorRight4 = new Color();
-            Color curColorRight5 = new Color();
-            Color curColorRight6 = new Color();
-            Color curColorRight7 = new Color();
-            Color curColorRight8 = new Color();
-
-            curColorLeft1 = GetColorAt(85, 269);
-            curColorLeft2 = GetColorAt(90, 269);
-            curColorLeft3 = GetColorAt(95, 269);
-            curColorLeft4 = GetColorAt(100, 269);
-            curColorLeft5 = GetColorAt(105, 269);
-            curColorLeft6 = GetColorAt(110, 269);
-            curColorLeft7 = GetColorAt(115, 269);
-            curColorLeft8 = GetColorAt(120, 269);
-            curColorRight1 = GetColorAt(250, 269);
-            curColorRight2 = GetColorAt(245, 269);
-            curColorRight3 = GetColorAt(240, 269);
-            curColorRight4 = GetColorAt(235, 269);
-            curColorRight5 = GetColorAt(230, 269);
-            curColorRight6 = GetColorAt(225, 269);
-            curColorRight7 = GetColorAt(220, 269);
-            curColorRight8 = GetColorAt(215, 269);
-
-            if ((curColorLeft1.R == 255 && curColorLeft1.G == 255) ||
-                (curColorLeft2.R == 255 && curColorLeft2.G == 255) ||
-                (curColorLeft3.R == 255 && curColorLeft3.G == 255) ||
-                (curColorLeft4.R == 255 && curColorLeft4.G == 255) ||
-                (curColorLeft5.R == 255 && curColorLeft5.G == 255) ||
-                (curColorLeft6.R == 255 && curColorLeft6.G == 255) ||
-                (curColorLeft7.R == 255 && curColorLeft7.G == 255) ||
-                (curColorLeft8.R == 255 && curColorLeft8.G == 255))
+            
+ 
+            for (int i = 0; i < 8; i++)
             {
-                LR = "R";
+                Color tempColor = GetColorAt(90 + (i * 5), 269);
+                if (tempColor.R == 255 && tempColor.G == 255)
+                {
+                    LR = "R";
+                    break;
+                }
             }
-            else if ((curColorRight1.R == 255 && curColorRight1.G == 255) ||
-               (curColorRight2.R == 255 && curColorRight2.G == 255) ||
-               (curColorRight3.R == 255 && curColorRight3.G == 255) ||
-               (curColorRight4.R == 255 && curColorRight4.G == 255) ||
-               (curColorRight5.R == 255 && curColorRight5.G == 255) ||
-               (curColorRight6.R == 255 && curColorRight6.G == 255) ||
-               (curColorRight7.R == 255 && curColorRight7.G == 255) ||
-               (curColorRight8.R == 255 && curColorRight8.G == 255))
+            for (int i = 0; i < 10; i++)
             {
-                LR = "L";
+                Color tempColor = GetColorAt(250 - (i * 5), 269);
+                if (tempColor.R == 255 && tempColor.G == 255)
+                {
+                    LR = "L";
+                    break;
             }
         }
+
+            
 
 
 
