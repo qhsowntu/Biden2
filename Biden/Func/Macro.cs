@@ -1721,8 +1721,11 @@ namespace Biden.Func
                 {
                     LR = "L";
                     break;
+                }
             }
+            
         }
+                
 
             
 
