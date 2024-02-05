@@ -67,6 +67,7 @@ namespace Biden.Func
         public static bool doublePasteFlag = true;
         public static bool clipBoardMonitorFlag = false; // Ctrl+V 중 클립보드모니터 중지
 
+        private static bool keyOnFlag = false;
         private static string key1 = "";
         private static string key2 = "";
         private static string clipboardChangedResult = "";
@@ -84,8 +85,11 @@ namespace Biden.Func
         private static int G2 = 0;
         private static int B2 = 0;
 
-        private static int sleepCount = 100;
+        private static int sleepCount = 0;
         private static int sleepCountMax = 0;
+
+        private static bool L_Flag = false;
+        private static bool R_Flag = false;
 
         private static int lastPosX = 0;
         private static System.Random randomNum = new System.Random((int)DateTime.Now.Ticks);
@@ -582,6 +586,12 @@ namespace Biden.Func
             //MessageBox.Show(Control.ModifierKeys + "");
             //MessageBox.Show(tempKey.ToString().ToUpper() + "");
 
+            if (tempKey.ToString().ToUpper() == "RSHIFTKEY" && keyOnFlag == false)
+            {
+                keyOnFlag = true;
+                AltAndDelete();
+            }
+
             // 1회 실행
             if (tempKey.ToString().ToUpper() == "F1")
             {
@@ -680,7 +690,7 @@ namespace Biden.Func
 
             key1 = "";
             key2 = "";
-
+            keyOnFlag = false;
         }
 
 
@@ -1038,7 +1048,7 @@ namespace Biden.Func
                     sendKeyInput(tokenSource2);
                     if (Macro.getInstance.Flag_F12)
                     {
-                        dongbasan_left_getPos(tokenSource2);
+                        //dongbasan_left_getPos(tokenSource2);
                         //dongbasan_mid_getPos(tokenSource2);
                         //dongbasan_right_getPos(tokenSource2);
 
@@ -1079,12 +1089,13 @@ namespace Biden.Func
                     {
                         if (Macro.getInstance.Flag_F12)
                         {
-                            dongbasan_left_attack();
+                            //dongbasan_left_attack();
                             //dongbasan_mid_attack();
                             //dongbasan_right_attack();
+                            Bernanke_mid_attack();
 
                             //yellen_buff();
-                            volker_buff();
+                            //volker_buff();
                             //reagan_buff();
                             Bernanke_buff();
                         }
@@ -2200,6 +2211,48 @@ namespace Biden.Func
             }
 
         }
+
+
+
+
+        private void AltAndDelete()
+        {
+            SK.sendkeyAlt(15);
+            SK.sendkeyDelete(10);
+        }
+
+        private void Bernanke_mid_attack()
+        {
+            int changeNum = 28;
+            sleepCount++;
+            
+            if(sleepCount <= changeNum && L_Flag == false)
+            {
+                L_Flag = true;
+                User32.API.keybd_event(0X27, 0, 0x0002, 0);
+                User32.API.keybd_event(0X25, 0, 0, 0);
+                R_Flag = false;
+            }
+            else if (sleepCount > changeNum && R_Flag == false)
+            {
+                L_Flag = false;
+                R_Flag = true;
+                User32.API.keybd_event(0X25, 0, 0x0002, 0);
+                User32.API.keybd_event(0X27, 0, 0, 0);
+            }
+
+
+            if (sleepCount % 7 == 0)
+            {
+                AltAndDelete();
+            }
+
+            if(sleepCount >= changeNum*2)
+            {
+                sleepCount = 0;
+            }
+        }
+
 
     }
 
