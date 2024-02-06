@@ -1782,7 +1782,7 @@ namespace Biden.Func
                 {
                     MainWindow.getInstance.SetStateString(curIndex, -i, tempColor);
                     LR = "L";
-                    SK.sendkeyLeft(i * 2 / 3);
+                    SK.sendkeyLeft(i * 1 / 2);
                     attackFlag = true;
                     break;
                 }
@@ -1805,7 +1805,7 @@ namespace Biden.Func
                 {
                     MainWindow.getInstance.SetStateString(curIndex, -i, tempColor);
                     LR = "R";
-                    SK.sendkeyRight(i * 2 / 3);
+                    SK.sendkeyRight(i * 1 / 2);
                     attackFlag = true;
                     break;
                 }
