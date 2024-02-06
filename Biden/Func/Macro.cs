@@ -1365,6 +1365,7 @@ namespace Biden.Func
 
             for (int i = 0; i <= 250; i = i + 1)
             {
+                SK.sendkeyZ(2);
                 int leftX = lastPosX - i;
                 int rightX = lastPosX + i;
                 if (leftX < 25)
@@ -1737,8 +1738,6 @@ namespace Biden.Func
 
         private void dongbasan_left_attack()
         {
-
-            SK.sendkeyZ(1);
 
             int curIndex = (int)((lastPosX - 25) * 13);
             int randomNum1to100 = randomNum.Next(1, 100);
