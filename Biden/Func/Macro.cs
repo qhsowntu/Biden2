@@ -1089,6 +1089,14 @@ namespace Biden.Func
                     //getMousePosAndColor();
                     try
                     {
+                        if (Macro.getInstance.Flag_F9)
+                        {
+                            //dropMeso();
+                        }
+                        if (Macro.getInstance.Flag_F11)
+                        {
+                            //reagan_buff_fury();
+                        }
                         if (Macro.getInstance.Flag_F12)
                         {
                             //dongbasan_left_attack();
@@ -1100,10 +1108,6 @@ namespace Biden.Func
                             //volker_buff();
                             //reagan_buff();
                             Bernanke_buff();
-                        }
-                        if (Macro.getInstance.Flag_F11)
-                        {
-                            //reagan_buff_fury();
                         }
                     }
                     catch
@@ -1226,7 +1230,7 @@ namespace Biden.Func
             Macro.getInstance.Flag_F7 = false;
             Macro.getInstance.Flag_F8 = false;
 
-            Macro.getInstance.Flag_F9 = false;
+            //Macro.getInstance.Flag_F9 = false;
             //Macro.getInstance.Flag_F10 = false;
             //Macro.getInstance.Flag_F11 = false;
             //Macro.getInstance.Flag_F12 = false;
@@ -2416,6 +2420,25 @@ namespace Biden.Func
             }
         }
 
+        private void dropMeso()
+        {
+            Thread.Sleep(100);
+            //1129,799
+            //779,546
+            User32.API.SetCursorPos(1129, 799);
+            Thread.Sleep(100);
+            MouseClick();
+            Thread.Sleep(100);
+            //SK.sendkeyMouseLeft(10);
+            Thread.Sleep(100);
+            User32.API.SetCursorPos(779, 546);
+            MouseClick();
+            Thread.Sleep(100);
+            //SK.sendkeyMouseLeft(10);
+            sendkey("50000");
+            SK.sendkeyEnter(10);
+            Thread.Sleep(100);
+        }
 
     }
 
