@@ -1048,11 +1048,11 @@ namespace Biden.Func
                     sendKeyInput(tokenSource2);
                     if (Macro.getInstance.Flag_F12)
                     {
-                        //dongbasan_left_getPos(tokenSource2);
+                        dongbasan_left_getPos(tokenSource2);
                         //dongbasan_mid_getPos(tokenSource2);
                         //dongbasan_right_getPos(tokenSource2);
 
-                        dongbasan_bernanke_getPos(tokenSource2);
+                        //dongbasan_bernanke_getPos(tokenSource2);
 
                     }
                     if (Macro.getInstance.Flag_F11)
@@ -1099,15 +1099,15 @@ namespace Biden.Func
                         }
                         if (Macro.getInstance.Flag_F12)
                         {
-                            //dongbasan_left_attack();
+                            dongbasan_left_attack();
                             //dongbasan_mid_attack();
                             //dongbasan_right_attack();
-                            Bernanke_mid_attack();
+                            //Bernanke_mid_attack();
 
                             //yellen_buff();
                             //volker_buff();
-                            //reagan_buff();
-                            Bernanke_buff();
+                            reagan_buff();
+                            //Bernanke_buff();
                         }
                     }
                     catch
@@ -1363,9 +1363,9 @@ namespace Biden.Func
             int curIndex = 0;
 
 
-            for (int i = 0; i <= 250; i = i + 2)
+            for (int i = 0; i <= 250; i = i + 1)
             {
-                SK.sendkeyZ(5);
+                SK.sendkeyZ(2);
                 int leftX = lastPosX - i;
                 int rightX = lastPosX + i;
                 if (leftX < 25)
@@ -1738,6 +1738,7 @@ namespace Biden.Func
 
         private void dongbasan_left_attack()
         {
+
             int curIndex = (int)((lastPosX - 25) * 13);
             int randomNum1to100 = randomNum.Next(1, 100);
 
@@ -1781,7 +1782,7 @@ namespace Biden.Func
                 {
                     MainWindow.getInstance.SetStateString(curIndex, -i, tempColor);
                     LR = "L";
-                    SK.sendkeyLeft(i * 2 / 3);
+                    SK.sendkeyLeft(i * 1 / 2);
                     attackFlag = true;
                     break;
                 }
@@ -1804,7 +1805,7 @@ namespace Biden.Func
                 {
                     MainWindow.getInstance.SetStateString(curIndex, -i, tempColor);
                     LR = "R";
-                    SK.sendkeyRight(i * 2 / 3);
+                    SK.sendkeyRight(i * 1 / 2);
                     attackFlag = true;
                     break;
                 }
