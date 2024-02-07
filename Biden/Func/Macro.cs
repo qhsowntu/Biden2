@@ -565,10 +565,10 @@ namespace Biden.Func
             Thread.Sleep(1500);
             User32.API.SetCursorPos(791, 615);
             MouseClick();
-            Thread.Sleep(46000);
+            Thread.Sleep(52000);
             User32.API.SetCursorPos(960, 633);
             MouseClick();
-            Thread.Sleep(7000);
+            Thread.Sleep(10000);
         }
 
         private static void MouseClick()
@@ -2222,15 +2222,19 @@ namespace Biden.Func
             }
 
 
-            Color curColorRed = GetColorAt(550, 1054);
+            Color curColorRed = GetColorAt(555, 1054);
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
-                SK.sendkeyPageUp(10);
+                Thread.Sleep(100);
+                SK.sendkeyPageUp(15);
+                Thread.Sleep(100);
             }
             if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
             {
-                SK.sendkeyPageDown(10);
+                Thread.Sleep(100);
+                SK.sendkeyPageDown(15);
+                Thread.Sleep(100);
             }
 
             Color curColorRedWarning = GetColorAt(462, 1054);
@@ -2341,7 +2345,6 @@ namespace Biden.Func
         private void Bernanke_mid_attack()
         {
             int changeNum = 90;
-            sleepCount++;
             SK.sendkeyZ(1);
             /*
             if(sleepCount < changeNum && L_Flag == false)
@@ -2413,11 +2416,13 @@ namespace Biden.Func
                 {
                     LR = "R";
                 }
-                else if (LR == "L")
+                else if (LR == "R")
                 {
                     LR = "L";
                 }
             }
+
+            sleepCount++;
         }
 
         private void dropMeso()
