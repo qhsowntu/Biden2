@@ -191,7 +191,30 @@ namespace Biden.Func
         private static KeyHandler kh;
 
 
+        public static void initValue()
+        {
+            LR = "L";
+            global_LR = 0;
+            x1 = 0;
+            y1 = 0;
+            R1 = 0;
+            G1 = 0;
+            B1 = 0;
+            x2 = 0;
+            y2 = 0;
+            R2 = 0;
+            G2 = 0;
+            B2 = 0;
 
+            sleepCount = 0;
+            intervalCount = 0;
+            sleepCountMax = 0;
+
+            last_LR = "R";
+
+            lastPosX = 0;
+        
+        }
 
         //Creation of the hook
         public static void CreateHook(KeyHandler _kh)
@@ -661,6 +684,7 @@ namespace Biden.Func
                 if (Macro.getInstance.Flag_F12)
                 {
                     Macro.getInstance.Flag_F12 = false;
+                    initValue();
                 }
                 else
                 {
@@ -1048,11 +1072,11 @@ namespace Biden.Func
                     sendKeyInput(tokenSource2);
                     if (Macro.getInstance.Flag_F12)
                     {
-                        dongbasan_left_getPos(tokenSource2);
+                        //dongbasan_left_getPos(tokenSource2);
                         //dongbasan_mid_getPos(tokenSource2);
                         //dongbasan_right_getPos(tokenSource2);
 
-                        //dongbasan_bernanke_getPos(tokenSource2);
+                        dongbasan_bernanke_getPos(tokenSource2);
 
                     }
                     if (Macro.getInstance.Flag_F11)
@@ -1099,15 +1123,15 @@ namespace Biden.Func
                         }
                         if (Macro.getInstance.Flag_F12)
                         {
-                            dongbasan_left_attack();
+                            //dongbasan_left_attack();
                             //dongbasan_mid_attack();
                             //dongbasan_right_attack();
-                            //Bernanke_mid_attack();
+                            Bernanke_mid_attack();
 
                             //yellen_buff();
                             //volker_buff();
-                            reagan_buff();
-                            //Bernanke_buff();
+                            //reagan_buff();
+                            Bernanke_buff();
                         }
                     }
                     catch
@@ -2227,15 +2251,15 @@ namespace Biden.Func
             Color curColorBlue = GetColorAt(706, 1054);
             if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
             {
-                Thread.Sleep(100);
-                SK.sendkeyPageUp(15);
-                Thread.Sleep(100);
+                Thread.Sleep(200);
+                SK.sendkeyPageUp(20);
+                Thread.Sleep(200);
             }
             if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
             {
-                Thread.Sleep(100);
-                SK.sendkeyPageDown(15);
-                Thread.Sleep(100);
+                Thread.Sleep(200);
+                SK.sendkeyPageDown(20);
+                Thread.Sleep(200);
             }
 
             Color curColorRedWarning = GetColorAt(462, 1054);
