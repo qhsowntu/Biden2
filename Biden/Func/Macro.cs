@@ -2209,6 +2209,36 @@ namespace Biden.Func
 
         private void Bernanke_buff()
         {
+            Color curColorRed = GetColorAt(600, 1054);
+            Color curColorBlue = GetColorAt(706, 1054);
+            if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
+            {
+                Thread.Sleep(200);
+                SK.sendkeyPageUp(20);
+                Thread.Sleep(200);
+            }
+            if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
+            {
+                Thread.Sleep(200);
+                SK.sendkeyPageDown(20);
+                Thread.Sleep(200);
+            }
+
+            Color curColorRedWarning = GetColorAt(462, 1054);
+            if ((curColorRedWarning.R == 190 && curColorRedWarning.G == 190 && curColorRedWarning.B == 190))
+            {
+                Thread.Sleep(100);
+                User32.API.keybd_event(0XA4, 0, 0, 0);
+                Thread.Sleep(100);
+                User32.API.keybd_event(0X73, 0, 0, 0);
+                Thread.Sleep(100);
+                User32.API.keybd_event(0X73, 0, 0x0002, 0);
+                Thread.Sleep(100);
+                User32.API.keybd_event(0XA4, 0, 0x0002, 0);
+                Thread.Sleep(100);
+            }
+
+
             int buffStackCount = 5;
             Color curColor1 = GetColorAt(1876, 145);
             List<Color> colorList1 = new List<Color>();
@@ -2247,34 +2277,7 @@ namespace Biden.Func
             }
 
 
-            Color curColorRed = GetColorAt(555, 1054);
-            Color curColorBlue = GetColorAt(706, 1054);
-            if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
-            {
-                Thread.Sleep(200);
-                SK.sendkeyPageUp(20);
-                Thread.Sleep(200);
-            }
-            if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
-            {
-                Thread.Sleep(200);
-                SK.sendkeyPageDown(20);
-                Thread.Sleep(200);
-            }
-
-            Color curColorRedWarning = GetColorAt(462, 1054);
-            if ((curColorRedWarning.R == 190 && curColorRedWarning.G == 190 && curColorRedWarning.B == 190))
-            {
-                Thread.Sleep(100);
-                User32.API.keybd_event(0XA4, 0, 0, 0);
-                Thread.Sleep(100);
-                User32.API.keybd_event(0X73, 0, 0, 0);
-                Thread.Sleep(100);
-                User32.API.keybd_event(0X73, 0, 0x0002, 0);
-                Thread.Sleep(100);
-                User32.API.keybd_event(0XA4, 0, 0x0002, 0);
-                Thread.Sleep(100);
-            }
+            
 
         }
 
