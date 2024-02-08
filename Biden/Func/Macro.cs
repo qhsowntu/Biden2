@@ -2231,7 +2231,7 @@ namespace Biden.Func
                 User32.API.keybd_event(0XA4, 0, 0, 0);
                 Thread.Sleep(100);
                 User32.API.keybd_event(0X73, 0, 0, 0);
-                Thread.Sleep(100);
+                Thread.Sleep(10);
                 User32.API.keybd_event(0X73, 0, 0x0002, 0);
                 Thread.Sleep(100);
                 User32.API.keybd_event(0XA4, 0, 0x0002, 0);
@@ -2390,9 +2390,23 @@ namespace Biden.Func
                 User32.API.keybd_event(0X27, 0, 0, 0);
             }*/
 
+            int intervalNumForFlag = randomNum.Next(1, 100);
+
             if (sleepCount % 6 == 0 && intervalCount == 0)
             {
                 AltAndDelete();
+            }
+
+            if (sleepCount > 30 && intervalNumForFlag == 99)
+            {
+                sleepCount = 0;
+                LR = "L";
+                last_LR = "R";
+            }else if (sleepCount > 30 && intervalNumForFlag == 98)
+            {
+                sleepCount = 0;
+                LR = "R";
+                last_LR = "L";
             }
 
             if (LR == "L")
@@ -2400,6 +2414,15 @@ namespace Biden.Func
                 if (last_LR == "R")
                 {
                     sleepCount = 0;
+                    if (intervalCount == 0)
+                    {
+                        
+                        if (intervalNumForFlag < 60)
+                        {
+                            intervalCount = 16;
+                        }
+                    }
+
                     intervalCount++;
                 }
                 if (intervalCount > 15)
@@ -2417,6 +2440,13 @@ namespace Biden.Func
                 if (last_LR == "L")
                 {
                     sleepCount = 0;
+                    if (intervalCount == 0)
+                    {
+                        if (intervalNumForFlag < 60)
+                        {
+                            intervalCount = 16;
+                        }
+                    }
                     intervalCount++;
                 }
                 if (intervalCount > 14)
@@ -2442,10 +2472,12 @@ namespace Biden.Func
                 sleepCount = 0;
                 if (LR == "L")
                 {
+                    last_LR = "L";
                     LR = "R";
                 }
                 else if (LR == "R")
                 {
+                    last_LR = "R";
                     LR = "L";
                 }
             }
