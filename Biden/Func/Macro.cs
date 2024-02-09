@@ -2426,6 +2426,7 @@ namespace Biden.Func
                 if (intervalCount > 16)
                 {
                     intervalCount = 0;
+                    changeDirectionCount++;
                     User32.API.keybd_event(0X27, 0, 0x0002, 0);
                     User32.API.keybd_event(0X25, 0, 0, 0);
                     last_LR = "L";
@@ -2453,6 +2454,7 @@ namespace Biden.Func
                 if (intervalCount > 14)
                 {
                     intervalCount = 0;
+                    changeDirectionCount++;
                     User32.API.keybd_event(0X25, 0, 0x0002, 0);
                     User32.API.keybd_event(0X27, 0, 0, 0);
                     last_LR = "R";
@@ -2485,12 +2487,14 @@ namespace Biden.Func
             }else{
                 sleepCount++;
             }
+            
+            MainWindow.getInstance.SetStateString(changeDirectionCount, 0, new Color());
             if (changeDirectionCount != 0 && changeDirectionCount % 100 == 0)
             {
+                MainWindow.getInstance.SetStateString(changeDirectionCount, 1, new Color());
                 SK.sendkeyY(10);
             }
         }
-
         private void dropMeso()
         {
             Thread.Sleep(100);
