@@ -136,6 +136,13 @@ namespace Biden.Func
             User32.API.keybd_event(0X02, 0, KEYEVENTF_KEYUP, 0);
         }
 
+        public void sendkeyY(int time)
+        {
+            User32.API.keybd_event(0X59, 0, 0, 0);
+            Thread.Sleep(time * 5);
+            User32.API.keybd_event(0X59, 0, KEYEVENTF_KEYUP, 0);
+        }
+
         public void sendkeyZ(int time)
         {
             User32.API.keybd_event(0X5A, 0, 0, 0);

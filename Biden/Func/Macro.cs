@@ -87,7 +87,10 @@ namespace Biden.Func
 
         private static int sleepCount = 0;
         private static int intervalCount = 0;
+        private static int intervalNoCount_L = 0;
+        private static int intervalNoCount_R = 0;
         private static int sleepCountMax = 0;
+        private static int changeDirectionCount = 0;
 
         private static string last_LR = "R";
 
@@ -1732,19 +1735,21 @@ namespace Biden.Func
             }
             */
             
- 
+            bool findFlag = false;
+
             for (int i = 0; i < 8; i++)
             {
-                Color tempColor = GetColorAt(90 + (i * 5), 269);
+                Color tempColor = GetColorAt(125 - (i * 5), 270);
                 if (tempColor.R == 255 && tempColor.G == 255)
                 {
                     LR = "R";
+                    findFlag = true;
                     break;
                 }
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 11 && findFlag == false; i++)
             {
-                Color tempColor = GetColorAt(250 - (i * 5), 269);
+                Color tempColor = GetColorAt(200 + (i * 5), 270);
                 if (tempColor.R == 255 && tempColor.G == 255)
                 {
                     LR = "L";
@@ -2397,17 +2402,6 @@ namespace Biden.Func
                 AltAndDelete();
             }
 
-            if (sleepCount > 30 && intervalNumForFlag == 99)
-            {
-                sleepCount = 0;
-                LR = "L";
-                last_LR = "R";
-            }else if (sleepCount > 30 && intervalNumForFlag == 98)
-            {
-                sleepCount = 0;
-                LR = "R";
-                last_LR = "L";
-            }
 
             if (LR == "L")
             {
@@ -2416,16 +2410,20 @@ namespace Biden.Func
                     sleepCount = 0;
                     if (intervalCount == 0)
                     {
-                        
-                        if (intervalNumForFlag < 60)
+                        //바로 턴
+                        if (intervalNumForFlag < 60 && intervalNoCount_L < 2)
                         {
-                            intervalCount = 16;
+                            intervalCount = 20;
+                            intervalNoCount_L++;
+                        }
+                        //좀 더 가다가 턴
+                        else{
+                            intervalNoCount_L = 0;
                         }
                     }
-
                     intervalCount++;
                 }
-                if (intervalCount > 15)
+                if (intervalCount > 16)
                 {
                     intervalCount = 0;
                     User32.API.keybd_event(0X27, 0, 0x0002, 0);
@@ -2442,9 +2440,12 @@ namespace Biden.Func
                     sleepCount = 0;
                     if (intervalCount == 0)
                     {
-                        if (intervalNumForFlag < 60)
+                        if (intervalNumForFlag < 60 && intervalNoCount_R < 2)
                         {
-                            intervalCount = 16;
+                            intervalCount = 20;
+                            intervalNoCount_R++;
+                        }else{
+                            intervalNoCount_R = 0;
                         }
                     }
                     intervalCount++;
@@ -2459,17 +2460,18 @@ namespace Biden.Func
             }
             else
             {
-                User32.API.keybd_event(0X25, 0, 0, 0);
-                User32.API.keybd_event(0X27, 0, 0, 0);
+                User32.API.keybd_event(0X25, 0, 0x0002, 0);
+                User32.API.keybd_event(0X27, 0, 0x0002, 0);
             }
 
 
 
             
 
-            if (sleepCount > changeNum)
+            if (sleepCount > changeNum) //|| (intervalNumForFlag == 99 && sleepCount > 40)
             {
                 sleepCount = 0;
+                changeDirectionCount++;
                 if (LR == "L")
                 {
                     last_LR = "L";
@@ -2480,9 +2482,13 @@ namespace Biden.Func
                     last_LR = "R";
                     LR = "L";
                 }
+            }else{
+                sleepCount++;
             }
-
-            sleepCount++;
+            if (changeDirectionCount != 0 && changeDirectionCount % 100 == 0)
+            {
+                SK.sendkeyY(10);
+            }
         }
 
         private void dropMeso()
