@@ -2489,9 +2489,10 @@ namespace Biden.Func
             }
             
             MainWindow.getInstance.SetStateString(changeDirectionCount, 0, new Color());
-            if (changeDirectionCount != 0 && changeDirectionCount % 200 == 0)
+            if (changeDirectionCount != 0 && changeDirectionCount % 250 == 0)
             {
                 MainWindow.getInstance.SetStateString(changeDirectionCount, 1, new Color());
+                changeDirectionCount++;
                 SK.sendkeyY(10);
             }
         }
