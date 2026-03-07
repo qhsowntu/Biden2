@@ -93,7 +93,10 @@ namespace Biden.Func
 
         private static int sleepCount = 0;
         private static int intervalCount = 0;
+        private static int intervalNoCount_L = 0;
+        private static int intervalNoCount_R = 0;
         private static int sleepCountMax = 0;
+        private static int changeDirectionCount = 0;
 
         private static int gongjeungCount = 0;
 
@@ -2325,19 +2328,21 @@ namespace Biden.Func
             }
             */
             
- 
+            bool findFlag = false;
+
             for (int i = 0; i < 8; i++)
             {
-                Color tempColor = GetColorAt(90 + (i * 5), 269);
+                Color tempColor = GetColorAt(125 - (i * 5), 270);
                 if (tempColor.R == 255 && tempColor.G == 255)
                 {
                     LR = "R";
+                    findFlag = true;
                     break;
                 }
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 11 && findFlag == false; i++)
             {
-                Color tempColor = GetColorAt(250 - (i * 5), 269);
+                Color tempColor = GetColorAt(200 + (i * 5), 270);
                 if (tempColor.R == 255 && tempColor.G == 255)
                 {
                     LR = "L";
@@ -2824,7 +2829,7 @@ namespace Biden.Func
                 User32.API.keybd_event(0XA4, 0, 0, 0);
                 Thread.Sleep(100);
                 User32.API.keybd_event(0X73, 0, 0, 0);
-                Thread.Sleep(100);
+                Thread.Sleep(10);
                 User32.API.keybd_event(0X73, 0, 0x0002, 0);
                 Thread.Sleep(100);
                 User32.API.keybd_event(0XA4, 0, 0x0002, 0);
@@ -3042,21 +3047,38 @@ namespace Biden.Func
                 User32.API.keybd_event(0X27, 0, 0, 0);
             }*/
 
+            int intervalNumForFlag = randomNum.Next(1, 100);
+
             if (sleepCount % 6 == 0 && intervalCount == 0)
             {
                 AltAndDelete();
             }
+
 
             if (LR == "L")
             {
                 if (last_LR == "R")
                 {
                     sleepCount = 0;
+                    if (intervalCount == 0)
+                    {
+                        //바로 턴
+                        if (intervalNumForFlag < 60 && intervalNoCount_L < 2)
+                        {
+                            intervalCount = 20;
+                            intervalNoCount_L++;
+                        }
+                        //좀 더 가다가 턴
+                        else{
+                            intervalNoCount_L = 0;
+                        }
+                    }
                     intervalCount++;
                 }
-                if (intervalCount > 15)
+                if (intervalCount > 16)
                 {
                     intervalCount = 0;
+                    changeDirectionCount++;
                     User32.API.keybd_event(0X27, 0, 0x0002, 0);
                     User32.API.keybd_event(0X25, 0, 0, 0);
                     last_LR = "L";
@@ -3069,11 +3091,22 @@ namespace Biden.Func
                 if (last_LR == "L")
                 {
                     sleepCount = 0;
+                    if (intervalCount == 0)
+                    {
+                        if (intervalNumForFlag < 60 && intervalNoCount_R < 2)
+                        {
+                            intervalCount = 20;
+                            intervalNoCount_R++;
+                        }else{
+                            intervalNoCount_R = 0;
+                        }
+                    }
                     intervalCount++;
                 }
                 if (intervalCount > 14)
                 {
                     intervalCount = 0;
+                    changeDirectionCount++;
                     User32.API.keybd_event(0X25, 0, 0x0002, 0);
                     User32.API.keybd_event(0X27, 0, 0, 0);
                     last_LR = "R";
@@ -3081,30 +3114,40 @@ namespace Biden.Func
             }
             else
             {
-                User32.API.keybd_event(0X25, 0, 0, 0);
-                User32.API.keybd_event(0X27, 0, 0, 0);
+                User32.API.keybd_event(0X25, 0, 0x0002, 0);
+                User32.API.keybd_event(0X27, 0, 0x0002, 0);
             }
 
 
 
             
 
-            if (sleepCount > changeNum)
+            if (sleepCount > changeNum) //|| (intervalNumForFlag == 99 && sleepCount > 40)
             {
                 sleepCount = 0;
+                changeDirectionCount++;
                 if (LR == "L")
                 {
+                    last_LR = "L";
                     LR = "R";
                 }
                 else if (LR == "R")
                 {
+                    last_LR = "R";
                     LR = "L";
                 }
+            }else{
+                sleepCount++;
             }
-
-            sleepCount++;
+            
+            MainWindow.getInstance.SetStateString(changeDirectionCount, 0, new Color());
+            if (changeDirectionCount != 0 && changeDirectionCount % 250 == 0)
+            {
+                MainWindow.getInstance.SetStateString(changeDirectionCount, 1, new Color());
+                changeDirectionCount++;
+                SK.sendkeyY(10);
+            }
         }
-
         private void dropMeso()
         {
             Thread.Sleep(100);
