@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -149,7 +150,24 @@ namespace Biden.Func
             Thread.Sleep(time * 5);
             User32.API.keybd_event(0xBC, 0, KEYEVENTF_KEYUP, 0);
         }
-        
+
+        public void sendkeyCtrlAndZ(int time)
+        {
+            User32.API.keybd_event(0X11, 0, 0, 0);
+            Thread.Sleep(time * 1);
+            User32.API.keybd_event(0X5A, 0, 0, 0);
+            Thread.Sleep(time * 10);
+            User32.API.keybd_event(0X5A, 0, KEYEVENTF_KEYUP, 0);
+            User32.API.keybd_event(0X11, 0, KEYEVENTF_KEYUP, 0);
+        }
+
+        public void sendkeySpace(int time)
+        {
+            User32.API.keybd_event(0X20, 0, 0, 0);
+            Thread.Sleep(time * 5);
+            User32.API.keybd_event(0X20, 0, KEYEVENTF_KEYUP, 0);
+        }
+
         public void sendkeyNumber(int time, int num)
         {
             if (num == 0)

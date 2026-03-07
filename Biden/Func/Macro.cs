@@ -91,6 +91,18 @@ namespace Biden.Func
         private static int G2 = 0;
         private static int B2 = 0;
 
+        private static int R0 = 0;
+        private static int G0 = 0;
+        private static int B0 = 0;
+
+        private static int R3 = 0;
+        private static int G3 = 0;
+        private static int B3 = 0;
+
+        private static int R4 = 0;
+        private static int G4 = 0;
+        private static int B4 = 0;
+
         private static int sleepCount = 0;
         private static int intervalCount = 0;
         private static int intervalNoCount_L = 0;
@@ -224,7 +236,7 @@ namespace Biden.Func
             last_LR = "R";
 
             lastPosX = 0;
-        
+
         }
 
         //Creation of the hook
@@ -637,7 +649,7 @@ namespace Biden.Func
 
                 getPos(tempKey.ToString().ToUpper());
             }
-            
+
 
             if (tempKey.ToString().ToUpper() == "RSHIFTKEY" && keyOnFlag == false)
             {
@@ -785,9 +797,9 @@ namespace Biden.Func
             {
                 if ((tempKey.ToString().ToUpper() + "").Contains("LSHIFTKEY"))
                 {
-                    if (tempKey.ToString().ToUpper() == "S") 
+                    if (tempKey.ToString().ToUpper() == "S")
                     {
-                        //Macro.getInstance.Flag1 = true; 
+                        //Macro.getInstance.Flag1 = true;
                     }
                 }
             }*/
@@ -975,7 +987,7 @@ namespace Biden.Func
 
         public void saveFile(Image img)
         {
-            //string path = 
+            //string path =
         }
 
 
@@ -1150,7 +1162,7 @@ namespace Biden.Func
                     //getMousePosAndColor();
                     sendKeyInput(tokenSource2);
 
-                    
+
 
                     Task.Delay(500);
                     if (ct.IsCancellationRequested)
@@ -1243,6 +1255,7 @@ namespace Biden.Func
             if (Macro.getInstance.Flag_F7)
             {
                 activate234();
+
             }
             if (Macro.getInstance.Flag_F8)
             {
@@ -1318,7 +1331,7 @@ namespace Biden.Func
                 Thread.Sleep(1000);
             }
 
-            
+
 
 
 
@@ -1471,7 +1484,108 @@ namespace Biden.Func
 
         private void activate234()
         {
-            //int x = 1683;
+            //XY(1330,892)  RGB(42,20,10)
+            //XY(1330,898)  RGB(58,37,24)
+
+
+            int x = 1801;
+            int y = 950;
+
+            int x0 = 1703;
+            int y0 = 921;
+
+            int x3 = 1843;
+            int y3 = 942;
+
+            int x4 = 1330;
+            int y4 = 892;
+            //Console.WriteLine($"User32.API.SetCursorPos({R2},{G2},{B2}");
+            //MainWindow.getInstance.SetStateString(x, y, curColor);
+
+            //959,770
+            //170,700
+
+            Thread.Sleep(12);
+            Color curColor = GetColorAt(x, y);
+            Color curColor0 = GetColorAt(x0, y0);
+            Color curColor3 = GetColorAt(x3, y3);
+            Color curColor4 = GetColorAt(x4, y4);
+            R0 = curColor0.R;
+            G0 = curColor0.G;
+            B0 = curColor0.B;
+            R2 = curColor.R;
+            G2 = curColor.G;
+            B2 = curColor.B;
+            R3 = curColor3.R;
+            G3 = curColor3.G;
+            B3 = curColor3.B;
+            R4 = curColor4.R;
+            G4 = curColor4.G;
+            B4 = curColor4.B;
+
+            //캡챠 발생 시 동작 안함
+            if(R3 == 42 && G3 == 20 && B3 == 10)
+            {
+                MessageBox.Show("캡챠 발생!!");
+                return;
+            }
+
+
+            System.Random random2 = new System.Random((int)System.DateTime.Now.Ticks);
+
+            if (R3 == 8 && G3 == 4 && B3 == 8)
+            {
+                //동동주
+                SK.sendkeyCtrlAndZ(50);
+            }
+            if (R2 == 8 && G2 == 4 && B2 == 8)
+            {
+                //공증
+                SK.sendkeyNumber(10, 2);
+            }
+            else if (R0 == 8 && G0 == 4 && B0 == 8)
+            {
+                //힐
+                int random3to4 = random2.Next(4, 5);
+                SK.sendkeyNumber(20 * random3to4, 3);
+
+            }
+
+            gongjeungCount++;
+            if (gongjeungCount % 100 == 0 || gongjeungCount <= 3)
+            {
+                SK.sendkeyNumber(10, 9);
+                SK.sendkeyNumber(10, 0);
+            }
+
+            int random1to3 = random2.Next(1, 3);
+
+            if (random1to3 == 1)
+            {
+                SK.sendkeyNumber(10, 6);
+                SK.sendkeyNumber(10, 4);
+                SK.sendkeyNumber(10, 5);
+            }
+            else if (random1to3 == 2)
+            {
+                SK.sendkeyNumber(10, 6);
+                SK.sendkeyNumber(10, 4);
+                SK.sendkeyNumber(10, 5);
+                SK.sendkeyNumber(10, 4);
+            }
+            else if (random1to3 == 3)
+            {
+                SK.sendkeyNumber(10, 6);
+                SK.sendkeyNumber(10, 4);
+                SK.sendkeyNumber(10, 4);
+                SK.sendkeyNumber(10, 5);
+            }
+
+
+            //스페이스
+            SK.sendkeySpace(5);
+
+            /*
             int x = 1726;
             int y = 962;
 
@@ -1497,7 +1611,6 @@ namespace Biden.Func
                 SK.sendkeyNumber(20, 4);
                 SK.sendkeyNumber(20, 4);
             }
-
             //보무
             gongjeungCount++;
             if (gongjeungCount % 50 == 0)
@@ -1510,7 +1623,6 @@ namespace Biden.Func
             {
                 SK.sendkeyNumber(10, 5);
             }
-
             //스킬
             SK.sendkeyNumber(10, 3);
             SK.sendkeyNumber(15, 4);
@@ -1519,9 +1631,8 @@ namespace Biden.Func
             SK.sendkeyNumber(15, 4);
             //스페이스
             SK.sendkeySpace(5);
+           
 
-
-            Point p = getMousePosAndColor();
             //Console.WriteLine($"User32.API.SetCursorPos({p.X},{p.Y})");
             //Console.WriteLine($"{p.X}, {p.Y}");
 
@@ -1529,10 +1640,12 @@ namespace Biden.Func
             //Console.WriteLine($"{p.X}, {p.Y}");
             //Console.WriteLine($"{curColor.R},{curColor.G},{curColor.B}");
 
-
             //Console.WriteLine($"curColor = GetColorAt({p.X}, {p.Y});");
             //Console.WriteLine($"colorList.Add(curColor);");
 
+           
+
+            //Point p = getMousePosAndColor();
 
             ArrayList colorList = new ArrayList();
             curColor = GetColorAt(816, 15);
@@ -1668,6 +1781,8 @@ namespace Biden.Func
                 SK.sendkeyUp(10);
                 SK.sendkeyComma(30);
             }
+            */
+
         }
 
 
@@ -1676,7 +1791,7 @@ namespace Biden.Func
         {
             Point p = getMousePosAndColor();
             Color curColor = GetColorAt(p.X, p.Y);
-            
+
             x2 = p.X;
             y2 = p.Y;
             R2 = curColor.R;
@@ -1703,7 +1818,8 @@ namespace Biden.Func
         {
             int tempDelay = 100;
 
-            for (int i = 0; i < 40; i++) { 
+            for (int i = 0; i < 40; i++)
+            {
                 User32.API.SetCursorPos(628, 237);
                 Thread.Sleep(30);
                 MouseClick();
@@ -2252,7 +2368,8 @@ namespace Biden.Func
             if (LR == "L")
             {
                 SK.sendkeyLeft(0.2);
-            }else if (LR == "R")
+            }
+            else if (LR == "R")
             {
                 SK.sendkeyRight(0.2);
             }
@@ -2327,7 +2444,7 @@ namespace Biden.Func
                 }
             }
             */
-            
+
             bool findFlag = false;
 
             for (int i = 0; i < 8; i++)
@@ -2349,11 +2466,11 @@ namespace Biden.Func
                     break;
                 }
             }
-            
-        }
-                
 
-            
+        }
+
+
+
 
 
 
@@ -2875,7 +2992,7 @@ namespace Biden.Func
             }
 
 
-            
+
 
         }
 
@@ -2895,7 +3012,7 @@ namespace Biden.Func
             {
                 User32.API.keybd_event(0X25, 0, 0x0002, 0);
                 User32.API.keybd_event(0X27, 0, 0x0002, 0);
-                
+
                 tempLR = LR;
                 LR = "STOP";
                 Thread.Sleep(100);
@@ -2922,7 +3039,7 @@ namespace Biden.Func
                 Thread.Sleep(100);
                 SK.sendkeyEnter(100);
                 Thread.Sleep(4000);
-                
+
             }
 
 
@@ -3069,7 +3186,8 @@ namespace Biden.Func
                             intervalNoCount_L++;
                         }
                         //좀 더 가다가 턴
-                        else{
+                        else
+                        {
                             intervalNoCount_L = 0;
                         }
                     }
@@ -3083,11 +3201,11 @@ namespace Biden.Func
                     User32.API.keybd_event(0X25, 0, 0, 0);
                     last_LR = "L";
                 }
-                
+
             }
             else if (LR == "R")
             {
-                
+
                 if (last_LR == "L")
                 {
                     sleepCount = 0;
@@ -3097,7 +3215,9 @@ namespace Biden.Func
                         {
                             intervalCount = 20;
                             intervalNoCount_R++;
-                        }else{
+                        }
+                        else
+                        {
                             intervalNoCount_R = 0;
                         }
                     }
@@ -3120,7 +3240,7 @@ namespace Biden.Func
 
 
 
-            
+
 
             if (sleepCount > changeNum) //|| (intervalNumForFlag == 99 && sleepCount > 40)
             {
@@ -3136,16 +3256,18 @@ namespace Biden.Func
                     last_LR = "R";
                     LR = "L";
                 }
-            }else{
+            }
+            else
+            {
                 sleepCount++;
             }
-            
+
             MainWindow.getInstance.SetStateString(changeDirectionCount, 0, new Color());
             if (changeDirectionCount != 0 && changeDirectionCount % 250 == 0)
             {
                 MainWindow.getInstance.SetStateString(changeDirectionCount, 1, new Color());
                 changeDirectionCount++;
-                SK.sendkeyY(10);
+                //SK.sendkeyY(10);
             }
         }
         private void dropMeso()
