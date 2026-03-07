@@ -3,6 +3,7 @@ using Biden.Model;
 using Biden.View;
 using Biden.ViewModel;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -23,6 +24,11 @@ using System.Windows.Media.Media3D;
 using WindowsInput;
 using static IronPython.Modules.PythonIterTools;
 using static IronPython.Modules.PythonRandom;
+
+using Newtonsoft.Json;
+using static Community.CsharpSqlite.Sqlite3;
+using System.Windows.Shapes;
+
 
 namespace Biden.Func
 {
@@ -89,10 +95,12 @@ namespace Biden.Func
         private static int intervalCount = 0;
         private static int sleepCountMax = 0;
 
+        private static int gongjeungCount = 0;
+
         private static string last_LR = "R";
 
         private static int lastPosX = 0;
-        private static System.Random randomNum = new System.Random((int)DateTime.Now.Ticks);
+        private static System.Random randomNum = new System.Random((int)System.DateTime.Now.Ticks);
 
         private static List<Task> allTasks = new List<Task>();
         private static ManualResetEvent pauseEvent = new ManualResetEvent(true);
@@ -601,13 +609,32 @@ namespace Biden.Func
             User32.API.mouse_event(0x0004, 0, 0, 0, 0);
         }
 
+        private static void MouseClick2()
+        {
+            // 마우스 이벤트 발생 (오른쪽 버튼 클릭)
+            User32.API.mouse_event(0x0008, 0, 0, 0, 0);
+            User32.API.mouse_event(0x00010, 0, 0, 0, 0);
+        }
 
+        long _lastLeftTick = 0;
+        const int LeftIntervalMs = 200; // 80~200ms 사이로 취향대로
 
 
         private void send(Keys tempKey)//Keys tempKey, IntPtr wParam, IntPtr lParam
         {
             //MessageBox.Show(Control.ModifierKeys + "");
             //MessageBox.Show(tempKey.ToString().ToUpper() + "");
+
+            if (Macro.getInstance.Flag_F8 == true && (tempKey.ToString().ToUpper() == "LEFT" || tempKey.ToString().ToUpper() == "RIGHT" || tempKey.ToString().ToUpper() == "UP" || tempKey.ToString().ToUpper() == "DOWN"))
+            {
+
+                int now = Environment.TickCount;
+                if (now - _lastLeftTick < LeftIntervalMs) return; // 간격 제한
+                _lastLeftTick = now;
+
+                getPos(tempKey.ToString().ToUpper());
+            }
+            
 
             if (tempKey.ToString().ToUpper() == "RSHIFTKEY" && keyOnFlag == false)
             {
@@ -632,9 +659,31 @@ namespace Biden.Func
             {
                 hi();
             }
+            if (tempKey.ToString().ToUpper() == "F5")
+            {
+                if (Macro.getInstance.Flag_F5)
+                {
+                    Macro.getInstance.Flag_F5 = false;
+                }
+                else
+                {
+                    Macro.getInstance.Flag_F5 = true;
+                }
+            }
 
-            // 토글
-            else if (tempKey.ToString().ToUpper() == "F8")
+            if (tempKey.ToString().ToUpper() == "F7")
+            {
+                if (Macro.getInstance.Flag_F7)
+                {
+                    Macro.getInstance.Flag_F7 = false;
+                }
+                else
+                {
+                    Macro.getInstance.Flag_F7 = true;
+                }
+            }
+
+            if (tempKey.ToString().ToUpper() == "F8")
             {
                 if (Macro.getInstance.Flag_F8)
                 {
@@ -645,15 +694,41 @@ namespace Biden.Func
                     Macro.getInstance.Flag_F8 = true;
                 }
             }
+            if (tempKey.ToString().ToUpper() == "F11")
+            {
+                //buyRing();
+                sellItemAndBuy();
+
+            }
+            if (tempKey.ToString().ToUpper() == "F12")
+            {
+                sellAllItem();
+            }
+            // 토글
+            //else if (tempKey.ToString().ToUpper() == "F8")
+            //{
+            //    if (Macro.getInstance.Flag_F8)
+            //    {
+            //        Macro.getInstance.Flag_F8 = false;
+            //        User32.API.keybd_event(0X57, 0, 0x0002, 0);
+            //    }
+            //    else
+            //    {
+            //        Macro.getInstance.Flag_F8 = true;
+            //        User32.API.keybd_event(0X57, 0, 0, 0);
+            //    }
+            //}
             else if (tempKey.ToString().ToUpper() == "F9")
             {
                 if (Macro.getInstance.Flag_F9)
                 {
                     Macro.getInstance.Flag_F9 = false;
+                    User32.API.keybd_event(0X01, 0, 0x0002, 0);
                 }
                 else
                 {
                     Macro.getInstance.Flag_F9 = true;
+                    User32.API.keybd_event(0X01, 0, 0, 0);
                 }
             }
             else if (tempKey.ToString().ToUpper() == "F10")
@@ -661,13 +736,15 @@ namespace Biden.Func
                 if (Macro.getInstance.Flag_F10)
                 {
                     Macro.getInstance.Flag_F10 = false;
+                    User32.API.keybd_event(0X46, 0, 0x0002, 0);
                 }
                 else
                 {
                     Macro.getInstance.Flag_F10 = true;
+                    User32.API.keybd_event(0X46, 0, 0, 0);
                 }
             }
-            else if (tempKey.ToString().ToUpper() == "F11")
+            else if (tempKey.ToString().ToUpper() == "F13")
             {
                 if (Macro.getInstance.Flag_F11)
                 {
@@ -679,12 +756,12 @@ namespace Biden.Func
                     Macro.getInstance.Flag_F11 = true;
                 }
             }
-            else if (tempKey.ToString().ToUpper() == "F12")
+            else if (tempKey.ToString().ToUpper() == "F13")
             {
                 if (Macro.getInstance.Flag_F12)
                 {
                     Macro.getInstance.Flag_F12 = false;
-                    initValue();
+                    sellAllItem();
                 }
                 else
                 {
@@ -714,7 +791,6 @@ namespace Biden.Func
 
             key1 = "";
             key2 = "";
-            keyOnFlag = false;
         }
 
 
@@ -859,10 +935,10 @@ namespace Biden.Func
                             Bitmap x;
                             x = (Bitmap)idat.GetData(DataFormats.Bitmap, true);
                             x.SetResolution(x.HorizontalResolution, x.VerticalResolution);
-                            x = cropAtRect(x, new Rectangle(0, 0, x.Width, x.Height));
+                            x = cropAtRect(x, new System.Drawing.Rectangle(0, 0, x.Width, x.Height));
                             //img.MakeTransparent();
                             //img = GetResizeImage(img, 1000, 1000);
-                            res = x.Clone(new Rectangle(0, 0, x.Width, x.Height), x.PixelFormat);
+                            res = x.Clone(new System.Drawing.Rectangle(0, 0, x.Width, x.Height), x.PixelFormat);
                             //res = img;
                             string path = System.IO.Path.GetFullPath(@"clipimage\ccc.png");
                             x.Save(path, System.Drawing.Imaging.ImageFormat.Png);
@@ -883,7 +959,7 @@ namespace Biden.Func
         }
 
 
-        public Bitmap cropAtRect(Bitmap b, Rectangle r)
+        public Bitmap cropAtRect(Bitmap b, System.Drawing.Rectangle r)
         {
             Bitmap nb = new Bitmap(r.Width, r.Height);
             using (Graphics g = Graphics.FromImage(nb))
@@ -1070,85 +1146,18 @@ namespace Biden.Func
                     //ClipboardDetect();
                     //getMousePosAndColor();
                     sendKeyInput(tokenSource2);
-                    if (Macro.getInstance.Flag_F12)
-                    {
-                        //dongbasan_left_getPos(tokenSource2);
-                        //dongbasan_mid_getPos(tokenSource2);
-                        //dongbasan_right_getPos(tokenSource2);
 
-                        dongbasan_bernanke_getPos(tokenSource2);
+                    
 
-                    }
-                    if (Macro.getInstance.Flag_F11)
-                    {
-                        //dongbasan_rest_getPos(tokenSource2);
-                    }
-                    Task.Delay(5);
+                    Task.Delay(500);
                     if (ct.IsCancellationRequested)
                     {
                         // Clean up here, then...
-                        ct.ThrowIfCancellationRequested();
+                        int abc = 0;
+                        //ct.ThrowIfCancellationRequested();
                     }
                 }
             }, tokenSource2.Token); // Pass same token to Task.Run.
-            tokenSource2.Cancel();
-            tokenSource2.Dispose();
-        }
-
-
-        public async void start2()
-        {
-            var tokenSource2 = new CancellationTokenSource();
-            CancellationToken ct = tokenSource2.Token;
-
-            await Task.Run(() =>
-            {
-                // Were we already canceled?
-                ct.ThrowIfCancellationRequested();
-
-                bool moreToDo = true;
-                while (moreToDo)
-                {
-                    //ClipboardDetect();
-                    //getMousePosAndColor();
-                    try
-                    {
-                        if (Macro.getInstance.Flag_F9)
-                        {
-                            //dropMeso();
-                        }
-                        if (Macro.getInstance.Flag_F11)
-                        {
-                            //reagan_buff_fury();
-                        }
-                        if (Macro.getInstance.Flag_F12)
-                        {
-                            //dongbasan_left_attack();
-                            //dongbasan_mid_attack();
-                            //dongbasan_right_attack();
-                            Bernanke_mid_attack();
-
-                            //yellen_buff();
-                            //volker_buff();
-                            //reagan_buff();
-                            Bernanke_buff();
-                        }
-                    }
-                    catch
-                    {
-
-                    }
-
-                    Task.Delay(1);
-
-                    if (ct.IsCancellationRequested)
-                    {
-                        // Clean up here, then...
-                        ct.ThrowIfCancellationRequested();
-                    }
-                }
-            }, tokenSource2.Token); // Pass same token to Task.Run.370
-
             tokenSource2.Cancel();
             tokenSource2.Dispose();
         }
@@ -1221,6 +1230,20 @@ namespace Biden.Func
             {
                 hi();
             }
+            if (Macro.getInstance.Flag_F5)
+            {
+                //activateGem();
+            }
+            if (Macro.getInstance.Flag_F6)
+            {
+            }
+            if (Macro.getInstance.Flag_F7)
+            {
+                activate234();
+            }
+            if (Macro.getInstance.Flag_F8)
+            {
+            }
 
             if (Macro.getInstance.Flag_F8)
             {
@@ -1230,13 +1253,14 @@ namespace Biden.Func
             }
             if (Macro.getInstance.Flag_F10)
             {
-                rejoin();
+                //rejoin();
             }
             if (Macro.getInstance.Flag_F11)
             {
             }
             if (Macro.getInstance.Flag_F12)
             {
+                //sellAllItem();
             }
             else
             {
@@ -1249,19 +1273,602 @@ namespace Biden.Func
             Macro.getInstance.Flag4 = false;
             Macro.getInstance.Flag5 = false;
 
-            Macro.getInstance.Flag_F5 = false;
+            //Macro.getInstance.Flag_F5 = false;
             Macro.getInstance.Flag_F6 = false;
-            Macro.getInstance.Flag_F7 = false;
-            Macro.getInstance.Flag_F8 = false;
+            //Macro.getInstance.Flag_F7 = false;
+            //Macro.getInstance.Flag_F8 = false;
 
             //Macro.getInstance.Flag_F9 = false;
             //Macro.getInstance.Flag_F10 = false;
             //Macro.getInstance.Flag_F11 = false;
-            //Macro.getInstance.Flag_F12 = false;
+            Macro.getInstance.Flag_F12 = false;
 
         }
 
 
+        private static void activateGem()
+        {
+
+            int x = 170;
+            int y = 700;
+
+            //Console.WriteLine($"User32.API.SetCursorPos({R2},{G2},{B2}");
+            //MainWindow.getInstance.SetStateString(x, y, curColor);
+
+            //959,770
+            //170,700
+
+
+            Thread.Sleep(12);
+            Color curColor = GetColorAt(x, y);
+            R2 = curColor.R;
+            G2 = curColor.G;
+            B2 = curColor.B;
+            if (R2 == 191 && G2 == 0 && B2 == 255)
+            {
+                User32.API.SetCursorPos(959, 770);
+                MouseClick();
+            }
+            else
+            {
+                Macro.getInstance.Flag_F5 = false;
+                Thread.Sleep(1000);
+            }
+
+            
+
+
+
+
+        }
+
+        private void getPos(string direction)
+        {
+            Point p = getMousePosAndColor();
+            Color curColor = GetColorAt(p.X, p.Y);
+
+            //Console.WriteLine($"User32.API.SetCursorPos({p.X},{p.Y})");
+            //Console.WriteLine($"{p.X}, {p.Y}");
+            //Console.WriteLine($"{curColor.R},{curColor.G},{curColor.B}");
+
+
+
+
+
+
+
+            ArrayList colorList = new ArrayList();
+
+            curColor = GetColorAt(816, 15);
+            colorList.Add(curColor);
+            curColor = GetColorAt(823, 10);
+            colorList.Add(curColor);
+            curColor = GetColorAt(799, 6);
+            colorList.Add(curColor);
+            curColor = GetColorAt(799, 19);
+            colorList.Add(curColor);
+            curColor = GetColorAt(785, 18);
+            colorList.Add(curColor);
+            curColor = GetColorAt(793, 7);
+            colorList.Add(curColor);
+            curColor = GetColorAt(783, 7);
+            colorList.Add(curColor);
+            curColor = GetColorAt(775, 8);
+            colorList.Add(curColor);
+            curColor = GetColorAt(750, 19);
+            colorList.Add(curColor);
+            curColor = GetColorAt(741, 11);
+            colorList.Add(curColor);
+            curColor = GetColorAt(718, 13);
+            colorList.Add(curColor);
+            curColor = GetColorAt(703, 9);
+            colorList.Add(curColor);
+            curColor = GetColorAt(703, 20);
+            colorList.Add(curColor);
+            curColor = GetColorAt(822, 20);
+            colorList.Add(curColor);
+            curColor = GetColorAt(822, 11);
+            colorList.Add(curColor);
+            curColor = GetColorAt(823, 5);
+            colorList.Add(curColor);
+            curColor = GetColorAt(820, 5);
+            colorList.Add(curColor);
+            curColor = GetColorAt(829, 9);
+            colorList.Add(curColor);
+            curColor = GetColorAt(829, 18);
+            colorList.Add(curColor);
+            curColor = GetColorAt(818, 17);
+            colorList.Add(curColor);
+            curColor = GetColorAt(819, 8);
+            colorList.Add(curColor);
+            curColor = GetColorAt(827, 16);
+            colorList.Add(curColor);
+            curColor = GetColorAt(819, 8);
+            colorList.Add(curColor);
+            curColor = GetColorAt(821, 19);
+            colorList.Add(curColor);
+            curColor = GetColorAt(827, 7);
+            colorList.Add(curColor);
+
+            curColor = GetColorAt(1622, 1034);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1627, 1038);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1631, 1038);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1625, 1043);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1630, 1046);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1641, 1035);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1648, 1035);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1648, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1642, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1649, 1046);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1644, 1046);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1713, 1034);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1721, 1037);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1716, 1040);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1721, 1045);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1716, 1046);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1718, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1730, 1034);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1734, 1034);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1739, 1035);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1732, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1735, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1741, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1733, 1044);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1739, 1045);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1703, 1043);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1696, 1040);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1609, 1049);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1611, 1039);
+            colorList.Add(curColor);
+
+
+            string path = "config.json";
+
+            SaveArrayListKeyValue(path, colorList, direction);
+
+
+            if (TryLoadByArrayListKey(path, new ArrayList { 1, 2, 3 }, out string v))
+                Console.WriteLine(v); // numbers
+
+            //Console.WriteLine(Environment.CurrentDirectory);
+
+
+        }
+
+
+
+
+        private void activate234()
+        {
+            //int x = 1683;
+            int x = 1726;
+            int y = 962;
+
+            //Console.WriteLine($"User32.API.SetCursorPos({R2},{G2},{B2}");
+            //MainWindow.getInstance.SetStateString(x, y, curColor);
+
+            //959,770
+            //170,700
+
+            Thread.Sleep(12);
+            Color curColor = GetColorAt(x, y);
+            R2 = curColor.R;
+            G2 = curColor.G;
+            B2 = curColor.B;
+            if (R2 == 8 && G2 == 4 && B2 == 8)
+            {
+                SK.sendkeyNumber(10, 2);
+                SK.sendkeyNumber(20, 4);
+                SK.sendkeyNumber(20, 4);
+                SK.sendkeyNumber(20, 4);
+                SK.sendkeyNumber(20, 4);
+                SK.sendkeyNumber(20, 4);
+                SK.sendkeyNumber(20, 4);
+                SK.sendkeyNumber(20, 4);
+            }
+
+            //보무
+            gongjeungCount++;
+            if (gongjeungCount % 50 == 0)
+            {
+                SK.sendkeyNumber(10, 9);
+                SK.sendkeyNumber(10, 0);
+            }
+            //저주
+            if (gongjeungCount % 3 == 0)
+            {
+                SK.sendkeyNumber(10, 5);
+            }
+
+            //스킬
+            SK.sendkeyNumber(10, 3);
+            SK.sendkeyNumber(15, 4);
+            SK.sendkeyNumber(10, 3);
+            SK.sendkeyNumber(15, 4);
+            SK.sendkeyNumber(15, 4);
+            //스페이스
+            SK.sendkeySpace(5);
+
+
+            Point p = getMousePosAndColor();
+            //Console.WriteLine($"User32.API.SetCursorPos({p.X},{p.Y})");
+            //Console.WriteLine($"{p.X}, {p.Y}");
+
+            //Console.WriteLine($"User32.API.SetCursorPos({p.X},{p.Y})");
+            //Console.WriteLine($"{p.X}, {p.Y}");
+            //Console.WriteLine($"{curColor.R},{curColor.G},{curColor.B}");
+
+
+            //Console.WriteLine($"curColor = GetColorAt({p.X}, {p.Y});");
+            //Console.WriteLine($"colorList.Add(curColor);");
+
+
+            ArrayList colorList = new ArrayList();
+            curColor = GetColorAt(816, 15);
+            colorList.Add(curColor);
+            curColor = GetColorAt(823, 10);
+            colorList.Add(curColor);
+            curColor = GetColorAt(799, 6);
+            colorList.Add(curColor);
+            curColor = GetColorAt(799, 19);
+            colorList.Add(curColor);
+            curColor = GetColorAt(785, 18);
+            colorList.Add(curColor);
+            curColor = GetColorAt(793, 7);
+            colorList.Add(curColor);
+            curColor = GetColorAt(783, 7);
+            colorList.Add(curColor);
+            curColor = GetColorAt(775, 8);
+            colorList.Add(curColor);
+            curColor = GetColorAt(750, 19);
+            colorList.Add(curColor);
+            curColor = GetColorAt(741, 11);
+            colorList.Add(curColor);
+            curColor = GetColorAt(718, 13);
+            colorList.Add(curColor);
+            curColor = GetColorAt(703, 9);
+            colorList.Add(curColor);
+            curColor = GetColorAt(703, 20);
+            colorList.Add(curColor);
+            curColor = GetColorAt(822, 20);
+            colorList.Add(curColor);
+            curColor = GetColorAt(822, 11);
+            colorList.Add(curColor);
+            curColor = GetColorAt(823, 5);
+            colorList.Add(curColor);
+            curColor = GetColorAt(820, 5);
+            colorList.Add(curColor);
+            curColor = GetColorAt(829, 9);
+            colorList.Add(curColor);
+            curColor = GetColorAt(829, 18);
+            colorList.Add(curColor);
+            curColor = GetColorAt(818, 17);
+            colorList.Add(curColor);
+            curColor = GetColorAt(819, 8);
+            colorList.Add(curColor);
+            curColor = GetColorAt(827, 16);
+            colorList.Add(curColor);
+            curColor = GetColorAt(819, 8);
+            colorList.Add(curColor);
+            curColor = GetColorAt(821, 19);
+            colorList.Add(curColor);
+            curColor = GetColorAt(827, 7);
+            colorList.Add(curColor);
+
+            curColor = GetColorAt(1622, 1034);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1627, 1038);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1631, 1038);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1625, 1043);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1630, 1046);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1641, 1035);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1648, 1035);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1648, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1642, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1649, 1046);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1644, 1046);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1713, 1034);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1721, 1037);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1716, 1040);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1721, 1045);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1716, 1046);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1718, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1730, 1034);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1734, 1034);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1739, 1035);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1732, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1735, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1741, 1041);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1733, 1044);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1739, 1045);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1703, 1043);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1696, 1040);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1609, 1049);
+            colorList.Add(curColor);
+            curColor = GetColorAt(1611, 1039);
+            colorList.Add(curColor);
+
+            string value = GetValue("config.json", colorList);
+            if (value != null) Console.WriteLine(value);
+
+            if (value == "LEFT")
+            {
+                SK.sendkeyLeft(10);
+                SK.sendkeyComma(30);
+            }
+            else if (value == "RIGHT")
+            {
+                SK.sendkeyRight(10);
+                SK.sendkeyComma(30);
+            }
+            else if (value == "DOWN")
+            {
+                SK.sendkeyDown(10);
+                SK.sendkeyComma(30);
+            }
+            else if (value == "UP")
+            {
+                SK.sendkeyUp(10);
+                SK.sendkeyComma(30);
+            }
+        }
+
+
+
+        private static void hi()
+        {
+            Point p = getMousePosAndColor();
+            Color curColor = GetColorAt(p.X, p.Y);
+            
+            x2 = p.X;
+            y2 = p.Y;
+            R2 = curColor.R;
+            G2 = curColor.G;
+            B2 = curColor.B;
+            //Console.WriteLine($"현재 마우스 커서의 위치: X = {p.X}, Y = {p.Y}");
+            //Console.WriteLine($"User32.API.SetCursorPos({p.X},{p.Y})");
+
+            MainWindow.getInstance.SetStateString(x2, y2, curColor);
+
+
+            //Console.WriteLine($"curColor = GetColorAt({p.X}, {p.Y})");
+            //Console.WriteLine($"{R2},{G2},{B2}");
+
+
+            Console.WriteLine($"curColor = GetColorAt({p.X}, {p.Y});");
+            Console.WriteLine($"colorList.Add(curColor);");
+
+
+        }
+
+
+        private static void buyRing()
+        {
+            int tempDelay = 100;
+
+            for (int i = 0; i < 40; i++) { 
+                User32.API.SetCursorPos(628, 237);
+                Thread.Sleep(30);
+                MouseClick();
+                Thread.Sleep(50);
+                User32.API.SetCursorPos(628, 256);
+                Thread.Sleep(3);
+                MouseClick();
+                Thread.Sleep(150);
+            }
+        }
+
+        private static void sellAllItem()
+        {
+
+            User32.API.keybd_event(0XA2, 0, 0, 0);
+
+            int tempDelay = 70;
+
+            User32.API.SetCursorPos(1290, 578);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1291, 624);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1288, 682);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1292, 723);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1342, 730);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1343, 674);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1341, 626);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1337, 582);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1384, 580);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1389, 636);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1389, 683);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1389, 729);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1438, 729);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1442, 674);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1437, 621);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1436, 579);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1487, 573);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1489, 624);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1488, 675);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1488, 722);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1536, 727);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1538, 676);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1539, 628);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1540, 583);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1589, 582);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1587, 623);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1585, 677);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1585, 726);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1635, 727);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1632, 675);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1633, 623);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1634, 580);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1683, 575);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1684, 622);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1678, 678);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1683, 726);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1730, 580);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1730, 629);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1730, 676);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+            User32.API.SetCursorPos(1730, 725);
+            MouseClick();
+            Thread.Sleep(tempDelay);
+
+            Thread.Sleep(200);
+            User32.API.keybd_event(0XA2, 0, 0x0002, 0);
+        }
+
+        private void sellItemAndBuy()
+        {
+            for (int i = 0; i < 300000; i++)
+            {
+                int tempDelay = 10;
+
+                User32.API.keybd_event(0XA2, 0, 0, 0);
+
+
+                User32.API.SetCursorPos(1730, 725);
+                MouseClick();
+                Thread.Sleep(tempDelay);
+
+                Thread.Sleep(200);
+                User32.API.keybd_event(0XA2, 0, 0x0002, 0);
+
+
+                User32.API.SetCursorPos(629, 296);
+                //SK.sendkeyMouseRight(2);
+
+                MouseClick2();
+
+                Thread.Sleep(tempDelay);
+            }
+        }
 
         private static void Macro_F8()
         {
@@ -1277,7 +1884,7 @@ namespace Biden.Func
 
         private static void random_F1toF5()
         {
-            System.Random random = new System.Random((int)DateTime.Now.Ticks);
+            System.Random random = new System.Random((int)System.DateTime.Now.Ticks);
             int randomF1toF5 = random.Next(1, 7);
             if (randomF1toF5 == 1)
             {
@@ -1358,20 +1965,6 @@ namespace Biden.Func
         private static void deleteStopPoint()
         {
             stopPointList = new List<stopPoint>();
-        }
-
-        private static void hi()
-        {
-            Point p = getMousePosAndColor();
-            Color curColor = GetColorAt(p.X, p.Y);
-
-            x2 = p.X;
-            y2 = p.Y;
-            R2 = curColor.R;
-            G2 = curColor.G;
-            B2 = curColor.B;
-
-            MainWindow.getInstance.SetStateString(x2, y2, curColor);
         }
 
 
@@ -2363,6 +2956,65 @@ namespace Biden.Func
 
 
 
+        public static void SaveArrayListKeyValue(string filePath, ArrayList keyList, string value)
+        {
+            // ArrayList를 JSON 문자열로 변환해서 "키"로 사용
+            string key = JsonConvert.SerializeObject(keyList);
+
+            // 기존 파일 로드
+            Dictionary<string, string> dict;
+            if (File.Exists(filePath))
+            {
+                var json = File.ReadAllText(filePath);
+                dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
+                       ?? new Dictionary<string, string>();
+            }
+            else
+            {
+                dict = new Dictionary<string, string>();
+            }
+
+            // 추가/갱신
+            dict[key] = value;
+
+            // 저장
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(dict, Formatting.Indented));
+        }
+        public static bool TryLoadByArrayListKey(string filePath, ArrayList keyList, out string value)
+        {
+            value = null;
+
+            if (!File.Exists(filePath))
+                return false;
+
+            var json = File.ReadAllText(filePath);
+            var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json);
+            if (dict == null) return false;
+
+            // 동일한 ArrayList를 동일한 JSON 문자열로 만들어서 키로 조회
+            string key = JsonConvert.SerializeObject(keyList);
+
+            return dict.TryGetValue(key, out value);
+        }
+
+        public static string GetValue(string filePath, ArrayList keyList)
+        {
+            if (!File.Exists(filePath))
+                return null;
+
+            var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+                File.ReadAllText(filePath)
+            );
+
+            if (dict == null)
+                return null;
+
+            // SaveArrayListKeyValue에서 쓴 것과 동일하게 key를 문자열로 만들기
+            string key = JsonConvert.SerializeObject(keyList);
+
+            return dict.TryGetValue(key, out var value) ? value : null;
+        }
+
 
         private void AltAndDelete()
         {
@@ -2473,6 +3125,8 @@ namespace Biden.Func
             Thread.Sleep(100);
         }
 
+
+
     }
 
     public class stopPoint
@@ -2487,6 +3141,7 @@ namespace Biden.Func
         public DataObject dataObject;
         public string type;
     }
+
 
 
 

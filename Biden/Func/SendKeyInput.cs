@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Biden.Func
 {
@@ -136,11 +137,89 @@ namespace Biden.Func
             User32.API.keybd_event(0X02, 0, KEYEVENTF_KEYUP, 0);
         }
 
+        public void sendkeySpace(int time)
+        {
+            User32.API.keybd_event(0X20, 0, 0, 0);
+            Thread.Sleep(time * 5);
+            User32.API.keybd_event(0X20, 0, KEYEVENTF_KEYUP, 0);
+        }
+
         public void sendkeyZ(int time)
         {
             User32.API.keybd_event(0X5A, 0, 0, 0);
             Thread.Sleep(time * 5);
             User32.API.keybd_event(0X5A, 0, KEYEVENTF_KEYUP, 0);
+        }
+        public void sendkeyComma(int time)
+        {
+            User32.API.keybd_event(0xBC, 0, 0, 0);
+            Thread.Sleep(time * 5);
+            User32.API.keybd_event(0xBC, 0, KEYEVENTF_KEYUP, 0);
+        }
+        
+        public void sendkeyNumber(int time, int num)
+        {
+            if (num == 0)
+            {
+                User32.API.keybd_event(0X30, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X30, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 1)
+            {
+                User32.API.keybd_event(0X31, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X31, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 2)
+            {
+                User32.API.keybd_event(0X32, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X32, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 3)
+            {
+                User32.API.keybd_event(0X33, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X33, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 4)
+            {
+                User32.API.keybd_event(0X34, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X34, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 5)
+            {
+                User32.API.keybd_event(0X35, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X35, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 6)
+            {
+                User32.API.keybd_event(0X36, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X36, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 7)
+            {
+                User32.API.keybd_event(0X37, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X37, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 8)
+            {
+                User32.API.keybd_event(0X38, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X38, 0, KEYEVENTF_KEYUP, 0);
+            }
+            else if (num == 9)
+            {
+                User32.API.keybd_event(0X39, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X39, 0, KEYEVENTF_KEYUP, 0);
+            }
+
         }
 
         public enum VK

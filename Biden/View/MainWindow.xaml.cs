@@ -48,6 +48,7 @@ namespace Biden.View
         {
             _viewModel.SetStateString(x, y, curColor);
         }
+      
         public void SetSyncCheckBox()
         {
             this.DataContext = _viewModel;

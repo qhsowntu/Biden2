@@ -183,7 +183,6 @@ namespace Biden.ViewModel
                     macro.create();
 
                     macro.start();
-                    macro.start2();
                 }
                 macro.ModeOn1 = true;
                 IsChecked01 = true;

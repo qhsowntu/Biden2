@@ -115,7 +115,6 @@ namespace Biden.ViewModel
                     macro.IsInit = true;
                     macro.create();
                     macro.start();
-                    macro.start2();
                 }
                 IsChecked01 = true;
                 macro.ModeOn1 = true;
