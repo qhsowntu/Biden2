@@ -168,6 +168,24 @@ namespace Biden.Func
             User32.API.keybd_event(0X20, 0, KEYEVENTF_KEYUP, 0);
         }
 
+
+        public void sendkeySpaceDown(int time)
+        {
+            User32.API.keybd_event(0X20, 0, 0, 0);
+        }
+
+        public void sendkeySpaceUp(int time)
+        {
+            User32.API.keybd_event(0X20, 0, KEYEVENTF_KEYUP, 0);
+        }
+
+        public void sendkeyTab(int time)
+        {
+            User32.API.keybd_event(0X09, 0, 0, 0);
+            Thread.Sleep(time * 5);
+            User32.API.keybd_event(0X09, 0, KEYEVENTF_KEYUP, 0);
+        }
+        
         public void sendkeyNumber(int time, int num)
         {
             if (num == 0)
@@ -231,6 +249,14 @@ namespace Biden.Func
                 User32.API.keybd_event(0X39, 0, KEYEVENTF_KEYUP, 0);
             }
 
+            else if (num == 45)
+            {
+                User32.API.keybd_event(0X34, 0, 0, 0);
+                User32.API.keybd_event(0X35, 0, 0, 0);
+                Thread.Sleep(time * 5);
+                User32.API.keybd_event(0X34, 0, KEYEVENTF_KEYUP, 0);
+                User32.API.keybd_event(0X35, 0, KEYEVENTF_KEYUP, 0);
+            }
         }
 
         public enum VK

@@ -14,6 +14,11 @@ namespace Biden.Func
 
         public static class API
         {
+            [DllImport("user32.dll", SetLastError = true)]
+            public static extern bool BlockInput(bool fBlockIt);
+
+
+
 
             [DllImport("user32.dll")]
             public static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, uint dwExtraInfo);
