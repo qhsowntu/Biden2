@@ -152,6 +152,7 @@ namespace Biden.Func
         public static int beepCount = 0;
 
         string curMove = "";
+        string lastMove = "";
 
         public static Dictionary<string, string> directionDic;
 
@@ -1674,15 +1675,6 @@ namespace Biden.Func
             curColor = GetColorAt(1611, 1039);
             colorList.Add(curColor);
 
-
-            string path = "config.json";
-
-            SaveArrayListKeyValue(path, colorList, direction);
-
-
-            if (TryLoadByArrayListKey(path, new ArrayList { 1, 2, 3 }, out string v))
-                Console.WriteLine(v); // numbers
-
             //Console.WriteLine(Environment.CurrentDirectory);
 
 
@@ -1776,6 +1768,9 @@ namespace Biden.Func
             //Console.WriteLine($"User32.API.SetCursorPos({R2},{G2},{B2}");
             //MainWindow.getInstance.SetStateString(x, y, curColor);
 
+
+
+            //////////////////////////////////////////////////////////////////////////////////////
             //좌표 색 가져오기
             Color curColor = GetColorAt(x, y);
             Color curColor0 = GetColorAt(x0, y0);
@@ -1817,6 +1812,95 @@ namespace Biden.Func
                 //MessageBox.Show("캡챠 발생!!");
                 return;
             }
+
+
+            keyDown();
+            
+            System.Random random3 = new System.Random((int)System.DateTime.Now.Ticks);
+            
+            if (R3 == 8 && G3 == 4 && B3 == 8)
+            {
+                //동동주
+                SK.sendkeyCtrlAndZ(10);
+            }
+            if (R2 == 8 && G2 == 4 && B2 == 8)
+            {
+                //공증
+                SK.sendkeyNumber(10, 2);
+            }
+            //보무
+            if (firstRunFlag || timerForBoMu.ElapsedMs >= 150000)
+            {
+                firstRunFlag = false;
+                SK.sendkeyNumber(5, 9);
+                SK.sendkeyNumber(5, 0);
+                timerForBoMu.Start();
+            }
+            else if (R0 == 8 && G0 == 4 && B0 == 8)
+            {
+                //힐
+                int random3to4 = random3.Next(4, 5);
+                SK.sendkeyNumber(20 * random3to4, 3);
+            }
+
+
+
+            //무빙 //여기
+            if (movingOpt)
+            {
+                int movingTime = 3;
+                int res1 = getMapNumber();
+                string res2 = getMapXY();
+                string key = "" + res1 + ":" + res2;
+                Console.WriteLine($"{key})");
+
+
+                curMove = GetValue("config.json", key);
+                if (curMove == null)
+                {
+                    curMove = lastMove;
+                    //User32.API.keybd_event(0X25, 0, 2, 0);
+                    //User32.API.keybd_event(0X26, 0, 2, 0);
+                    //User32.API.keybd_event(0X27, 0, 2, 0);
+                    //User32.API.keybd_event(0X28, 0, 2, 0);
+                }
+                if (curMove == "동")
+                {
+                    User32.API.keybd_event(0X27, 0, 0, 0);
+                    Thread.Sleep(movingTime);
+                    User32.API.keybd_event(0X27, 0, 2, 0);
+                }
+                else if (curMove == "서")
+                {
+                    User32.API.keybd_event(0X25, 0, 0, 0);
+                    Thread.Sleep(movingTime);
+                    User32.API.keybd_event(0X25, 0, 2, 0);
+                }
+                else if (curMove == "남")
+                {
+                    User32.API.keybd_event(0X28, 0, 0, 0);
+                    Thread.Sleep(movingTime);
+                    User32.API.keybd_event(0X28, 0, 2, 0);
+                }
+                else if (curMove == "북")
+                {
+                    User32.API.keybd_event(0X26, 0, 0, 0);
+                    Thread.Sleep(movingTime);
+                    User32.API.keybd_event(0X26, 0, 2, 0);
+                }
+                else
+                {
+                }
+                lastMove = curMove;
+                Thread.Sleep(5);
+            }
+
+            keyUp();
+
+            return;
+
+
+            
 
             //힐, 저주, 첨첨
             keyDown();
@@ -2157,6 +2241,19 @@ namespace Biden.Func
             }
             Console.WriteLine($"directionDic.Add(\"{key}\", \"{tempDirection}\");");
 
+
+
+            string path = "config.json";
+            
+            //SaveDirectionDic(path, directionDic);
+
+            SaveStringKeyValue(path, key, tempDirection);
+
+
+            //if (TryLoadByArrayListKey(path, new ArrayList { 1, 2, 3 }, out string v))
+            //    Console.WriteLine(v); // numbers
+
+
             //Console.WriteLine($"curColor = GetColorAt({p.X}, {p.Y})");
             //Console.WriteLine($"{R2},{G2},{B2}");
 
@@ -2164,6 +2261,11 @@ namespace Biden.Func
             //Console.WriteLine($"colorList.Add(curColor);");
 
 
+        }
+        static void SaveDirectionDic(string filePath, Dictionary<string, string> directionDic)
+        {
+            string json = JsonConvert.SerializeObject(directionDic, Formatting.Indented);
+            File.WriteAllText(filePath, json);
         }
 
         public void setMoveDictionary()
@@ -2210,6 +2312,8 @@ namespace Biden.Func
             directionDic.Add("1:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "서");
             directionDic.Add("1:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
             directionDic.Add("1:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "북");
+            directionDic.Add("1:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "서");
+            directionDic.Add("1:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
 
 
 
@@ -3745,17 +3849,58 @@ namespace Biden.Func
         }
 
 
+        //두번째 인자가 배열인 경우
+        //public static void SaveArrayListKeyValue(string filePath, ArrayList keyList, string value)
+        //{
+        //    // ArrayList를 JSON 문자열로 변환해서 "키"로 사용
+        //    string key = JsonConvert.SerializeObject(keyList);
 
-        public static void SaveArrayListKeyValue(string filePath, ArrayList keyList, string value)
+        //    // 기존 파일 로드
+        //    Dictionary<string, string> dict;
+        //    if (File.Exists(filePath))
+        //    {
+        //        var json = File.ReadAllText(filePath);
+        //        dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
+        //               ?? new Dictionary<string, string>();
+        //    }
+        //    else
+        //    {
+        //        dict = new Dictionary<string, string>();
+        //    }
+
+        //    // 추가/갱신
+        //    dict[key] = value;
+
+        //    // 저장
+        //    File.WriteAllText(filePath, JsonConvert.SerializeObject(dict, Formatting.Indented));
+        //}
+
+        //public static string GetValue(string filePath, ArrayList keyList)
+        //{
+        //    if (!File.Exists(filePath))
+        //        return null;
+
+        //    var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(
+        //        File.ReadAllText(filePath)
+        //    );
+
+        //    if (dict == null)
+        //        return null;
+
+        //    // SaveArrayListKeyValue에서 쓴 것과 동일하게 key를 문자열로 만들기
+        //    string key = JsonConvert.SerializeObject(keyList);
+
+        //    return dict.TryGetValue(key, out var value) ? value : null;
+        //}
+
+
+        static void SaveStringKeyValue(string filePath, string key, string value)
         {
-            // ArrayList를 JSON 문자열로 변환해서 "키"로 사용
-            string key = JsonConvert.SerializeObject(keyList);
-
-            // 기존 파일 로드
             Dictionary<string, string> dict;
+
             if (File.Exists(filePath))
             {
-                var json = File.ReadAllText(filePath);
+                string json = File.ReadAllText(filePath);
                 dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
                        ?? new Dictionary<string, string>();
             }
@@ -3764,12 +3909,12 @@ namespace Biden.Func
                 dict = new Dictionary<string, string>();
             }
 
-            // 추가/갱신
             dict[key] = value;
 
-            // 저장
             File.WriteAllText(filePath, JsonConvert.SerializeObject(dict, Formatting.Indented));
         }
+
+
         public static bool TryLoadByArrayListKey(string filePath, ArrayList keyList, out string value)
         {
             value = null;
@@ -3787,7 +3932,8 @@ namespace Biden.Func
             return dict.TryGetValue(key, out value);
         }
 
-        public static string GetValue(string filePath, ArrayList keyList)
+        
+        static string GetValue(string filePath, string key)
         {
             if (!File.Exists(filePath))
                 return null;
@@ -3799,12 +3945,8 @@ namespace Biden.Func
             if (dict == null)
                 return null;
 
-            // SaveArrayListKeyValue에서 쓴 것과 동일하게 key를 문자열로 만들기
-            string key = JsonConvert.SerializeObject(keyList);
-
             return dict.TryGetValue(key, out var value) ? value : null;
         }
-
 
         private void AltAndDelete()
         {
@@ -4005,4 +4147,11 @@ namespace Biden.Func
 
         public bool IsRunning => _isRunning;
     }
+
+
+
+
+
+
+
 }
