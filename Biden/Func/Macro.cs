@@ -1037,7 +1037,7 @@ namespace Biden.Func
             }
             if (Macro.getInstance.Flag_F4)
             {
-                hi();
+                //hi();
             }
             if (Macro.getInstance.Flag_F5)
             {
@@ -1814,7 +1814,32 @@ namespace Biden.Func
             }
 
 
-            keyDown();
+            //현재 맵 타이틀과 좌표를 통해 key 추출
+            int movingTime = 10;
+            int res1 = getMapNumber();
+            string res2 = getMapXY();
+            string key = "" + res1 + ":" + res2;
+
+            //몬스터가 없는 곳을 구분
+            bool noMonsterFlag = false;
+            int movingDelay = 350;
+            if (key.Contains("12:"))
+            {
+                noMonsterFlag = true;
+            }
+
+            //몬스터가 없는 곳에서는 빠르게 이동
+            if (noMonsterFlag)
+            {
+                movingDelay = 100;
+            }
+            //몬스터가 있는 곳에서 스킬 사용
+            else
+            {
+                //힐, 저주, 첨첨
+                keyDown();
+            }
+            
             
             System.Random random3 = new System.Random((int)System.DateTime.Now.Ticks);
             
@@ -1836,33 +1861,61 @@ namespace Biden.Func
                 SK.sendkeyNumber(5, 0);
                 timerForBoMu.Start();
             }
+            //힐
             else if (R0 == 8 && G0 == 4 && B0 == 8)
             {
-                //힐
                 int random3to4 = random3.Next(4, 5);
                 SK.sendkeyNumber(20 * random3to4, 3);
             }
 
-
-
             //무빙 //여기
             if (movingOpt)
             {
-                int movingTime = 3;
-                int res1 = getMapNumber();
-                string res2 = getMapXY();
-                string key = "" + res1 + ":" + res2;
                 Console.WriteLine($"{key})");
-
-
                 curMove = GetValue("config.json", key);
+                //흉가 대기실에서 출 외치고 들어가기
+                if(key == "12:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0" || key == "12:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0")
+                {
+                        
+                    User32.API.keybd_event(0X25, 0, 2, 0);
+                    User32.API.keybd_event(0X26, 0, 2, 0);
+                    User32.API.keybd_event(0X27, 0, 2, 0);
+                    User32.API.keybd_event(0X28, 0, 2, 0);
+                    keyUp();
+                    Thread.Sleep(2000);
+                    SK.sendkeyEsc(5);
+
+                    User32.API.keybd_event(0XA4, 0, 0, 0);
+                    Thread.Sleep(5);
+                    User32.API.keybd_event(0X31, 0, 0, 0);
+                    Thread.Sleep(5);
+                    User32.API.keybd_event(0X31, 0, 2, 0);
+                    User32.API.keybd_event(0XA4, 0, 2, 0);
+                    Thread.Sleep(2000);
+                    SK.sendkeyTab(5);
+                    Thread.Sleep(10);
+                    SK.sendkeyTab(5);
+                }
+                //입장 전 노란비서 떨구기
+                if(key == "12:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79" || 
+                    key == "12:91,53,12,0,0,0,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79")
+                    //key == "12:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79" || 
+                    //key == "12:91,53,12,0,0,0,215,191,111,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79" || 
+                {
+                    Thread.Sleep(1000);
+                    User32.API.keybd_event(0X44, 0, 0, 0);
+                    User32.API.keybd_event(0X44, 0, 2, 0);
+                    Thread.Sleep(10);
+                    User32.API.keybd_event(0X42, 0, 0, 0);
+                    User32.API.keybd_event(0X42, 0, 2, 0);
+                    Thread.Sleep(500);
+                    keyDown();
+                }
+
+                // key가 없는 좌표에서는 이전 이동을 그대로
                 if (curMove == null)
                 {
                     curMove = lastMove;
-                    //User32.API.keybd_event(0X25, 0, 2, 0);
-                    //User32.API.keybd_event(0X26, 0, 2, 0);
-                    //User32.API.keybd_event(0X27, 0, 2, 0);
-                    //User32.API.keybd_event(0X28, 0, 2, 0);
                 }
                 if (curMove == "동")
                 {
@@ -1892,89 +1945,18 @@ namespace Biden.Func
                 {
                 }
                 lastMove = curMove;
-                Thread.Sleep(5);
+                User32.API.keybd_event(0X25, 0, 2, 0);
+                User32.API.keybd_event(0X26, 0, 2, 0);
+                User32.API.keybd_event(0X27, 0, 2, 0);
+                User32.API.keybd_event(0X28, 0, 2, 0);
+                Thread.Sleep(movingDelay);
             }
-
-            keyUp();
-
-            return;
-
 
             
-
-            //힐, 저주, 첨첨
-            keyDown();
-
-            //보무
-            if (firstRunFlag || timerForBoMu.ElapsedMs >= 150000)
-            {
-                firstRunFlag = false;
-                SK.sendkeyNumber(5, 9);
-                SK.sendkeyNumber(5, 0);
-                timerForBoMu.Start();
-            }
-
-            bool noMonsterFlag = false;
-
-            //무빙 //여기
-            if (movingOpt)
-            {
-                int movingTime = 3;
-                int res1 = getMapNumber();
-                string res2 = getMapXY();
-                string key = "" + res1 + ":" + res2;
-                Console.WriteLine($"{key})");
-
-                if (key.Contains("12:"))
-                {
-                    noMonsterFlag = true;
-                }
-                if (directionDic.ContainsKey(key))
-                {
-                    curMove = directionDic[key];
-
-                    User32.API.keybd_event(0X25, 0, 2, 0);
-                    User32.API.keybd_event(0X26, 0, 2, 0);
-                    User32.API.keybd_event(0X27, 0, 2, 0);
-                    User32.API.keybd_event(0X28, 0, 2, 0);
-
-                }
-                if (curMove == "동")
-                {
-                    User32.API.keybd_event(0X27, 0, 0, 0);
-                    Thread.Sleep(movingTime);
-                    User32.API.keybd_event(0X27, 0, 2, 0);
-                }
-                else if (curMove == "서")
-                {
-                    User32.API.keybd_event(0X25, 0, 0, 0);
-                    Thread.Sleep(movingTime);
-                    User32.API.keybd_event(0X25, 0, 2, 0);
-                }
-                else if (curMove == "남")
-                {
-                    User32.API.keybd_event(0X28, 0, 0, 0);
-                    Thread.Sleep(movingTime);
-                    User32.API.keybd_event(0X28, 0, 2, 0);
-                }
-                else if (curMove == "북")
-                {
-                    User32.API.keybd_event(0X26, 0, 0, 0);
-                    Thread.Sleep(movingTime);
-                    User32.API.keybd_event(0X26, 0, 2, 0);
-                }
-                else
-                {
-                }
-                Thread.Sleep(5);
-            }
-
-
-
-
+            keyUp();
 
             // 정지상태인 경우 헬파이어
-            if ( !noMonsterFlag && !(R4 == 255 && G4 == 255 && B4 == 255) && !(R0 == 8 && G0 == 4 && B0 == 8)) //isMovingFlag == false && 
+            if (!noMonsterFlag && !(R4 == 255 && G4 == 255 && B4 == 255) && !(R0 == 8 && G0 == 4 && B0 == 8)) //isMovingFlag == false && 
             {
                 try
                 {
@@ -1983,9 +1965,9 @@ namespace Biden.Func
                     //User32.API.keybd_event(0X26, 0, 0x0002, 0);
                     //User32.API.keybd_event(0X27, 0, 0x0002, 0);
                     //User32.API.keybd_event(0X28, 0, 0x0002, 0);
-                    keyUp();
                     //User32.API.BlockInput(true);   // 사용자 입력 차단
-                    attackUsingHell();
+
+                    //attackUsingHell();
                 }
                 finally
                 {
@@ -1993,39 +1975,6 @@ namespace Biden.Func
                 }
                 return;
             }
-
-
-
-            System.Random random2 = new System.Random((int)System.DateTime.Now.Ticks);
-
-            if (R3 == 8 && G3 == 4 && B3 == 8)
-            {
-                //동동주
-                SK.sendkeyCtrlAndZ(5);
-            }
-            if (R2 == 8 && G2 == 4 && B2 == 8)
-            {
-                //공증
-                SK.sendkeyNumber(10, 2);
-            }
-            else if (R0 == 8 && G0 == 4 && B0 == 8)
-            {
-                //힐
-                int random3to4 = random2.Next(4, 5);
-                SK.sendkeyNumber(20 * random3to4, 3);
-            }
-
-            keyUp();
-
-
-            //(802, 17) + (809, 11)
-
-            //(804, 13) + (809, 6)
-
-            //(804, 13) + (810, 6)
-
-
-            
 
         }
 
