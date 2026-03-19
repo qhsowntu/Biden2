@@ -118,6 +118,10 @@ namespace Biden.Func
         private static int G5 = 0;
         private static int B5 = 0;
 
+        private static int R6 = 0;
+        private static int G6 = 0;
+        private static int B6 = 0;
+
         private static int titleR1 = 0;
         private static int titleG1 = 0;
         private static int titleB1 = 0;
@@ -190,7 +194,6 @@ namespace Biden.Func
 
         private CorrectString correctString;
         private FindAndAlert findAndAlert;
-        private MultiClipboard multiClipboard;
         private PasteAlert pasteAlert;
         private ClipboardMonitor clipboardMonitor;
         private SendKeyInput SK;
@@ -207,13 +210,17 @@ namespace Biden.Func
 
         private static Macro instance = null;
 
+
+
+
+
+
         private Macro()
         {
             list = new List<String>();
             parameterList = new List<String>();
             correctString = new CorrectString();
             findAndAlert = new FindAndAlert();
-            multiClipboard = new MultiClipboard();
             pasteAlert = new PasteAlert();
             clipboardMonitor = new ClipboardMonitor(this);
 
@@ -223,9 +230,12 @@ namespace Biden.Func
             
             timerForBoMu = new SimpleTimer();
             timerForMovingFlag = new SimpleTimer();
+            timerForSajahu = new SimpleTimer();
+            timerForAlt2 = new SimpleTimer();
 
             directionDic = new Dictionary<string, string>();
-            setMoveDictionary();
+            //setMoveDictionary();
+            setMagicNumber();
         }
 
         public static Macro getInstance
@@ -668,37 +678,79 @@ namespace Biden.Func
 
         }
 
+        bool UseHellfire = MainWindow.getInstance.ViewModel.UseHellfire;
+        int HellfireDirectionIndex = MainWindow.getInstance.ViewModel.HellfireDirectionIndex;
+        bool UseNormalAttack = MainWindow.getInstance.ViewModel.UseNormalAttack;
+        bool UsePoison = MainWindow.getInstance.ViewModel.UsePoison;
+        bool UsePickup = MainWindow.getInstance.ViewModel.UsePickup;
+        bool UseCaptchaAlert = MainWindow.getInstance.ViewModel.UseCaptchaAlert;
 
-        private static void rejoin()
+        bool UseHeal = MainWindow.getInstance.ViewModel.UseHeal;
+        bool UseProtectArmor = MainWindow.getInstance.ViewModel.UseProtectArmor;
+        bool UseCurseOption = MainWindow.getInstance.ViewModel.UseCurseOption;
+        bool UseBuffCombo = MainWindow.getInstance.ViewModel.UseBuffCombo;
+        bool UseExtraCombo = MainWindow.getInstance.ViewModel.UseExtraCombo;
+
+        bool UseShout = MainWindow.getInstance.ViewModel.UseShout;
+        int ShoutCooldown = MainWindow.getInstance.ViewModel.ShoutCooldown;
+        string ShoutMessage = MainWindow.getInstance.ViewModel.ShoutMessage;
+        bool UseChatDetectAlt2 = MainWindow.getInstance.ViewModel.UseChatDetectAlt2;
+        int ChatDetectAlt2Cooldown = MainWindow.getInstance.ViewModel.ChatDetectAlt2Cooldown;
+
+        int magic1;
+        int magic2;
+        int magic3;
+        int magic4;
+        int magic5;
+        int magic6;
+        int magic7;
+        int magic8;
+        int magic9;
+        int magic0;
+
+        int movingDelayUI;
+
+        public void setMagicNumber()
         {
 
-            Thread.Sleep(1500);
-            User32.API.SetCursorPos(1718, 246);
-            MouseClick();
-            Thread.Sleep(1500);
-            User32.API.SetCursorPos(1724, 326);
-            MouseClick();
-            Thread.Sleep(1500);
-            User32.API.SetCursorPos(791, 615);
-            MouseClick();
-            Thread.Sleep(52000);
-            User32.API.SetCursorPos(960, 633);
-            MouseClick();
-            Thread.Sleep(10000);
-        }
+            UseHellfire = MainWindow.getInstance.ViewModel.UseHellfire;
+            HellfireDirectionIndex = MainWindow.getInstance.ViewModel.HellfireDirectionIndex;
+            UseNormalAttack = MainWindow.getInstance.ViewModel.UseNormalAttack;
+            UsePoison = MainWindow.getInstance.ViewModel.UsePoison;
+            UseHeal = MainWindow.getInstance.ViewModel.UseHeal;
+            UseCurseOption = MainWindow.getInstance.ViewModel.UseCurseOption;
+            UseBuffCombo = MainWindow.getInstance.ViewModel.UseBuffCombo;
+            UseExtraCombo = MainWindow.getInstance.ViewModel.UseExtraCombo;
+            UseShout = MainWindow.getInstance.ViewModel.UseShout;
+            ShoutCooldown = MainWindow.getInstance.ViewModel.ShoutCooldown;
+            ShoutMessage = MainWindow.getInstance.ViewModel.ShoutMessage;
+            UseChatDetectAlt2 = MainWindow.getInstance.ViewModel.UseChatDetectAlt2;
+            ChatDetectAlt2Cooldown = MainWindow.getInstance.ViewModel.ChatDetectAlt2Cooldown;
+       
+            bool ok1 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoHellfire, out magic1);
+            bool ok2 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoBuff, out magic2);
+            bool ok3 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoHeal, out magic3);
+            bool ok4 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoCurse, out magic4);
+            bool ok5 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoExtra1, out magic5);
+            bool ok6 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoExtra2, out magic6);
+            bool ok7 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoPoison, out magic7);
+            bool ok8 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoParalyze, out magic8);
+            bool ok9 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoProtect, out magic9);
+            bool ok0 = int.TryParse(MainWindow.getInstance.ViewModel.MagicNoArmor, out magic0);
 
-        private static void MouseClick()
-        {
-            // 마우스 이벤트 발생 (왼쪽 버튼 클릭)
-            User32.API.mouse_event(0x0002, 0, 0, 0, 0);
-            User32.API.mouse_event(0x0004, 0, 0, 0, 0);
-        }
+            magic1 = GetVkNumber(magic1);
+            magic2 = GetVkNumber(magic2);
+           
+                magic3 = GetVkNumber(magic3);
+            magic4 = GetVkNumber(magic4);
+            magic5 = GetVkNumber(magic5);
+            magic6 = GetVkNumber(magic6);
+            magic7 = GetVkNumber(magic7);
+            magic8 = GetVkNumber(magic8);
+            magic9 = GetVkNumber(magic9);
+            magic0 = GetVkNumber(magic0);
 
-        private static void MouseClick2()
-        {
-            // 마우스 이벤트 발생 (오른쪽 버튼 클릭)
-            User32.API.mouse_event(0x0008, 0, 0, 0, 0);
-            User32.API.mouse_event(0x00010, 0, 0, 0, 0);
+            movingDelayUI = MainWindow.getInstance.ViewModel.MoveDelay;
         }
 
         long _lastLeftTick = 0;
@@ -707,6 +759,8 @@ namespace Biden.Func
         static bool isMovingFlag = false;
         static SimpleTimer timerForBoMu;
         static SimpleTimer timerForMovingFlag;
+        static SimpleTimer timerForSajahu;
+        static SimpleTimer timerForAlt2;
 
         private void send(Keys tempKey)//Keys tempKey, IntPtr wParam, IntPtr lParam
         {
@@ -745,8 +799,11 @@ namespace Biden.Func
                 {
                     timerForBoMu.Start();
                     timerForMovingFlag.Start();
+                    timerForSajahu.Start();
+                    timerForAlt2.Start();
                     firstRunFlag = true;
                     Macro.getInstance.Flag_END = true;
+                    setMagicNumber();
                 }
             }
             if (tempKey.ToString().ToUpper() == "INSERT")
@@ -794,7 +851,7 @@ namespace Biden.Func
             }
             if (tempKey.ToString().ToUpper() == "F3")
             {
-                deleteStopPoint();
+                
             }
             if (tempKey.ToString().ToUpper() == "F4")
             {
@@ -842,7 +899,15 @@ namespace Biden.Func
                 //    }
                 //}
 
-                
+                //선녀의방10굴 이후
+                //for (int i = 805; i < 819; i++) 
+                //{
+                //    for (int j = 3; j < 24; j++)
+                //    {
+                //        hi2(i, j);
+                //    }
+                //}
+
                 hi();
             }
             if (tempKey.ToString().ToUpper() == "F5")
@@ -876,12 +941,12 @@ namespace Biden.Func
             if (tempKey.ToString().ToUpper() == "F11")
             {
                 //buyRing();
-                sellItemAndBuy();
+                //sellItemAndBuy();
 
             }
             if (tempKey.ToString().ToUpper() == "F12")
             {
-                sellAllItem();
+                //sellAllItem();
             }
             // 토글
             //else if (tempKey.ToString().ToUpper() == "F8")
@@ -897,56 +962,6 @@ namespace Biden.Func
             //        User32.API.keybd_event(0X57, 0, 0, 0);
             //    }
             //}
-            else if (tempKey.ToString().ToUpper() == "F9")
-            {
-                if (Macro.getInstance.Flag_F9)
-                {
-                    Macro.getInstance.Flag_F9 = false;
-                    User32.API.keybd_event(0X01, 0, 0x0002, 0);
-                }
-                else
-                {
-                    Macro.getInstance.Flag_F9 = true;
-                    User32.API.keybd_event(0X01, 0, 0, 0);
-                }
-            }
-            else if (tempKey.ToString().ToUpper() == "F10")
-            {
-                if (Macro.getInstance.Flag_F10)
-                {
-                    Macro.getInstance.Flag_F10 = false;
-                    User32.API.keybd_event(0X46, 0, 0x0002, 0);
-                }
-                else
-                {
-                    Macro.getInstance.Flag_F10 = true;
-                    User32.API.keybd_event(0X46, 0, 0, 0);
-                }
-            }
-            else if (tempKey.ToString().ToUpper() == "F13")
-            {
-                if (Macro.getInstance.Flag_F11)
-                {
-                    Macro.getInstance.Flag_F11 = false;
-                }
-                else
-                {
-                    Thread.Sleep(15000);
-                    Macro.getInstance.Flag_F11 = true;
-                }
-            }
-            else if (tempKey.ToString().ToUpper() == "F13")
-            {
-                if (Macro.getInstance.Flag_F12)
-                {
-                    Macro.getInstance.Flag_F12 = false;
-                    sellAllItem();
-                }
-                else
-                {
-                    Macro.getInstance.Flag_F12 = true;
-                }
-            }
             else
             {
 
@@ -972,24 +987,66 @@ namespace Biden.Func
             key2 = "";
         }
 
+        private static byte GetVkNumber(int number)
+        {
+            if (number < 0 || number > 9)
+                throw new ArgumentOutOfRangeException(nameof(number), "0~9만 가능합니다.");
+
+            return (byte)(0x30 + number);
+        }
+
         public void keyUp()
         {
-            User32.API.keybd_event(0X20, 0, 2, 0);
-            //User32.API.keybd_event(0X33, 0, 2, 0);
-            User32.API.keybd_event(0X36, 0, 2, 0);
-            User32.API.keybd_event(0X34, 0, 2, 0);
-            User32.API.keybd_event(0X35, 0, 2, 0);
-            User32.API.keybd_event(0xBC, 0, 2, 0);
+            //평타
+            if (UseNormalAttack)
+            {
+                User32.API.keybd_event(0X20, 0, 2, 0);
+            }
+            //줍기
+            if (UsePickup)
+            { 
+                User32.API.keybd_event(0xBC, 0, 2, 0);
+            }
+            //저주
+            if (UseCurseOption)
+            {
+                User32.API.keybd_event((byte)magic4, 0, 2, 0);
+            }
+            //첨1,첨2
+            if (UseExtraCombo)
+            {
+                User32.API.keybd_event((byte)magic5, 0, 2, 0);
+                User32.API.keybd_event((byte)magic6, 0, 2, 0);
+            }
         }
 
         public void keyDown()
         {
-            User32.API.keybd_event(0X20, 0, 0, 0);
-            //User32.API.keybd_event(0X33, 0, 0, 0);
-            User32.API.keybd_event(0X36, 0, 0, 0);
-            User32.API.keybd_event(0X34, 0, 0, 0);
-            User32.API.keybd_event(0X35, 0, 0, 0);
-            User32.API.keybd_event(0xBC, 0, 0, 0);
+            //평타
+            if (UseNormalAttack)
+            {
+                User32.API.keybd_event(0X20, 0, 0, 0);
+            }
+            //줍기
+            if (UsePickup)
+            {
+                User32.API.keybd_event(0xBC, 0, 0, 0);
+            }
+            if (UseCurseOption)
+            {
+                User32.API.keybd_event(0xBC, 0, 0, 0);
+            }
+            //저주
+            if (UseCurseOption)
+            {
+                User32.API.keybd_event((byte)magic4, 0, 0, 0);
+            }
+            //첨1,첨2
+            if (UseExtraCombo)
+            {
+                User32.API.keybd_event((byte)magic5, 0, 0, 0);
+                User32.API.keybd_event((byte)magic6, 0, 0, 0);
+            }
         }
 
         public void sendKeyInput(CancellationTokenSource ct)
@@ -1033,7 +1090,7 @@ namespace Biden.Func
             }
             if (Macro.getInstance.Flag_F3)
             {
-                deleteStopPoint();
+
             }
             if (Macro.getInstance.Flag_F4)
             {
@@ -1092,309 +1149,6 @@ namespace Biden.Func
 
         }
 
-
-        public String getClipBoardText()
-        {
-
-            String res = "";
-            //IDataObject idat = null;
-            Exception threadEx = null;
-            Thread staThread = new Thread(
-                delegate ()
-                {
-                    try
-                    {
-                        IDataObject idat = Clipboard.GetDataObject();
-                        //MessageBox.Show(idat.GetFormats(). + "");
-                        if (Clipboard.ContainsText()) //Clipboard.ContainsText(TextDataFormat.Text)
-                        {
-                            res = Clipboard.GetText();
-                        }
-                    }
-
-                    catch (Exception ex)
-                    {
-                        threadEx = ex;
-                    }
-                });
-            staThread.IsBackground = true;
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-            return res;
-        }
-
-
-
-
-        //fff
-        public DataObjectClass getClipBoardIData()
-        {
-
-            Exception threadEx = null;
-            DataObject dataObject = null;
-            IDataObject idataObject;
-            string curFormat = "";
-            Thread staThread = new Thread(
-                delegate ()
-                {
-                    try
-                    {
-                        if (getClipBoardDataType() == "Text") { curFormat = DataFormats.Text; }
-                        else if (getClipBoardDataType() == "Image") { curFormat = DataFormats.Bitmap; }
-                        else { }
-
-                        dataObject = new DataObject();
-                        idataObject = Clipboard.GetDataObject();
-                        object data = idataObject.GetData(curFormat);
-                        if (data != null) { dataObject.SetData(curFormat, data); }
-
-                    }
-
-                    catch (Exception ex)
-                    {
-                        threadEx = ex;
-                    }
-                });
-            staThread.IsBackground = true;
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-            try
-            {
-                //MessageBox.Show(((IDataObject)dataObject).GetData(DataFormats.Text) + "!!\n" + dataObject);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("Error \n\n\n" + e);
-            }
-            DataObjectClass tempDataObjectClass = new DataObjectClass();
-            tempDataObjectClass.dataObject = dataObject;
-            tempDataObjectClass.type = curFormat;
-            return tempDataObjectClass;
-        }
-
-
-
-        public Bitmap getClipBoardImage()
-        {
-
-            Bitmap res = null;
-            //IDataObject idat = null;
-            Exception threadEx = null;
-            Thread staThread = new Thread(
-                delegate ()
-                {
-                    try
-                    {
-                        IDataObject idat = Clipboard.GetDataObject();
-                        string tempStr = idat.GetFormats() + "";
-                        //MessageBox.Show(tempStr, "Inform", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0x40000);
-                        if (Clipboard.ContainsImage())
-                        {
-                            res = (Bitmap)Clipboard.GetImage();
-                        }
-                    }
-
-                    catch (Exception ex)
-                    {
-                        threadEx = ex;
-                    }
-                });
-            staThread.IsBackground = true;
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-            return res;
-        }
-
-        public Bitmap getClipBoardObject()
-        {
-
-            Bitmap res = null;
-            //IDataObject idat = null;
-            Exception threadEx = null;
-            Thread staThread = new Thread(
-                delegate ()
-                {
-                    try
-                    {
-                        IDataObject idat = Clipboard.GetDataObject();
-                        string tempStr = idat.GetFormats() + "";
-                        string tempStr2 = idat.GetFormats().GetType() + "";
-                        if (idat.GetDataPresent(DataFormats.Bitmap))
-                        {
-
-                        }
-                        //MessageBox.Show(tempStr1, "Inform", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0x40000);
-                        //MessageBox.Show(tempStr2, "Inform", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, (MessageBoxOptions)0x40000);
-                        if (Clipboard.ContainsImage())
-                        {
-                            Bitmap x;
-                            x = (Bitmap)idat.GetData(DataFormats.Bitmap, true);
-                            x.SetResolution(x.HorizontalResolution, x.VerticalResolution);
-                            x = cropAtRect(x, new System.Drawing.Rectangle(0, 0, x.Width, x.Height));
-                            //img.MakeTransparent();
-                            //img = GetResizeImage(img, 1000, 1000);
-                            res = x.Clone(new System.Drawing.Rectangle(0, 0, x.Width, x.Height), x.PixelFormat);
-                            //res = img;
-                            string path = System.IO.Path.GetFullPath(@"clipimage\ccc.png");
-                            x.Save(path, System.Drawing.Imaging.ImageFormat.Png);
-                            setClipBoardImage(res);
-                        }
-                    }
-
-                    catch (Exception ex)
-                    {
-                        threadEx = ex;
-                    }
-                });
-            staThread.IsBackground = true;
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-            return res;
-        }
-
-
-        public Bitmap cropAtRect(Bitmap b, System.Drawing.Rectangle r)
-        {
-            Bitmap nb = new Bitmap(r.Width, r.Height);
-            using (Graphics g = Graphics.FromImage(nb))
-            {
-                g.DrawImage(b, -r.X, -r.Y);
-                return nb;
-            }
-        }
-
-
-        public void saveFile(Image img)
-        {
-            //string path =
-        }
-
-
-        public String getClipBoardDataType()
-        {
-
-            String res = "";
-            //IDataObject idat = null;
-            Exception threadEx = null;
-            Thread staThread = new Thread(
-                delegate ()
-                {
-                    try
-                    {
-                        if (Clipboard.ContainsText()) //Clipboard.ContainsText(TextDataFormat.Text)
-                        {
-                            res = "Text";
-                        }
-                        else if (Clipboard.ContainsImage() == true)
-                        {
-                            res = "Image";
-                        }
-                        else
-                        {
-                            res = "None";
-                        }
-                    }
-
-                    catch (Exception ex)
-                    {
-                        threadEx = ex;
-                    }
-                });
-            staThread.IsBackground = true;
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-            return res;
-        }
-
-        public static void setClipBoardText(object obj)
-        {
-            Exception threadEx = null;
-            Thread staThread = new Thread(
-                delegate ()
-                {
-                    try
-                    {
-                        if ((string)obj == "")
-                        {
-                            Clipboard.Clear();
-                        }
-                        else
-                        {
-                            Clipboard.SetText(obj + "");
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        threadEx = ex;
-                    }
-                });
-            staThread.IsBackground = true;
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-        }
-
-        public static void setClipBoardImage(Bitmap obj)
-        {
-            Exception threadEx = null;
-            //MessageBox.Show(obj.GetFormats()+"@");
-            Thread staThread = new Thread(
-                delegate ()
-                {
-                    try
-                    {
-                        Clipboard.Clear();
-                        if (obj == null)
-                        {
-                        }
-                        else
-                        {
-                            //Clipboard.SetImage((Bitmap)obj.GetData(DataFormats., true));
-                            Clipboard.SetImage((Bitmap)obj);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        threadEx = ex;
-                    }
-                });
-            staThread.IsBackground = true;
-            staThread.SetApartmentState(ApartmentState.STA);
-            staThread.Start();
-            staThread.Join();
-        }
-
-
-        public String[] SplitStrByDoubleEnter(String str)
-        {
-            return str.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.None);
-        }
-
-        public static int NthIndexOf(string input, String charToFind, int n)
-        {
-            int position;
-
-            switch (Math.Sign(n))
-            {
-                case 1:
-                    position = 0;
-                    while (((position = input.IndexOf(charToFind, position)) != -1) && ((--n) > 0)) { position++; }
-                    break;
-                case -1:
-                    position = input.Length - 1;
-                    while (((position = input.LastIndexOf(charToFind, position)) != -1) && ((++n) < 0)) { position--; }
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(message: "param cannot be equal to 0", paramName: nameof(n));
-            }
-
-            return position;
-        }
 
         public static Point getMousePosAndColor()
         {
@@ -1512,242 +1266,97 @@ namespace Biden.Func
         //ddd
         
 
-        private static void activateGem()
-        {
+        public static string lastDirection = "LEFT";
 
-            int x = 170;
-            int y = 700;
-
-            //Console.WriteLine($"User32.API.SetCursorPos({R2},{G2},{B2}");
-            //MainWindow.getInstance.SetStateString(x, y, curColor);
-
-            //959,770
-            //170,700
-
-
-            Thread.Sleep(12);
-            Color curColor = GetColorAt(x, y);
-            R2 = curColor.R;
-            G2 = curColor.G;
-            B2 = curColor.B;
-            if (R2 == 191 && G2 == 0 && B2 == 255)
-            {
-                User32.API.SetCursorPos(959, 770);
-                MouseClick();
-            }
-            else
-            {
-                Macro.getInstance.Flag_F5 = false;
-                Thread.Sleep(1000);
-            }
-
-
-
-
-
-
-        }
-
-        private void getPos(string direction)
-        {
-            Point p = getMousePosAndColor();
-            Color curColor = GetColorAt(p.X, p.Y);
-
-            //Console.WriteLine($"User32.API.SetCursorPos({p.X},{p.Y})");
-            //Console.WriteLine($"{p.X}, {p.Y}");
-            //Console.WriteLine($"{curColor.R},{curColor.G},{curColor.B}");
-
-
-
-
-
-
-
-            ArrayList colorList = new ArrayList();
-
-            curColor = GetColorAt(816, 15);
-            colorList.Add(curColor);
-            curColor = GetColorAt(823, 10);
-            colorList.Add(curColor);
-            curColor = GetColorAt(799, 6);
-            colorList.Add(curColor);
-            curColor = GetColorAt(799, 19);
-            colorList.Add(curColor);
-            curColor = GetColorAt(785, 18);
-            colorList.Add(curColor);
-            curColor = GetColorAt(793, 7);
-            colorList.Add(curColor);
-            curColor = GetColorAt(783, 7);
-            colorList.Add(curColor);
-            curColor = GetColorAt(775, 8);
-            colorList.Add(curColor);
-            curColor = GetColorAt(750, 19);
-            colorList.Add(curColor);
-            curColor = GetColorAt(741, 11);
-            colorList.Add(curColor);
-            curColor = GetColorAt(718, 13);
-            colorList.Add(curColor);
-            curColor = GetColorAt(703, 9);
-            colorList.Add(curColor);
-            curColor = GetColorAt(703, 20);
-            colorList.Add(curColor);
-            curColor = GetColorAt(822, 20);
-            colorList.Add(curColor);
-            curColor = GetColorAt(822, 11);
-            colorList.Add(curColor);
-            curColor = GetColorAt(823, 5);
-            colorList.Add(curColor);
-            curColor = GetColorAt(820, 5);
-            colorList.Add(curColor);
-            curColor = GetColorAt(829, 9);
-            colorList.Add(curColor);
-            curColor = GetColorAt(829, 18);
-            colorList.Add(curColor);
-            curColor = GetColorAt(818, 17);
-            colorList.Add(curColor);
-            curColor = GetColorAt(819, 8);
-            colorList.Add(curColor);
-            curColor = GetColorAt(827, 16);
-            colorList.Add(curColor);
-            curColor = GetColorAt(819, 8);
-            colorList.Add(curColor);
-            curColor = GetColorAt(821, 19);
-            colorList.Add(curColor);
-            curColor = GetColorAt(827, 7);
-            colorList.Add(curColor);
-
-            curColor = GetColorAt(1622, 1034);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1627, 1038);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1631, 1038);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1625, 1043);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1630, 1046);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1641, 1035);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1648, 1035);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1648, 1041);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1642, 1041);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1649, 1046);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1644, 1046);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1713, 1034);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1721, 1037);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1716, 1040);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1721, 1045);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1716, 1046);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1718, 1041);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1730, 1034);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1734, 1034);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1739, 1035);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1732, 1041);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1735, 1041);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1741, 1041);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1733, 1044);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1739, 1045);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1703, 1043);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1696, 1040);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1609, 1049);
-            colorList.Add(curColor);
-            curColor = GetColorAt(1611, 1039);
-            colorList.Add(curColor);
-
-            //Console.WriteLine(Environment.CurrentDirectory);
-
-
-        }
-
+    
 
         private void attackUsingHell()
         {
-            Thread.Sleep(500);
+            Thread.Sleep(10);
             SK.sendkeyEsc(5);
-            SK.sendkeyNumber(5, 1);
-            if (curDirection == "LEFT")
+            SK.sendkeyNumber(10, (int)magic1);
+
+            User32.API.keybd_event((byte)magic1, 0, 0, 0);
+            Thread.Sleep(50);
+            User32.API.keybd_event((byte)magic1, 0, 2, 0);
+            SK.sendkeyHome(5);
+            if (HellfireDirectionIndex == 0)
             {
-                SK.sendkeyRight(3);
+                if (curDirection == null)
+                {
+                    curDirection = lastDirection;
+                }   
+                if (curDirection == "LEFT")
+                {
+                    SK.sendkeyLeft(5);
+                }
+                else if (curDirection == "RIGHT")
+                {
+                    SK.sendkeyRight(5);
+                }
+                else if (curDirection == "UP")
+                {
+                    SK.sendkeyUp(5);
+                }
+                else if (curDirection == "DOWN")
+                {
+                    SK.sendkeyDown(5);
+                }
+                else
+                {
+                }
+                lastDirection = curDirection;
             }
-            else if (curDirection == "RIGHT")
+            else if (HellfireDirectionIndex == 1)
             {
-                SK.sendkeyLeft(3);
+                if (curDirection == null)
+                {
+                    curDirection = lastDirection;
+                }
+                if (curDirection == "LEFT")
+                {
+                    SK.sendkeyRight(5);
+                }
+                else if (curDirection == "RIGHT")
+                {
+                    SK.sendkeyLeft(5);
+                }
+                else if (curDirection == "UP")
+                {
+                    SK.sendkeyDown(5);
+                }
+                else if (curDirection == "DOWN")
+                {
+                    SK.sendkeyUp(5);
+                }
+                else
+                {
+                }
+                lastDirection = curDirection;
             }
-            else if (curDirection == "UP")
+            else if (HellfireDirectionIndex == 2)
             {
-                SK.sendkeyDown(3);
+
             }
-            else if (curDirection == "DOWN")
+            else
             {
-                SK.sendkeyUp(3);
+
             }
+            
+            Thread.Sleep(10);
             SK.sendkeyEnter(5);
+            SK.sendkeyEsc(5);
             Thread.Sleep(10);
             SK.sendkeyTab(5);
             SK.sendkeyHome(5);
             SK.sendkeyTab(5);
 
-
-
-
-            //SK.sendkeyEsc(1);
-            //SK.sendkeyTab(5);
-            //SK.sendkeyHome(5);
-            //if (curDirection == "LEFT")
-            //{
-            //    SK.sendkeyRight(3);
-            //}
-            //else if (curDirection == "RIGHT")
-            //{
-            //    SK.sendkeyLeft(3);
-            //}
-            //else if (curDirection == "UP")
-            //{
-            //    SK.sendkeyDown(3);
-            //}
-            //else if (curDirection == "DOWN")
-            //{
-            //    SK.sendkeyUp(3);
-            //}
-            //SK.sendkeyTab(5);
-            //Thread.Sleep(10);
-            //SK.sendkeyNumber(25, 6);
-            //SK.sendkeyNumber(10, 1);
-            //SK.sendkeyEsc(1);
-            //SK.sendkeyTab(5);
-            //SK.sendkeyHome(10);
-            //SK.sendkeyTab(5);
-
-            //SK.sendkeyCtrlAndZ(5);
-            //SK.sendkeyNumber(5, 2);
-            //SK.sendkeyNumber(70, 3);
-
-
         }
+
 
         private void activate234()
         {
+
             //좌표 설정  
             int x = 1801;
             int y = 950;
@@ -1761,9 +1370,13 @@ namespace Biden.Func
             int x4 = 32;
             int y4 = 8;
 
-            //캡챠 확인용
+            //캡챠 확인용 좌표
             int x5 = 1231;
             int y5 = 855;
+
+            //일반 채팅 확인용 좌표
+            int x6 = 1383;
+            int y6 = 1006;
 
             //Console.WriteLine($"User32.API.SetCursorPos({R2},{G2},{B2}");
             //MainWindow.getInstance.SetStateString(x, y, curColor);
@@ -1777,6 +1390,7 @@ namespace Biden.Func
             Color curColor3 = GetColorAt(x3, y3);
             Color curColor4 = GetColorAt(x4, y4);
             Color curColor5 = GetColorAt(x5, y5);
+            Color curColor6 = GetColorAt(x6, y6);
             R0 = curColor0.R;
             G0 = curColor0.G;
             B0 = curColor0.B;
@@ -1792,11 +1406,12 @@ namespace Biden.Func
             R5 = curColor5.R;
             G5 = curColor5.G;
             B5 = curColor5.B;
-
-
+            R6 = curColor6.R;
+            G6 = curColor6.G;
+            B6 = curColor6.B;
 
             //캡챠 발생 시 동작 안함
-            if (!(R5 == 6 && G5 == 3 && B5 == 6) && beepCount < 30)
+            if (UseCaptchaAlert && !(R5 == 6 && G5 == 3 && B5 == 6) && beepCount < 30)
             {
                 keyUp();
                 User32.API.keybd_event(0X25, 0, 2, 0);
@@ -1813,6 +1428,55 @@ namespace Biden.Func
                 return;
             }
 
+            
+            //일반 채팅 매크로 반응
+            if (UseChatDetectAlt2 && timerForAlt2.ElapsedMs > ChatDetectAlt2Cooldown * 1000)
+            {
+                timerForAlt2.Start();
+                if ((R6 == 229 && G6 == 189 && B6 == 1541 ||
+                    (R6 == 231 && G6 == 196 && B6 == 154) ||
+                    (R6 == 255 && G6 == 196 && B6 == 154) ||
+                    R6 == 230 && G6 == 187 && B6 == 139))
+                {
+                    User32.API.keybd_event(0X12, 0, 0, 0);
+                    Thread.Sleep(10);
+                    User32.API.keybd_event(0X32, 0, 0, 0);
+                    Thread.Sleep(10);
+                    User32.API.keybd_event(0X12, 0, 2, 0);
+                    User32.API.keybd_event(0X32, 0, 2, 0);
+                }
+            }
+
+            //사자후
+            if (UseShout && timerForSajahu.ElapsedMs > ShoutCooldown * 1000)
+            {
+                timerForSajahu.Start();
+                User32.API.keybd_event(0X10, 0, 0, 0);
+                Thread.Sleep(10);
+                User32.API.keybd_event(0X5A, 0, 0, 0);
+                Thread.Sleep(10);
+                User32.API.keybd_event(0X5A, 0, 2, 0);
+                Thread.Sleep(10);
+                User32.API.keybd_event(0X43, 0, 0, 0);
+                Thread.Sleep(10);
+                User32.API.keybd_event(0X43, 0, 2, 0);
+                User32.API.keybd_event(0X10, 0, 2, 0);
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    System.Windows.Clipboard.SetText(ShoutMessage);
+                });
+                Thread.Sleep(10);
+
+                User32.API.keybd_event(0X11, 0, 0, 0);
+                Thread.Sleep(10);
+                User32.API.keybd_event(0X56, 0, 0, 0);
+                Thread.Sleep(10);
+                User32.API.keybd_event(0X11, 0, 2, 0);
+                User32.API.keybd_event(0X56, 0, 2, 0);
+                Thread.Sleep(10);
+                SK.sendkeyEnter(10);
+            }
+
 
             //현재 맵 타이틀과 좌표를 통해 key 추출
             int movingTime = 10;
@@ -1822,8 +1486,8 @@ namespace Biden.Func
 
             //몬스터가 없는 곳을 구분
             bool noMonsterFlag = false;
-            int movingDelay = 350;
-            if (key.Contains("12:"))
+            int movingDelay = movingDelayUI;
+            if (key.Contains("122:"))
             {
                 noMonsterFlag = true;
             }
@@ -1831,7 +1495,7 @@ namespace Biden.Func
             //몬스터가 없는 곳에서는 빠르게 이동
             if (noMonsterFlag)
             {
-                movingDelay = 100;
+                movingDelay = 10;
             }
             //몬스터가 있는 곳에서 스킬 사용
             else
@@ -1839,33 +1503,45 @@ namespace Biden.Func
                 //힐, 저주, 첨첨
                 keyDown();
             }
-            
-            
-            System.Random random3 = new System.Random((int)System.DateTime.Now.Ticks);
-            
-            if (R3 == 8 && G3 == 4 && B3 == 8)
+
+
+            //동동주+공증
+            if (UseBuffCombo)
             {
-                //동동주
-                SK.sendkeyCtrlAndZ(10);
+                if (R3 == 8 && G3 == 4 && B3 == 8)
+                {
+                    SK.sendkeyCtrlAndZ(10);
+                }
+                if (R2 == 8 && G2 == 4 && B2 == 8)
+                {
+                    SK.sendkeyNumber(10, (byte)magic2);
+                }
             }
-            if (R2 == 8 && G2 == 4 && B2 == 8)
-            {
-                //공증
-                SK.sendkeyNumber(10, 2);
-            }
+
             //보무
-            if (firstRunFlag || timerForBoMu.ElapsedMs >= 150000)
+            if (UseProtectArmor && (firstRunFlag || timerForBoMu.ElapsedMs >= 90000))
             {
                 firstRunFlag = false;
-                SK.sendkeyNumber(5, 9);
-                SK.sendkeyNumber(5, 0);
+
+                User32.API.keybd_event((byte)magic9, 0, 0, 0);
+                User32.API.keybd_event((byte)magic0, 0, 0, 0);
+                Thread.Sleep(5);
+                User32.API.keybd_event((byte)magic9, 0, 2, 0);
+                User32.API.keybd_event((byte)magic0, 0, 2, 0);
                 timerForBoMu.Start();
             }
+                        
             //힐
-            else if (R0 == 8 && G0 == 4 && B0 == 8)
+            if (UseHeal)
             {
-                int random3to4 = random3.Next(4, 5);
-                SK.sendkeyNumber(20 * random3to4, 3);
+                if (R0 == 8 && G0 == 4 && B0 == 8)
+                {
+                    System.Random random3 = new System.Random((int)System.DateTime.Now.Ticks);
+                    int random3to4 = random3.Next(4, 5);
+                    User32.API.keybd_event((byte)magic3, 0, 0, 0);
+                    Thread.Sleep(100* random3to4);
+                    User32.API.keybd_event((byte)magic3, 0, 2, 0);
+                }
             }
 
             //무빙 //여기
@@ -1952,26 +1628,38 @@ namespace Biden.Func
                 Thread.Sleep(movingDelay);
             }
 
+
             
             keyUp();
 
+            //중독
+            if (UsePoison)
+            {
+                SK.sendkeyEsc(10);
+                User32.API.keybd_event((byte)magic7, 0, 0, 0);
+                Thread.Sleep(10);
+                User32.API.keybd_event((byte)magic7, 0, 2, 0);
+                SK.sendkeyRight(5);
+                SK.sendkeyEnter(5);
+                SK.sendkeyEsc(10);
+                Thread.Sleep(10);
+                SK.sendkeyTab(5);
+                SK.sendkeyHome(5);
+                SK.sendkeyTab(5);
+            }
+
             // 정지상태인 경우 헬파이어
-            if (!noMonsterFlag && !(R4 == 255 && G4 == 255 && B4 == 255) && !(R0 == 8 && G0 == 4 && B0 == 8)) //isMovingFlag == false && 
+            if (UseHellfire && !noMonsterFlag && !(R4 == 255 && G4 == 255 && B4 == 255) && !(R0 == 8 && G0 == 4 && B0 == 8)) //isMovingFlag == false && 
             {
                 try
                 {
+                    User32.API.BlockInput(true);   // 사용자 입력 차단
+                    attackUsingHell();
 
-                    //User32.API.keybd_event(0X25, 0, 0x0002, 0);
-                    //User32.API.keybd_event(0X26, 0, 0x0002, 0);
-                    //User32.API.keybd_event(0X27, 0, 0x0002, 0);
-                    //User32.API.keybd_event(0X28, 0, 0x0002, 0);
-                    //User32.API.BlockInput(true);   // 사용자 입력 차단
-
-                    //attackUsingHell();
                 }
                 finally
                 {
-                    //User32.API.BlockInput(false);        // 반드시 해제
+                    User32.API.BlockInput(false);        // 반드시 해제
                 }
                 return;
             }
@@ -1981,7 +1669,19 @@ namespace Biden.Func
 
 
         public static int getMapNumber()
-        {
+
+
+        {   //XY(805,21)  RGB(255,255,255)
+            //XY(805,22)  RGB(255,255,255)
+            //XY(805,23)  RGB(255,255,255)
+            //XY(805,24)  RGB(203,200,196)
+
+
+            //XY(804,23)  RGB(75,75,74)
+            //XY(804,24)  RGB(60,61,59)
+
+
+
             int res = 0;
             //(804, 13) + (809, 6)
             //
@@ -1991,67 +1691,134 @@ namespace Biden.Func
             int mapTitleX2 = 809;
             int mapTitleY2 = 11;
 
+
+            //선녀의방 10번 이후를 위한 좌표 추가
+            int mapTitleX3 = 645;
+            int mapTitleY3 = 23;
+            //XY(806, 3)과 XY(811,13)
+            int mapTitleX4 = 806;
+            int mapTitleY4 = 3;
+            int mapTitleX5 = 811;
+            int mapTitleY5 = 13;
+
             //좌표 색 가져오기
             Color curTitleColor1 = GetColorAt(mapTitleX1, mapTitleY1);
             Color curTitleColor2 = GetColorAt(mapTitleX2, mapTitleY2);
+            Color curTitleColor3 = GetColorAt(mapTitleX3, mapTitleY3);
+            Color curTitleColor4 = GetColorAt(mapTitleX4, mapTitleY4);
+            Color curTitleColor5 = GetColorAt(mapTitleX5, mapTitleY5);
             titleR1 = curTitleColor1.R;
             titleG1 = curTitleColor1.G;
             titleB1 = curTitleColor1.B;
             titleR2 = curTitleColor2.R;
             titleG2 = curTitleColor2.G;
             titleB2 = curTitleColor2.B;
+            titleR3 = curTitleColor3.R;
+            titleG3 = curTitleColor3.G;
+            titleB3 = curTitleColor3.B;
+            titleR4 = curTitleColor4.R;
+            titleG4 = curTitleColor4.G;
+            titleB4 = curTitleColor4.B;
+            titleR5 = curTitleColor5.R;
+            titleG5 = curTitleColor5.G;
+            titleB5 = curTitleColor5.B;
 
-            if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+
+            if (titleR3 == 244 && titleG3 == 244 && titleB3 == 244)
             {
-                res = 1;
-            }
-            else if (titleR1 == 131 && titleG1 == 129 && titleB1 == 131 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
-            {
-                res = 2;
-            }
-            else if (titleR1 == 12 && titleG1 == 9 && titleB1 == 12 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
-            {
-                res = 3;
-            }
-            else if (titleR1 == 135 && titleG1 == 133 && titleB1 == 135 && titleR2 == 75 && titleG2 == 75 && titleB2 == 74)
-            {
-                res = 4;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 60 && titleG2 == 61 && titleB2 == 59)
-            {
-                res = 5;
-            }
-            else if (titleR1 == 130 && titleG1 == 129 && titleB1 == 130 && titleR2 == 60 && titleG2 == 61 && titleB2 == 59)
-            {
-                res = 6;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
-            {
-                res = 7;
-            }
-            else if (titleR1 == 130 && titleG1 == 129 && titleB1 == 130 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
-            {
-                res = 8;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 198 && titleG2 == 199 && titleB2 == 198)
-            {
-                res = 9;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 75 && titleG2 == 75 && titleB2 == 74)
-            {
-                res = 10;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
-            {
-                res = 11;
-            }
-            else if (titleR1 == 243 && titleG1 == 243 && titleB1 == 243 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
-            {
-                res = 12;
+                //Console.WriteLine($"if (titleR4 == {titleR4} && titleG4 == {titleG4} && titleB4 == {titleB4} && titleR5 == {titleR5} && titleG5 == {titleG5} && titleB5 == {titleB5} && titleR6 == {titleR6} && titleG6 == {titleG6} && titleB6 == {titleB6})" );
+                if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 18 && titleG5 == 19 && titleB5 == 17)
+                {
+                    res = 10;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 137 && titleG5 == 137 && titleB5 == 136)
+                {
+                    res = 11;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 77 && titleG5 == 78 && titleB5 == 77)
+                {
+                    res = 12;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 78 && titleG5 == 79 && titleB5 == 78)
+                {
+                    res = 13;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 77 && titleG5 == 77 && titleB5 == 76)
+                {
+                    res = 14;
+                }
+                else if (titleR4 == 18 && titleG4 == 15 && titleB4 == 18 && titleR5 == 136 && titleG5 == 137 && titleB5 == 136)
+                {
+                    res = 15;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 136 && titleG5 == 137 && titleB5 == 136)
+                {
+                    res = 16;
+                }
+                else if (titleR4 == 18 && titleG4 == 15 && titleB4 == 18 && titleR5 == 18 && titleG5 == 19 && titleB5 == 17)
+                {
+                    res = 17;
+                }
+                else
+                {
+                    res = 999;
+                }
+
             }
             else
             {
-                res = 0;
+                if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+                {
+                    res = 1;
+                }
+                else if (titleR1 == 131 && titleG1 == 129 && titleB1 == 131 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
+                {
+                    res = 2;
+                }
+                else if (titleR1 == 12 && titleG1 == 9 && titleB1 == 12 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
+                {
+                    res = 3;
+                }
+                else if (titleR1 == 135 && titleG1 == 133 && titleB1 == 135 && titleR2 == 75 && titleG2 == 75 && titleB2 == 74)
+                {
+                    res = 4;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 60 && titleG2 == 61 && titleB2 == 59)
+                {
+                    res = 5;
+                }
+                else if (titleR1 == 130 && titleG1 == 129 && titleB1 == 130 && titleR2 == 60 && titleG2 == 61 && titleB2 == 59)
+                {
+                    res = 6;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
+                {
+                    res = 7;
+                }
+                else if (titleR1 == 130 && titleG1 == 129 && titleB1 == 130 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
+                {
+                    res = 8;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 198 && titleG2 == 199 && titleB2 == 198)
+                {
+                    res = 9;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 75 && titleG2 == 75 && titleB2 == 74)
+                {
+                    res = 10;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+                {
+                    res = 11;
+                }
+                else if (titleR1 == 243 && titleG1 == 243 && titleB1 == 243 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+                {
+                    res = 12;
+                }
+                else
+                {
+                    res = 0;
+                }
             }
 
 
@@ -2078,12 +1845,12 @@ namespace Biden.Func
             int mapTitleX5 = 1805;
             int mapTitleY5 = 1044;
 
-            int mapTitleX6 = 1724;
-            int mapTitleY6 = 1030;
-            int mapTitleX7 = 1737;
-            int mapTitleY7 = 1030;
-            int mapTitleX8 = 1737;
-            int mapTitleY8 = 1042;
+            int mapTitleX6 = 1725;
+            int mapTitleY6 = 1028;
+            int mapTitleX7 = 1725;
+            int mapTitleY7 = 1037;
+            int mapTitleX8 = 1736;
+            int mapTitleY8 = 1033;
 
             int mapTitleX9 = 1704;
             int mapTitleY9 = 1033;
@@ -2163,9 +1930,10 @@ namespace Biden.Func
 
             int res1 = getMapNumber();
             string res2 = getMapXY();
-            //MainWindow.getInstance.SetStateString(res, res, curColor);
+            //MainWindow.getInstance.SetStateString(res1, res1, curColor);
             //MainWindow.getInstance.SetStateString(res2, res2, curColor);
-            MainWindow.getInstance.SetStateString(x2, y2, curColor);
+            //MainWindow.getInstance.SetStateString(x2, y2, curColor);
+            Console.WriteLine($"{x2}, {y2}, {curColor}");
 
 
             string key = "" + res1 + ":" + res2;
@@ -2219,291 +1987,6 @@ namespace Biden.Func
 
         public void setMoveDictionary()
         {
-            //관령성
-            directionDic.Add("1:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,255,255,183,117,70,21,102,55,13,91,53,12", "북");
-            directionDic.Add("1:91,53,12,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,255,255,183,117,70,21,102,55,13,91,53,12", "북");
-
-            //흉가입구
-            directionDic.Add("12:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("12:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("12:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "북");
-            directionDic.Add("12:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "북");
-            directionDic.Add("12:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "북");
-            directionDic.Add("12:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "북");
-            directionDic.Add("12:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "동");
-            directionDic.Add("12:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "동");
-            directionDic.Add("12:91,53,12,0,0,0,215,191,111,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "동");
-            directionDic.Add("12:91,53,12,0,0,0,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "동");
-
-
-
-            directionDic.Add("1:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("1:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("1:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("1:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("1:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("1:0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("1:0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "북");
-            directionDic.Add("1:91,53,12,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "동");
-            directionDic.Add("1:91,53,12,102,55,13,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "남");
-            directionDic.Add("1:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "서");
-            directionDic.Add("1:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,255,255,183,117,70,21,0,0,0,91,53,12", "남");
-            directionDic.Add("1:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,117,70,21,0,0,0,91,53,12", "동");
-            directionDic.Add("1:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "남");
-            directionDic.Add("1:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("1:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "북");
-            directionDic.Add("1:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "동");
-            directionDic.Add("1:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "남");
-            directionDic.Add("1:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "서");
-            directionDic.Add("1:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "남");
-            directionDic.Add("1:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "동");
-            directionDic.Add("1:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "남");
-            directionDic.Add("1:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "서");
-            directionDic.Add("1:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("1:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "북");
-
-
-
-            directionDic.Add("2:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "북");
-            directionDic.Add("2:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,102,55,13,255,255,183,117,70,21,0,0,0,91,53,12", "북");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,255,255,183,117,70,21,0,0,0,91,53,12", "동");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,117,70,21,0,0,0,91,53,12", "동");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "동");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "동");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "남");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "북");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "동");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,0,0,0,195,155,79", "남");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,0,0,0,195,155,79", "동");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "북");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "서");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,0,0,0,195,155,79", "북");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,117,70,21,0,0,0,195,155,79", "동");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "북");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "서");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "서");
-            directionDic.Add("2:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,0,0,0,91,53,12", "남");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,0,0,0,91,53,12", "서");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "남");
-            directionDic.Add("2:91,53,12,195,155,79,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "동");
-            directionDic.Add("2:91,53,12,195,155,79,215,191,111,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "북");
-            directionDic.Add("2:91,53,12,195,155,79,215,191,111,0,0,0,102,55,13,102,55,13,255,255,183,203,171,95,0,0,0,195,155,79", "북");
-
-            directionDic.Add("3:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "서");
-            directionDic.Add("3:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "서");
-            directionDic.Add("3:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "북");
-            directionDic.Add("3:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "북");
-
-
-            directionDic.Add("4:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "북");
-            directionDic.Add("4:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "북");
-            directionDic.Add("4:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "북");
-            directionDic.Add("4:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "북");
-            directionDic.Add("4:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "서");
-            directionDic.Add("4:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "서");
-            directionDic.Add("4:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "서");
-            directionDic.Add("4:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "서");
-            directionDic.Add("4:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "북");
-            directionDic.Add("4:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "북");
-            directionDic.Add("4:91,53,12,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "동");
-            directionDic.Add("4:91,53,12,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,117,70,21,102,55,13,0,0,0", "북");
-            directionDic.Add("4:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,117,70,21,102,55,13,0,0,0", "서");
-            directionDic.Add("4:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "남");
-            directionDic.Add("4:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "서");
-            directionDic.Add("4:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,91,53,12,117,70,21,0,0,0,91,53,12", "북");
-            directionDic.Add("4:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,117,70,21,0,0,0,91,53,12", "동");
-            directionDic.Add("4:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "북");
-
-
-
-            directionDic.Add("5:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "북");
-            directionDic.Add("5:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "북");
-            directionDic.Add("5:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("5:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("5:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "북");
-            directionDic.Add("5:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "북");
-            directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "북");
-            directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "동");
-            directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "동");
-            directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "남");
-            directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "북");
-            directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "동");
-            directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "남");
-            directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "북");
-
-
-
-            directionDic.Add("6:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "북");
-            directionDic.Add("6:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "서");
-            directionDic.Add("6:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("6:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("6:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("6:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("6:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,0,0,0,91,53,12", "북");
-            directionDic.Add("6:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,0,0,0,91,53,12,117,70,21,0,0,0,91,53,12", "동");
-            directionDic.Add("6:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("6:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "동");
-            directionDic.Add("6:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,255,255,183,117,70,21,102,55,13,0,0,0", "북");
-            directionDic.Add("6:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,102,55,13,255,255,183,117,70,21,102,55,13,0,0,0", "동");
-            directionDic.Add("6:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "북");
-
-
-
-            directionDic.Add("7:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "서");
-            directionDic.Add("7:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,117,70,21,102,55,13,0,0,0", "서");
-            directionDic.Add("7:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,117,70,21,102,55,13,0,0,0", "서");
-            directionDic.Add("7:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("7:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("7:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("7:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("7:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "서");
-            directionDic.Add("7:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "북");
-
-
-            directionDic.Add("8:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("8:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("8:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,0,0,0,91,53,12,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("8:0,0,0,102,55,13,215,191,111,255,255,183,195,155,79,0,0,0,91,53,12,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("8:91,53,12,195,155,79,215,191,111,255,255,183,195,155,79,0,0,0,91,53,12,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("8:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,0,0,0,91,53,12,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("8:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "남");
-            directionDic.Add("8:91,53,12,195,155,79,215,191,111,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("8:91,53,12,195,155,79,215,191,111,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,0,0,0,195,155,79", "남");
-            directionDic.Add("8:91,53,12,102,55,13,215,191,111,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,0,0,0,195,155,79", "동");
-            directionDic.Add("8:91,53,12,102,55,13,215,191,111,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "북");
-            directionDic.Add("8:91,53,12,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "서");
-            directionDic.Add("8:91,53,12,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,0,0,0,91,53,12", "북");
-            directionDic.Add("8:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,255,255,183,203,171,95,0,0,0,91,53,12", "동");
-            directionDic.Add("8:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "남");
-            directionDic.Add("8:0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("8:0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "북");
-
-
-            directionDic.Add("9:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "북");
-            directionDic.Add("9:91,53,12,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "서");
-            directionDic.Add("9:91,53,12,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("9:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("9:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "서");
-            directionDic.Add("9:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "북");
-            directionDic.Add("9:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("9:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("9:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("9:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "북");
-            directionDic.Add("9:91,53,12,0,0,0,117,70,21,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("9:91,53,12,0,0,0,117,70,21,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("9:91,53,12,102,55,13,0,0,0,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("9:91,53,12,102,55,13,0,0,0,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "북");
-            directionDic.Add("9:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "동");
-            directionDic.Add("9:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "남");
-            directionDic.Add("9:91,53,12,102,55,13,0,0,0,0,0,0,102,55,13,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "동");
-            directionDic.Add("9:91,53,12,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "남");
-            directionDic.Add("9:91,53,12,0,0,0,117,70,21,0,0,0,0,0,0,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "동");
-            directionDic.Add("9:91,53,12,0,0,0,117,70,21,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,0,0,0,195,155,79", "북");
-
-
-            directionDic.Add("10:91,53,12,102,55,13,0,0,0,0,0,0,102,55,13,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("10:91,53,12,0,0,0,117,70,21,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("10:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "동");
-            directionDic.Add("10:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,255,255,183,117,70,21,102,55,13,0,0,0", "남");
-            directionDic.Add("10:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,255,255,183,117,70,21,102,55,13,0,0,0", "서");
-            directionDic.Add("10:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("10:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("10:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("10:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "서");
-            directionDic.Add("10:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "남");
-            directionDic.Add("10:91,53,12,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "동");
-            directionDic.Add("10:91,53,12,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "남");
-            directionDic.Add("10:91,53,12,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,117,70,21,102,55,13,0,0,0", "서");
-            directionDic.Add("10:91,53,12,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "남");
-            directionDic.Add("10:91,53,12,102,55,13,0,0,0,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "서");
-            directionDic.Add("10:91,53,12,102,55,13,0,0,0,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "남");
-            directionDic.Add("10:91,53,12,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "동");
-            directionDic.Add("10:91,53,12,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "북");
-            directionDic.Add("10:91,53,12,0,0,0,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "서");
-            directionDic.Add("10:91,53,12,0,0,0,117,70,21,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "북");
-
-
-
-            //directionDic.Add("1:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,91,53,12", "동");
-            //directionDic.Add("1:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,0,0,0,91,53,12", "남");
-            //directionDic.Add("1:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,0,0,0,91,53,12", "동");
-            //directionDic.Add("1:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "남");
-            //directionDic.Add("1:91,53,12,102,55,13,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "서");
-            //directionDic.Add("1:91,53,12,102,55,13,0,0,0,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "남");
-            //directionDic.Add("1:91,53,12,102,55,13,0,0,0,255,255,183,195,155,79,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "서");
-            //directionDic.Add("1:91,53,12,102,55,13,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
-
-            //directionDic.Add("2:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,102,55,13,255,255,183,117,70,21,0,0,0,91,53,12", "북");
-            //directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,117,70,21,0,0,0,91,53,12", "동");
-            //directionDic.Add("2:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "북");
-            //directionDic.Add("2:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "서");
-            //directionDic.Add("2:0,0,0,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,0,0,0,0,0,0,0,0,0,91,53,12", "북");
-            //directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,0,0,0,91,53,12", "동");
-            //directionDic.Add("2:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "북");
-
-            //directionDic.Add("3:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,0,0,0,195,155,79", "서");
-            //directionDic.Add("3:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "북");
-
-            //directionDic.Add("4:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "북");
-            //directionDic.Add("4:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "서");
-            //directionDic.Add("4:0,0,0,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "북");
-            //directionDic.Add("4:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "서");
-            //directionDic.Add("4:91,53,12,195,155,79,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,117,70,21,0,0,0,91,53,12", "북");
-
-            //directionDic.Add("5:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "북");
-            //directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,255,255,183,117,70,21,0,0,0,91,53,12", "동");
-            //directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "남");
-            //directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "동");
-            //directionDic.Add("5:0,0,0,0,0,0,215,191,111,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "북");
-            //directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,0,0,0,91,53,12,203,171,95,102,55,13,0,0,0", "동");
-            //directionDic.Add("5:91,53,12,195,155,79,117,70,21,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "북");
-
-            //directionDic.Add("6:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "북");
-            //directionDic.Add("6:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,195,155,79", "서");
-            //directionDic.Add("6:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,0,0,0,91,53,12", "북");
-            //directionDic.Add("6:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,102,55,13,255,255,183,203,171,95,0,0,0,91,53,12", "동");
-            //directionDic.Add("6:0,0,0,0,0,0,215,191,111,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,0,0,0,195,155,79", "북");
-
-            //directionDic.Add("7:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "서");
-            //directionDic.Add("7:91,53,12,0,0,0,215,191,111,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "북");
-            //directionDic.Add("7:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "서");
-            //directionDic.Add("7:0,0,0,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,91,53,12", "북");
-
-            //directionDic.Add("8:0,0,0,0,0,0,0,0,0,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "북");
-            //directionDic.Add("8:91,53,12,195,155,79,215,191,111,255,255,183,195,155,79,255,255,183,0,0,0,203,171,95,0,0,0,91,53,12", "동");
-            //directionDic.Add("8:91,53,12,195,155,79,215,191,111,255,255,183,195,155,79,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "북");
-            //directionDic.Add("8:91,53,12,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,0,0,0,195,155,79", "서");
-            //directionDic.Add("8:91,53,12,0,0,0,215,191,111,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,0,0,0,91,53,12", "북");
-            //directionDic.Add("8:0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,102,55,13,255,255,183,203,171,95,0,0,0,91,53,12", "동");
-            //directionDic.Add("8:0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
-
-            //directionDic.Add("9:0,0,0,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "북");
-            //directionDic.Add("9:91,53,12,0,0,0,117,70,21,0,0,0,0,0,0,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "서");
-            //directionDic.Add("9:91,53,12,0,0,0,117,70,21,0,0,0,0,0,0,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "북");
-            //directionDic.Add("9:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,255,255,183,0,0,0,203,171,95,102,55,13,0,0,0", "동");
-            //directionDic.Add("9:0,0,0,102,55,13,215,191,111,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "남");
-            //directionDic.Add("9:0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "동");
-            //directionDic.Add("9:0,0,0,0,0,0,0,0,0,0,0,0,102,55,13,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "남");
-            //directionDic.Add("9:91,53,12,102,55,13,0,0,0,0,0,0,102,55,13,102,55,13,255,255,183,203,171,95,102,55,13,0,0,0", "동");
-            //directionDic.Add("9:91,53,12,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0,255,255,183,0,0,0,0,0,0,195,155,79", "북");
-
-            //directionDic.Add("10:91,53,12,102,55,13,0,0,0,0,0,0,102,55,13,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "남");
-            //directionDic.Add("10:91,53,12,102,55,13,215,191,111,0,0,0,0,0,0,102,55,13,91,53,12,0,0,0,102,55,13,0,0,0", "서");
-            //directionDic.Add("10:91,53,12,102,55,13,215,191,111,0,0,0,0,0,0,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "남");
-            //directionDic.Add("10:91,53,12,195,155,79,117,70,21,255,255,183,195,155,79,0,0,0,255,255,183,0,0,0,102,55,13,0,0,0", "동");
-            //directionDic.Add("10:91,53,12,195,155,79,117,70,21,255,255,183,195,155,79,102,55,13,0,0,0,0,0,0,102,55,13,0,0,0", "북");
-
         }
 
         private static void hi2(int x,int y)
@@ -2517,7 +2000,7 @@ namespace Biden.Func
             //Console.WriteLine($"현재 마우스 커서의 위치: X = {p.X}, Y = {p.Y}");
             //Console.WriteLine($"User32.API.SetCursorPos({p.X},{p.Y})");
 
-            MainWindow.getInstance.SetStateString(x, y, curColor);
+            //MainWindow.getInstance.SetStateString(x, y, curColor);
 
 
             //Console.WriteLine($"curColor = GetColorAt({p.X}, {p.Y})");
@@ -2533,1252 +2016,6 @@ namespace Biden.Func
         }
 
 
-        private static void buyRing()
-        {
-            int tempDelay = 100;
-
-            for (int i = 0; i < 40; i++)
-            {
-                User32.API.SetCursorPos(628, 237);
-                Thread.Sleep(30);
-                MouseClick();
-                Thread.Sleep(50);
-                User32.API.SetCursorPos(628, 256);
-                Thread.Sleep(3);
-                MouseClick();
-                Thread.Sleep(150);
-            }
-        }
-
-        private static void sellAllItem()
-        {
-
-            User32.API.keybd_event(0XA2, 0, 0, 0);
-
-            int tempDelay = 70;
-
-            User32.API.SetCursorPos(1290, 578);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1291, 624);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1288, 682);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1292, 723);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1342, 730);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1343, 674);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1341, 626);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1337, 582);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1384, 580);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1389, 636);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1389, 683);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1389, 729);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1438, 729);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1442, 674);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1437, 621);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1436, 579);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1487, 573);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1489, 624);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1488, 675);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1488, 722);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1536, 727);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1538, 676);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1539, 628);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1540, 583);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1589, 582);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1587, 623);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1585, 677);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1585, 726);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1635, 727);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1632, 675);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1633, 623);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1634, 580);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1683, 575);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1684, 622);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1678, 678);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1683, 726);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1730, 580);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1730, 629);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1730, 676);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-            User32.API.SetCursorPos(1730, 725);
-            MouseClick();
-            Thread.Sleep(tempDelay);
-
-            Thread.Sleep(200);
-            User32.API.keybd_event(0XA2, 0, 0x0002, 0);
-        }
-
-        private void sellItemAndBuy()
-        {
-            for (int i = 0; i < 300000; i++)
-            {
-                int tempDelay = 10;
-
-                User32.API.keybd_event(0XA2, 0, 0, 0);
-
-
-                User32.API.SetCursorPos(1730, 725);
-                MouseClick();
-                Thread.Sleep(tempDelay);
-
-                Thread.Sleep(200);
-                User32.API.keybd_event(0XA2, 0, 0x0002, 0);
-
-
-                User32.API.SetCursorPos(629, 296);
-                //SK.sendkeyMouseRight(2);
-
-                MouseClick2();
-
-                Thread.Sleep(tempDelay);
-            }
-        }
-
-        private static void Macro_F8()
-        {
-            Point p = getMousePosAndColor();
-            Color curColor = GetColorAt(p.X, p.Y);
-            x1 = p.X;
-            y1 = p.Y;
-            R1 = curColor.R;
-            G1 = curColor.G;
-            B1 = curColor.B;
-        }
-
-
-        private static void random_F1toF5()
-        {
-            System.Random random = new System.Random((int)System.DateTime.Now.Ticks);
-            int randomF1toF5 = random.Next(1, 7);
-            if (randomF1toF5 == 1)
-            {
-                Thread.Sleep(20);
-                sendkey("{F1}");
-                Thread.Sleep(20);
-            }
-            else if (randomF1toF5 == 2)
-            {
-                Thread.Sleep(20);
-                sendkey("{F2}");
-                Thread.Sleep(20);
-            }
-            else if (randomF1toF5 == 13)
-            {
-                Thread.Sleep(20);
-                sendkey("{F3}");
-                Thread.Sleep(20);
-            }
-            else if (randomF1toF5 == 4)
-            {
-                Thread.Sleep(20);
-                sendkey("{F4}");
-                Thread.Sleep(20);
-            }
-            else if (randomF1toF5 == 5)
-            {
-                Thread.Sleep(20);
-                sendkey("{F5}");
-                Thread.Sleep(20);
-            }
-            else if (randomF1toF5 == 6)
-            {
-                Thread.Sleep(20);
-                sendkey("{F6}");
-                Thread.Sleep(20);
-            }
-            else if (randomF1toF5 == 7)
-            {
-                Thread.Sleep(20);
-                sendkey("{F7}");
-                Thread.Sleep(20);
-            }
-            else
-            {
-
-            }
-        }
-
-        private static void pushLeftStopPoint()
-        {
-            Point p = GetCursorPosition();
-            int x = p.X;
-            int y = p.Y;
-            Color curColor = GetColorAt(x, y);
-            stopPoint tempStopPoint = new stopPoint();
-            tempStopPoint.x = x;
-            tempStopPoint.y = y;
-            tempStopPoint.color = curColor;
-            tempStopPoint.LR = "L";
-            stopPointList.Add(tempStopPoint);
-        }
-
-        private static void pushRightStopPoint()
-        {
-            Point p = GetCursorPosition();
-            int x = p.X;
-            int y = p.Y;
-            Color curColor = GetColorAt(x, y);
-            stopPoint tempStopPoint = new stopPoint();
-            tempStopPoint.x = x;
-            tempStopPoint.y = y;
-            tempStopPoint.color = curColor;
-            tempStopPoint.LR = "R";
-            stopPointList.Add(tempStopPoint);
-        }
-
-        private static void deleteStopPoint()
-        {
-            stopPointList = new List<stopPoint>();
-        }
-
-
-
-        private void dongbasan_left_getPos(CancellationTokenSource ct)
-        {
-            Color curColorLeft2 = new Color();
-            Color curColorRight2 = new Color();
-            Color curColorLeft = new Color();
-            Color curColorRight = new Color();
-
-
-            int curIndex = 0;
-
-
-            for (int i = 0; i <= 250; i = i + 1)
-            {
-                SK.sendkeyZ(2);
-                int leftX = lastPosX - i;
-                int rightX = lastPosX + i;
-                if (leftX < 25)
-                {
-                    leftX = 25;
-                }
-                else if (leftX > 249)
-                {
-                    leftX = 249;
-                }
-                if (rightX < 25)
-                {
-                    rightX = 25;
-                }
-                else if (rightX > 249)
-                {
-                    rightX = 249;
-                }
-                curColorLeft = GetColorAt(rightX, 258);
-                curColorRight = GetColorAt(leftX, 258);
-                curColorLeft2 = GetColorAt(rightX, 269);
-                curColorRight2 = GetColorAt(leftX, 269);
-                if (curColorLeft.R == 255 && curColorLeft.G == 255)
-                {
-                    lastPosX = rightX;
-                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorLeft);
-                    if (lastPosX <= 25)
-                    {
-                        SK.sendkeyRight(50);
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 80)
-                    {
-                        SK.sendkeyLeft(350);
-                        LR = "L";
-                    }
-                    break;
-                }
-                else if (curColorRight.R == 255 && curColorRight.G == 255)
-                {
-                    lastPosX = leftX;
-                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorRight);
-                    if (lastPosX <= 25)
-                    {
-                        SK.sendkeyRight(50);
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 80)
-                    {
-                        SK.sendkeyLeft(350);
-                        LR = "L";
-                    }
-                    break;
-                }
-                else if ((curColorRight2.R == 255 && curColorRight2.G == 255) || (curColorLeft2.R == 255 && curColorLeft2.G == 255))
-                {
-                    if (rightX >= 79)
-                    {
-                        SK.sendkeyLeft(850);
-                    }
-                }
-            }
-        }
-        private void dongbasan_mid_getPos(CancellationTokenSource ct)
-        {
-            Color curColorWall = new Color();
-            Color curColorLeft = new Color();
-            Color curColorRight = new Color();
-
-            int curIndex = 0;
-
-            for (int i = 0; i <= 250; i = i + 2)
-            {
-                SK.sendkeyZ(5);
-                int leftX = lastPosX - i;
-                int rightX = lastPosX + i;
-                if (leftX < 92)
-                {
-                    leftX = 92;
-                }
-                else if (leftX > 250)
-                {
-                    leftX = 250;
-                }
-                if (rightX < 92)
-                {
-                    rightX = 92;
-                }
-                else if (rightX > 250)
-                {
-                    rightX = 250;
-                }
-                curColorWall = GetColorAt(26, 263);
-                curColorLeft = GetColorAt(rightX, 266);
-                curColorRight = GetColorAt(leftX, 266);
-                if (curColorLeft.R == 255 && curColorLeft.G == 255)
-                {
-                    lastPosX = rightX;
-                    curIndex = (int)(lastPosX * 6.53);
-                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorLeft);
-                    if (lastPosX <= 115)
-                    {
-                        SK.sendkeyRight(50);
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 175)
-                    {
-                        SK.sendkeyLeft(50);
-                        LR = "L";
-                    }
-                    break;
-                }
-                else if (curColorRight.R == 255 && curColorRight.G == 255)
-                {
-                    lastPosX = leftX;
-                    curIndex = (int)(lastPosX * 6.53);
-                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorRight);
-                    if (lastPosX <= 115)
-                    {
-                        SK.sendkeyRight(50);
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 175)
-                    {
-                        SK.sendkeyLeft(50);
-                        LR = "L";
-                    }
-                    break;
-                }
-                else if (curColorWall.R == 255 && curColorWall.G == 255)
-                {
-                    SK.sendkeyRight(2050);
-                    LR = "R";
-                }
-            }
-        }
-        private void dongbasan_right_getPos(CancellationTokenSource ct)
-        {
-            Color curColorWall = new Color();
-            Color curColorLeft = new Color();
-            Color curColorRight = new Color();
-
-            for (int i = 0; i <= 250; i = i + 2)
-            {
-                SK.sendkeyZ(5);
-                int leftX = lastPosX - i;
-                int rightX = lastPosX + i;
-                if (leftX < 25)
-                {
-                    leftX = 25;
-                }
-                else if (leftX > 249)
-                {
-                    leftX = 249;
-                }
-                if (rightX < 25)
-                {
-                    rightX = 25;
-                }
-                else if (rightX > 249)
-                {
-                    rightX = 249;
-                }
-
-                curColorLeft = GetColorAt(rightX, 266);
-                curColorRight = GetColorAt(leftX, 266);
-                curColorWall = GetColorAt(26, 263);
-
-                if (curColorLeft.R == 255 && curColorLeft.G == 255)
-                {
-                    lastPosX = rightX;
-                    if (lastPosX <= 170)
-                    {
-                        SK.sendkeyRight(50);
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 248)
-                    {
-                        SK.sendkeyLeft(50);
-                        LR = "L";
-                    }
-                    break;
-                }
-                else if (curColorRight.R == 255 && curColorRight.G == 255)
-                {
-                    lastPosX = leftX;
-                    if (lastPosX <= 170)
-                    {
-                        SK.sendkeyRight(50);
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 248)
-                    {
-                        SK.sendkeyLeft(50);
-                        LR = "L";
-                    }
-                    break;
-                }
-                else if (curColorWall.R == 255 && curColorWall.G == 255)
-                {
-                    SK.sendkeyRight(3050);
-                    LR = "R";
-                    break;
-                }
-            }
-        }
-
-        private void dongbasan_rest_getPos(CancellationTokenSource ct)
-        {
-            Thread.Sleep(500);
-            Color curColorLeft = new Color();
-            Color curColorRight = new Color();
-
-
-            for (int i = 0; i <= 250; i = i + 1)
-            {
-                int leftX = lastPosX - i;
-                int rightX = lastPosX + i;
-                if (leftX <= 150)
-                {
-                    leftX = 150;
-                    lastPosX = 150;
-                }
-                if (rightX >= 158)
-                {
-                    rightX = 158;
-                    lastPosX = 158;
-                }
-                curColorLeft = GetColorAt(rightX, 235);
-                curColorRight = GetColorAt(leftX, 235);
-
-                //MainWindow.getInstance.SetStateString(lastPosX, 235, curColorLeft);
-
-                if (curColorLeft.R == 255 && curColorLeft.G == 255)
-                {
-                    lastPosX = rightX;
-                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorLeft);
-                    if (lastPosX <= 152)
-                    {
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 156)
-                    {
-                        LR = "L";
-                    }
-                    break;
-                }
-                else if (curColorRight.R == 255 && curColorRight.G == 255)
-                {
-                    lastPosX = leftX;
-                    //MainWindow.getInstance.SetStateString(lastPosX, 271, curColorRight);
-                    if (lastPosX <= 152)
-                    {
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 156)
-                    {
-                        LR = "L";
-                    }
-                    break;
-                }
-            }
-
-            if (LR == "L")
-            {
-                SK.sendkeyLeft(0.2);
-            }
-            else if (LR == "R")
-            {
-                SK.sendkeyRight(0.2);
-            }
-            else
-            {
-
-            }
-        }
-
-
-
-        private void dongbasan_bernanke_getPos(CancellationTokenSource ct)
-        {
-            /*
-            Color curColorLeft = new Color();
-            Color curColorRight = new Color();
-
-            for (int i = 0; i <= 250; i = i + 4)
-            {
-                SK.sendkeyZ(5);
-                int leftX = lastPosX - i;
-                int rightX = lastPosX + i;
-                if (leftX < 25)
-                {
-                    leftX = 25;
-                }
-                else if (leftX > 249)
-                {
-                    leftX = 249;
-                }
-                if (rightX < 25)
-                {
-                    rightX = 25;
-                }
-                else if (rightX > 249)
-                {
-                    rightX = 249;
-                }
-
-                curColorLeft = GetColorAt(rightX, 269);
-                curColorRight = GetColorAt(leftX, 269);
-
-                if (curColorLeft.R == 255 && curColorLeft.G == 255)
-                {
-                    lastPosX = rightX;
-                    if (lastPosX <= 120)
-                    {
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 230)
-                    {
-                        LR = "L";
-                    }
-                    break;
-                }
-                else if (curColorRight.R == 255 && curColorRight.G == 255)
-                {
-                    lastPosX = leftX;
-                    if (lastPosX <= 120)
-                    {
-                        LR = "R";
-                    }
-                    else if (lastPosX >= 230)
-                    {
-                        LR = "L";
-                    }
-                    break;
-                }
-                if (i == 250)
-                {
-                    lastPosX = 180;
-                }
-            }
-            */
-
-            bool findFlag = false;
-
-            for (int i = 0; i < 8; i++)
-            {
-                Color tempColor = GetColorAt(125 - (i * 5), 270);
-                if (tempColor.R == 255 && tempColor.G == 255)
-                {
-                    LR = "R";
-                    findFlag = true;
-                    break;
-                }
-            }
-            for (int i = 0; i < 11 && findFlag == false; i++)
-            {
-                Color tempColor = GetColorAt(200 + (i * 5), 270);
-                if (tempColor.R == 255 && tempColor.G == 255)
-                {
-                    LR = "L";
-                    break;
-                }
-            }
-
-        }
-
-
-
-
-
-
-
-        private void dongbasan_left_attack()
-        {
-
-            int curIndex = (int)((lastPosX - 25) * 13);
-            int randomNum1to100 = randomNum.Next(1, 100);
-
-            bool attackFlag = false;
-
-            int mobDistMin = 10;
-            int mobDistMax = 400;
-            for (int i = mobDistMin; i < mobDistMax; i = i + (i / 100 + 3))
-            {
-                int leftX = curIndex - i;
-                int rightX = curIndex + i;
-
-                if (rightX > 730)
-                {
-                    rightX = 730;
-                }
-                if (leftX < 0)
-                {
-                    leftX = 1;
-                }
-
-                Color tempColor = GetColorAt(leftX, 675);
-                Color tempColor2 = GetColorAt(rightX, 675);
-                // 154, 137,121
-                if ((tempColor.R >= 99 && tempColor.R <= 115 && tempColor.G >= 48 && tempColor.G <= 53 && tempColor.B >= 29 && tempColor.B <= 38) ||
-                    (tempColor.R == 99 && tempColor.G == 84 && tempColor.B == 68) ||
-                    (tempColor.R == 104 && tempColor.G == 89 && tempColor.B == 66) ||
-                    (tempColor.R == 27 && tempColor.G == 20 && tempColor.B == 16) ||
-                    (tempColor.R == 99 && tempColor.G == 88 && tempColor.B == 68) ||
-                    (tempColor.R == 86 && tempColor.G == 76 && tempColor.B == 58) ||
-                    (tempColor.R == 140 && tempColor.G == 121 && tempColor.B == 90) ||
-                    (tempColor.R == 100 && tempColor.G == 86 && tempColor.B == 67) ||
-                    (tempColor.R == 137 && tempColor.G == 122 && tempColor.B == 88) ||
-                    (tempColor.R == 57 && tempColor.G == 52 && tempColor.B == 33) ||
-                    (tempColor.R == 33 && tempColor.G == 16 && tempColor.B == 16) ||
-                    (tempColor.R == 8 && tempColor.G == 0 && tempColor.B == 0) ||
-                    (tempColor.R == 75 && tempColor.G == 66 && tempColor.B == 51) ||
-                    (tempColor.R == 0 && tempColor.G == 4 && tempColor.B == 0) ||
-                    (tempColor.R == 4 && tempColor.G == 3 && tempColor.B == 3) ||
-                    (tempColor.R == 15 && tempColor.G == 7 && tempColor.B == 6))
-                {
-                    MainWindow.getInstance.SetStateString(curIndex, -i, tempColor);
-                    LR = "L";
-                    SK.sendkeyLeft(i * 1 / 2);
-                    attackFlag = true;
-                    break;
-                }
-                if ((tempColor2.R >= 99 && tempColor2.R <= 115 && tempColor2.G >= 48 && tempColor2.G <= 53 && tempColor2.B >= 29 && tempColor2.B <= 38) ||
-                    (tempColor2.R == 99 && tempColor2.G == 84 && tempColor2.B == 68) ||
-                    (tempColor2.R == 104 && tempColor2.G == 89 && tempColor2.B == 66) ||
-                    (tempColor2.R == 27 && tempColor2.G == 20 && tempColor2.B == 16) ||
-                    (tempColor2.R == 99 && tempColor2.G == 88 && tempColor2.B == 68) ||
-                    (tempColor2.R == 86 && tempColor2.G == 76 && tempColor2.B == 58) ||
-                    (tempColor2.R == 140 && tempColor2.G == 121 && tempColor2.B == 90) ||
-                    (tempColor2.R == 100 && tempColor2.G == 86 && tempColor2.B == 67) ||
-                    (tempColor2.R == 137 && tempColor2.G == 122 && tempColor2.B == 88) ||
-                    (tempColor2.R == 57 && tempColor2.G == 52 && tempColor2.B == 33) ||
-                    (tempColor2.R == 33 && tempColor2.G == 16 && tempColor2.B == 16) ||
-                    (tempColor2.R == 8 && tempColor2.G == 0 && tempColor2.B == 0) ||
-                    (tempColor2.R == 75 && tempColor2.G == 66 && tempColor2.B == 51) ||
-                    (tempColor2.R == 0 && tempColor2.G == 4 && tempColor2.B == 0) ||
-                    (tempColor2.R == 4 && tempColor2.G == 3 && tempColor2.B == 3) ||
-                    (tempColor2.R == 15 && tempColor2.G == 7 && tempColor2.B == 6))
-                {
-                    MainWindow.getInstance.SetStateString(curIndex, -i, tempColor);
-                    LR = "R";
-                    SK.sendkeyRight(i * 1 / 2);
-                    attackFlag = true;
-                    break;
-                }
-                if (i > mobDistMax - 10)
-                {
-                    if (lastPosX > 50)
-                    {
-                        SK.sendkeyLeft(100);
-                    }
-                    else
-                    {
-                        SK.sendkeyRight(100);
-                    }
-                }
-            }
-
-
-            if (attackFlag)
-            {
-                SK.sendkeyControl(20);
-                if (randomNum1to100 < 90)
-                {
-                    Thread.Sleep(600);
-                    SK.sendkeyControl(20);
-                    Thread.Sleep(100);
-                }
-            }
-
-            if (randomNum1to100 == 50 || randomNum1to100 == 51)
-            {
-                //random_F1toF5();
-            }
-
-        }
-        private void dongbasan_mid_attack()
-        {
-            int randomNum1to100 = randomNum.Next(1, 100);
-            bool attackFlag = false;
-
-            if (lastPosX < 170)
-            {
-                int mobDistMin = 10;
-                int mobDistMax = 400;
-                for (int i = mobDistMin; i < mobDistMax; i = i + (i / 100 + 3))
-                {
-                    Color tempColor = GetColorAt(970 - i, 747);
-                    Color tempColor2 = GetColorAt(970 + i, 747);
-                    // 154, 137,121
-                    if ((tempColor.R >= 99 && tempColor.R <= 115 && tempColor.G >= 48 && tempColor.G <= 53 && tempColor.B >= 29 && tempColor.B <= 38) ||
-                    (tempColor.R == 99 && tempColor.G == 84 && tempColor.B == 68) ||
-                    (tempColor.R == 104 && tempColor.G == 89 && tempColor.B == 66) ||
-                    (tempColor.R == 27 && tempColor.G == 20 && tempColor.B == 16) ||
-                    (tempColor.R == 99 && tempColor.G == 88 && tempColor.B == 68) ||
-                    (tempColor.R == 86 && tempColor.G == 76 && tempColor.B == 58) ||
-                    (tempColor.R == 140 && tempColor.G == 121 && tempColor.B == 90) ||
-                    (tempColor.R == 100 && tempColor.G == 86 && tempColor.B == 67) ||
-                    (tempColor.R == 137 && tempColor.G == 122 && tempColor.B == 88) ||
-                    (tempColor.R == 57 && tempColor.G == 52 && tempColor.B == 33) ||
-                    (tempColor.R == 33 && tempColor.G == 16 && tempColor.B == 16) ||
-                    (tempColor.R == 8 && tempColor.G == 0 && tempColor.B == 0) ||
-                    (tempColor.R == 75 && tempColor.G == 66 && tempColor.B == 51) ||
-                    (tempColor.R == 0 && tempColor.G == 4 && tempColor.B == 0) ||
-                    (tempColor.R == 4 && tempColor.G == 3 && tempColor.B == 3) ||
-                    (tempColor.R == 15 && tempColor.G == 7 && tempColor.B == 6))
-                    {
-                        //MainWindow.getInstance.SetStateString(-i, 271, tempColor);
-                        LR = "L";
-                        SK.sendkeyLeft(i * 2 / 3);
-                        attackFlag = true;
-                        break;
-                    }
-                    if ((tempColor2.R >= 99 && tempColor2.R <= 115 && tempColor2.G >= 48 && tempColor2.G <= 53 && tempColor2.B >= 29 && tempColor2.B <= 38) ||
-                    (tempColor2.R == 99 && tempColor2.G == 84 && tempColor2.B == 68) ||
-                    (tempColor2.R == 104 && tempColor2.G == 89 && tempColor2.B == 66) ||
-                    (tempColor2.R == 27 && tempColor2.G == 20 && tempColor2.B == 16) ||
-                    (tempColor2.R == 99 && tempColor2.G == 88 && tempColor2.B == 68) ||
-                    (tempColor2.R == 86 && tempColor2.G == 76 && tempColor2.B == 58) ||
-                    (tempColor2.R == 140 && tempColor2.G == 121 && tempColor2.B == 90) ||
-                    (tempColor2.R == 100 && tempColor2.G == 86 && tempColor2.B == 67) ||
-                    (tempColor2.R == 137 && tempColor2.G == 122 && tempColor2.B == 88) ||
-                    (tempColor2.R == 57 && tempColor2.G == 52 && tempColor2.B == 33) ||
-                    (tempColor2.R == 33 && tempColor2.G == 16 && tempColor2.B == 16) ||
-                    (tempColor2.R == 8 && tempColor2.G == 0 && tempColor2.B == 0) ||
-                    (tempColor2.R == 75 && tempColor2.G == 66 && tempColor2.B == 51) ||
-                    (tempColor2.R == 0 && tempColor2.G == 4 && tempColor2.B == 0) ||
-                    (tempColor2.R == 4 && tempColor2.G == 3 && tempColor2.B == 3) ||
-                    (tempColor2.R == 15 && tempColor2.G == 7 && tempColor2.B == 6))
-                    {
-                        //MainWindow.getInstance.SetStateString(i, 271, tempColor);
-                        LR = "R";
-                        SK.sendkeyRight(i * 2 / 3);
-                        attackFlag = true;
-                        break;
-                    }
-                    if (i > mobDistMax - 10)
-                    {
-                        if (lastPosX < 145)
-                        {
-                            SK.sendkeyRight(230);
-                        }
-                        else
-                        {
-                            SK.sendkeyLeft(200);
-                        }
-                    }
-                }
-
-            }
-
-
-            if (attackFlag)
-            {
-                if (randomNum1to100 < 10)
-                {
-                    Thread.Sleep(100);
-                    SK.sendkeyDelete(20);
-                    Thread.Sleep(600);
-                    SK.sendkeyControl(20);
-                }
-                else
-                {
-                    Thread.Sleep(100);
-                    SK.sendkeyControl(20);
-                    Thread.Sleep(600);
-                    SK.sendkeyControl(20);
-                    Thread.Sleep(100);
-                }
-            }
-
-
-            if (randomNum1to100 == 50 || randomNum1to100 == 51)
-            {
-                //random_F1toF5();
-            }
-
-
-        }
-        private void dongbasan_right_attack()
-        {
-
-            int curIndex = 0;
-            if (lastPosX < 170)
-            {
-                curIndex = 960;
-            }
-            else
-            {
-                curIndex = (int)((lastPosX - 170) * 12) + 960;
-            }
-
-            bool attackFlag = false;
-
-            //1150
-
-            int mobDistMin = 10;
-            int mobDistMax = 400;
-            for (int i = mobDistMin; i < mobDistMax; i = i + (i / 100 + 3))
-            {
-                int leftX = curIndex - i;
-                int rightX = curIndex + i;
-
-                if (rightX > 1919)
-                {
-                    rightX = 1919;
-                }
-                if (leftX < 950)
-                {
-                    leftX = 950;
-                }
-
-                Color tempColor = GetColorAt(leftX, 747);
-                Color tempColor2 = GetColorAt(rightX, 747);
-                // 154, 137,121
-                if ((tempColor.R >= 99 && tempColor.R <= 115 && tempColor.G >= 48 && tempColor.G <= 53 && tempColor.B >= 29 && tempColor.B <= 38) ||
-                    (tempColor.R == 99 && tempColor.G == 84 && tempColor.B == 68) ||
-                    (tempColor.R == 104 && tempColor.G == 89 && tempColor.B == 66) ||
-                    (tempColor.R == 27 && tempColor.G == 20 && tempColor.B == 16) ||
-                    (tempColor.R == 99 && tempColor.G == 88 && tempColor.B == 68) ||
-                    (tempColor.R == 86 && tempColor.G == 76 && tempColor.B == 58) ||
-                    (tempColor.R == 140 && tempColor.G == 121 && tempColor.B == 90) ||
-                    (tempColor.R == 100 && tempColor.G == 86 && tempColor.B == 67) ||
-                    (tempColor.R == 137 && tempColor.G == 122 && tempColor.B == 88) ||
-                    (tempColor.R == 57 && tempColor.G == 52 && tempColor.B == 33) ||
-                    (tempColor.R == 33 && tempColor.G == 16 && tempColor.B == 16) ||
-                    (tempColor.R == 8 && tempColor.G == 0 && tempColor.B == 0) ||
-                    (tempColor.R == 75 && tempColor.G == 66 && tempColor.B == 51) ||
-                    (tempColor.R == 0 && tempColor.G == 4 && tempColor.B == 0) ||
-                    (tempColor.R == 4 && tempColor.G == 3 && tempColor.B == 3) ||
-                    (tempColor.R == 15 && tempColor.G == 7 && tempColor.B == 6))
-                {
-                    //MainWindow.getInstance.SetStateString(-i, 271, tempColor);
-                    LR = "L";
-                    SK.sendkeyLeft(i / 3 * 2);
-                    attackFlag = true;
-                    break;
-                }
-                if ((tempColor2.R >= 99 && tempColor2.R <= 115 && tempColor2.G >= 48 && tempColor2.G <= 53 && tempColor2.B >= 29 && tempColor2.B <= 38) ||
-                    (tempColor2.R == 99 && tempColor2.G == 84 && tempColor2.B == 68) ||
-                    (tempColor2.R == 104 && tempColor2.G == 89 && tempColor2.B == 66) ||
-                    (tempColor2.R == 27 && tempColor2.G == 20 && tempColor2.B == 16) ||
-                    (tempColor2.R == 99 && tempColor2.G == 88 && tempColor2.B == 68) ||
-                    (tempColor2.R == 86 && tempColor2.G == 76 && tempColor2.B == 58) ||
-                    (tempColor2.R == 140 && tempColor2.G == 121 && tempColor2.B == 90) ||
-                    (tempColor2.R == 100 && tempColor2.G == 86 && tempColor2.B == 67) ||
-                    (tempColor2.R == 137 && tempColor2.G == 122 && tempColor2.B == 88) ||
-                    (tempColor2.R == 57 && tempColor2.G == 52 && tempColor2.B == 33) ||
-                    (tempColor2.R == 33 && tempColor2.G == 16 && tempColor2.B == 16) ||
-                    (tempColor2.R == 8 && tempColor2.G == 0 && tempColor2.B == 0) ||
-                    (tempColor2.R == 75 && tempColor2.G == 66 && tempColor2.B == 51) ||
-                    (tempColor2.R == 0 && tempColor2.G == 4 && tempColor2.B == 0) ||
-                    (tempColor2.R == 4 && tempColor2.G == 3 && tempColor2.B == 3) ||
-                    (tempColor2.R == 15 && tempColor2.G == 7 && tempColor2.B == 6))
-                {
-                    //MainWindow.getInstance.SetStateString(i, 271, tempColor);
-                    LR = "R";
-                    SK.sendkeyRight(i / 3 * 2);
-                    attackFlag = true;
-                    break;
-                }
-
-                if (i > mobDistMax - 10)
-                {
-                    if (lastPosX > 210)
-                    {
-                        SK.sendkeyLeft(100);
-                    }
-                    else
-                    {
-                        SK.sendkeyRight(100);
-                    }
-                }
-            }
-
-
-
-            int randomNum1to100 = randomNum.Next(1, 100);
-
-            if (attackFlag)
-            {
-                if (randomNum1to100 < 3)
-                {
-                    SK.sendkeyEnd(20);
-                }
-
-                SK.sendkeyControl(20);
-                if (randomNum1to100 < 88)
-                {
-                    Thread.Sleep(600);
-                    SK.sendkeyControl(20);
-                }
-            }
-
-
-            if (randomNum1to100 == 50 || randomNum1to100 == 51)
-            {
-                //random_F1toF5();
-            }
-        }
-
-
-
-
-        private void yellen_buff()
-        {
-            Color curColor1 = GetColorAt(1738, 147);
-            Color curColor2 = GetColorAt(1801, 147);
-            Color curColor3 = GetColorAt(1873, 147);
-
-            Color curColor7 = GetColorAt(1888, 145);//181,102,84
-            Color curColor8 = GetColorAt(1820, 145);//181,102,84
-            Color curColor9 = GetColorAt(1752, 145);//181,102,84
-
-            if (!((curColor7.R == 64 && curColor7.G == 64 && curColor7.B == 64) || (curColor8.R == 64 && curColor8.G == 64 && curColor8.B == 64) || (curColor9.R == 64 && curColor9.G == 64 && curColor9.B == 64)))
-            {
-                SK.sendkeyHome(20);
-            }
-
-            if (!((curColor1.R == 208 && curColor1.G == 208 && curColor1.B == 191) || (curColor2.R == 208 && curColor2.G == 208 && curColor2.B == 191) || (curColor3.R == 208 && curColor3.G == 208 && curColor3.B == 191)))
-            {
-                SK.sendkeyInsert(20);
-            }
-
-            Color curColorRed = GetColorAt(550, 1054);
-            Color curColorBlue = GetColorAt(706, 1054);
-            if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
-            {
-                SK.sendkeyPageUp(10);
-            }
-            if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
-            {
-                SK.sendkeyPageDown(10);
-            }
-        }
-        private void reagan_buff()
-        {
-            Color curColor1 = GetColorAt(1738, 147);
-            Color curColor2 = GetColorAt(1801, 147);
-            Color curColor3 = GetColorAt(1873, 147);
-            /*
-            Color curColor7 = GetColorAt(1888, 145);//181,102,84
-            Color curColor8 = GetColorAt(1820, 145);//181,102,84
-            Color curColor9 = GetColorAt(1752, 145);//181,102,84
-
-            if (!((curColor7.R == 64 && curColor7.G == 64 && curColor7.B == 64) || (curColor8.R == 64 && curColor8.G == 64 && curColor8.B == 64) || (curColor9.R == 64 && curColor9.G == 64 && curColor9.B == 64)))
-            {
-                Thread.Sleep(200);
-                User32.API.keybd_event(0X24, 0, 0, 0); // home
-                Thread.Sleep(200);
-                User32.API.keybd_event(0X24, 0, KEYEVENTF_KEYUP, 0); // home
-                Thread.Sleep(50);
-            }*/
-
-            if (!((curColor1.R == 208 && curColor1.G == 208 && curColor1.B == 191) || (curColor2.R == 208 && curColor2.G == 208 && curColor2.B == 191) || (curColor3.R == 208 && curColor3.G == 208 && curColor3.B == 191)))
-            {
-                SK.sendkeyInsert(20);
-            }
-
-            Color curColorRed = GetColorAt(550, 1054);
-            Color curColorBlue = GetColorAt(706, 1054);
-            if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
-            {
-                SK.sendkeyPageUp(10);
-            }
-            if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
-            {
-                SK.sendkeyPageDown(10);
-
-            }
-        }
-        private void volker_buff()
-        {
-            Color curColor1 = GetColorAt(1738, 147);
-            Color curColor2 = GetColorAt(1801, 147);
-            Color curColor3 = GetColorAt(1873, 147);
-
-            Color curColor4 = GetColorAt(1826, 147); //
-            Color curColor5 = GetColorAt(1758, 147);
-            Color curColor6 = GetColorAt(1894, 147);
-
-
-            /*
-            Color curColor7 = GetColorAt(1888, 145);//181,102,84
-            Color curColor8 = GetColorAt(1820, 145);//181,102,84
-            Color curColor9 = GetColorAt(1752, 145);//181,102,84
-
-            if (!((curColor7.R == 181 && curColor7.G == 102 && curColor7.B == 84) || (curColor8.R == 181 && curColor8.G == 102 && curColor8.B == 84) || (curColor9.R == 181 && curColor9.G == 102 && curColor9.B == 84)))
-            {
-                Thread.Sleep(200);
-                User32.API.keybd_event(0X24, 0, 0, 0);
-                Thread.Sleep(200);
-                User32.API.keybd_event(0X24, 0, KEYEVENTF_KEYUP, 0);
-                Thread.Sleep(50);
-            }*/
-
-            if (!((curColor4.R == 85 && curColor4.G == 85 && curColor4.B == 85) || (curColor5.R == 85 && curColor5.G == 85 && curColor5.B == 85) || (curColor6.R == 85 && curColor6.G == 85 && curColor6.B == 85)))
-            {
-                SK.sendkeyHome(40);
-            }
-
-            if (!((curColor1.R == 208 && curColor1.G == 208 && curColor1.B == 191) || (curColor2.R == 208 && curColor2.G == 208 && curColor2.B == 191) || (curColor3.R == 208 && curColor3.G == 208 && curColor3.B == 191)))
-            {
-                SK.sendkeyInsert(40);
-            }
-
-            Color curColorRed = GetColorAt(550, 1054);
-            Color curColorBlue = GetColorAt(706, 1054);
-            if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
-            {
-                SK.sendkeyPageUp(10);
-            }
-            if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
-            {
-                SK.sendkeyPageDown(10);
-            }
-
-        }
-
-        private void Bernanke_buff()
-        {
-            Color curColorRed = GetColorAt(600, 1054);
-            Color curColorBlue = GetColorAt(706, 1054);
-            if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
-            {
-                Thread.Sleep(200);
-                SK.sendkeyPageUp(20);
-                Thread.Sleep(200);
-            }
-            if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
-            {
-                Thread.Sleep(200);
-                SK.sendkeyPageDown(20);
-                Thread.Sleep(200);
-            }
-
-            Color curColorRedWarning = GetColorAt(462, 1054);
-            if ((curColorRedWarning.R == 190 && curColorRedWarning.G == 190 && curColorRedWarning.B == 190))
-            {
-                Thread.Sleep(100);
-                User32.API.keybd_event(0XA4, 0, 0, 0);
-                Thread.Sleep(100);
-                User32.API.keybd_event(0X73, 0, 0, 0);
-                Thread.Sleep(10);
-                User32.API.keybd_event(0X73, 0, 0x0002, 0);
-                Thread.Sleep(100);
-                User32.API.keybd_event(0XA4, 0, 0x0002, 0);
-                Thread.Sleep(100);
-            }
-
-
-            int buffStackCount = 5;
-            Color curColor1 = GetColorAt(1876, 145);
-            List<Color> colorList1 = new List<Color>();
-            List<Color> colorList2 = new List<Color>();
-
-            for (int i = 0; i < buffStackCount; i++)
-            {
-                colorList1.Add(GetColorAt(1876 - (68 * i), 145));
-            }
-            for (int i = 0; i < buffStackCount; i++)
-            {
-                colorList2.Add(GetColorAt(1872 - (68 * i), 145));
-            }
-
-            for (int i = 0; i < buffStackCount; i++)
-            {
-                if ((colorList1[i].R == 182 && colorList1[i].G == 195 && colorList1[i].B == 203))
-                {
-                    break;
-                }
-                if (i == buffStackCount - 1)
-                {
-                    SK.sendkeyHome(30);
-                }
-            }
-            for (int i = 0; i < buffStackCount; i++)
-            {
-                if ((colorList2[i].R == 38 && colorList2[i].G == 38 && colorList2[i].B == 38))
-                {
-                    break;
-                }
-                if (i == buffStackCount - 1)
-                {
-                    SK.sendkeyInsert(30);
-                }
-            }
-
-
-
-
-        }
-
-
-
-
-
-
-
-        private void reagan_buff_fury()
-        {
-            Color curColor1 = GetColorAt(70, 925);
-            Color curColor2 = GetColorAt(48, 925);
-            string tempLR = LR;
-
-            if ((curColor1.R == 0 && curColor1.G == 255 && curColor1.B == 0) || (curColor2.R == 0 && curColor2.G == 255 && curColor2.B == 0))
-            {
-                User32.API.keybd_event(0X25, 0, 0x0002, 0);
-                User32.API.keybd_event(0X27, 0, 0x0002, 0);
-
-                tempLR = LR;
-                LR = "STOP";
-                Thread.Sleep(100);
-                SK.sendkeyEnter(100);
-                Thread.Sleep(100);
-                sendkey("/vkxlcheo qjsodzl");
-                Thread.Sleep(100);
-                SK.sendkeyEnter(100);
-                Thread.Sleep(500);
-                SK.sendkeyEsc(50);
-                SK.sendkeyEsc(50);
-                Thread.Sleep(100);
-                SK.sendkeyShift(100);
-                Thread.Sleep(800);
-                SK.sendkeyEnter(100);
-                Thread.Sleep(100);
-                sendkey("/vkxlrkdxhl qjsodzl");
-                Thread.Sleep(100);
-                SK.sendkeyEnter(100);
-                Thread.Sleep(100);
-                SK.sendkeyEnter(100);
-                Thread.Sleep(100);
-                sendkey("/vkxlrkdxhl qjsodzl");
-                Thread.Sleep(100);
-                SK.sendkeyEnter(100);
-                Thread.Sleep(4000);
-
-            }
-
-
-            SK.sendkeyEsc(10);
-            SK.sendkeyEsc(10);
-
-            LR = tempLR;
-
-            Color curColorRed = GetColorAt(550, 1054);
-            Color curColorBlue = GetColorAt(706, 1054);
-            if ((curColorRed.R == 190 && curColorRed.G == 190 && curColorRed.B == 190))
-            {
-                SK.sendkeyPageUp(10);
-            }
-            if ((curColorBlue.R == 190 && curColorBlue.G == 190 && curColorBlue.B == 190))
-            {
-                SK.sendkeyPageDown(10);
-
-            }
-        }
 
         private static void sendkey(string str)
         {
@@ -3794,52 +2031,6 @@ namespace Biden.Func
             }
 
         }
-
-
-        //두번째 인자가 배열인 경우
-        //public static void SaveArrayListKeyValue(string filePath, ArrayList keyList, string value)
-        //{
-        //    // ArrayList를 JSON 문자열로 변환해서 "키"로 사용
-        //    string key = JsonConvert.SerializeObject(keyList);
-
-        //    // 기존 파일 로드
-        //    Dictionary<string, string> dict;
-        //    if (File.Exists(filePath))
-        //    {
-        //        var json = File.ReadAllText(filePath);
-        //        dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
-        //               ?? new Dictionary<string, string>();
-        //    }
-        //    else
-        //    {
-        //        dict = new Dictionary<string, string>();
-        //    }
-
-        //    // 추가/갱신
-        //    dict[key] = value;
-
-        //    // 저장
-        //    File.WriteAllText(filePath, JsonConvert.SerializeObject(dict, Formatting.Indented));
-        //}
-
-        //public static string GetValue(string filePath, ArrayList keyList)
-        //{
-        //    if (!File.Exists(filePath))
-        //        return null;
-
-        //    var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(
-        //        File.ReadAllText(filePath)
-        //    );
-
-        //    if (dict == null)
-        //        return null;
-
-        //    // SaveArrayListKeyValue에서 쓴 것과 동일하게 key를 문자열로 만들기
-        //    string key = JsonConvert.SerializeObject(keyList);
-
-        //    return dict.TryGetValue(key, out var value) ? value : null;
-        //}
-
 
         static void SaveStringKeyValue(string filePath, string key, string value)
         {
@@ -3900,153 +2091,6 @@ namespace Biden.Func
             SK.sendkeyAlt(15);
             SK.sendkeyDelete(10);
         }
-
-        private void Bernanke_mid_attack()
-        {
-            int changeNum = 90;
-            SK.sendkeyZ(1);
-            /*
-            if(sleepCount < changeNum && L_Flag == false)
-            {
-                L_Flag = true;
-                User32.API.keybd_event(0X27, 0, 0x0002, 0);
-                User32.API.keybd_event(0X25, 0, 0, 0);
-                R_Flag = false;
-            }
-            else if (sleepCount >= changeNum && R_Flag == false)
-            {
-                L_Flag = false;
-                R_Flag = true;
-                User32.API.keybd_event(0X25, 0, 0x0002, 0);
-                User32.API.keybd_event(0X27, 0, 0, 0);
-            }*/
-
-            int intervalNumForFlag = randomNum.Next(1, 100);
-
-            if (sleepCount % 6 == 0 && intervalCount == 0)
-            {
-                AltAndDelete();
-            }
-
-
-            if (LR == "L")
-            {
-                if (last_LR == "R")
-                {
-                    sleepCount = 0;
-                    if (intervalCount == 0)
-                    {
-                        //바로 턴
-                        if (intervalNumForFlag < 60 && intervalNoCount_L < 2)
-                        {
-                            intervalCount = 20;
-                            intervalNoCount_L++;
-                        }
-                        //좀 더 가다가 턴
-                        else
-                        {
-                            intervalNoCount_L = 0;
-                        }
-                    }
-                    intervalCount++;
-                }
-                if (intervalCount > 16)
-                {
-                    intervalCount = 0;
-                    changeDirectionCount++;
-                    User32.API.keybd_event(0X27, 0, 0x0002, 0);
-                    User32.API.keybd_event(0X25, 0, 0, 0);
-                    last_LR = "L";
-                }
-
-            }
-            else if (LR == "R")
-            {
-
-                if (last_LR == "L")
-                {
-                    sleepCount = 0;
-                    if (intervalCount == 0)
-                    {
-                        if (intervalNumForFlag < 60 && intervalNoCount_R < 2)
-                        {
-                            intervalCount = 20;
-                            intervalNoCount_R++;
-                        }
-                        else
-                        {
-                            intervalNoCount_R = 0;
-                        }
-                    }
-                    intervalCount++;
-                }
-                if (intervalCount > 14)
-                {
-                    intervalCount = 0;
-                    changeDirectionCount++;
-                    User32.API.keybd_event(0X25, 0, 0x0002, 0);
-                    User32.API.keybd_event(0X27, 0, 0, 0);
-                    last_LR = "R";
-                }
-            }
-            else
-            {
-                User32.API.keybd_event(0X25, 0, 0x0002, 0);
-                User32.API.keybd_event(0X27, 0, 0x0002, 0);
-            }
-
-
-
-
-
-            if (sleepCount > changeNum) //|| (intervalNumForFlag == 99 && sleepCount > 40)
-            {
-                sleepCount = 0;
-                changeDirectionCount++;
-                if (LR == "L")
-                {
-                    last_LR = "L";
-                    LR = "R";
-                }
-                else if (LR == "R")
-                {
-                    last_LR = "R";
-                    LR = "L";
-                }
-            }
-            else
-            {
-                sleepCount++;
-            }
-
-            MainWindow.getInstance.SetStateString(changeDirectionCount, 0, new Color());
-            if (changeDirectionCount != 0 && changeDirectionCount % 250 == 0)
-            {
-                MainWindow.getInstance.SetStateString(changeDirectionCount, 1, new Color());
-                changeDirectionCount++;
-                //SK.sendkeyY(10);
-            }
-        }
-        private void dropMeso()
-        {
-            Thread.Sleep(100);
-            //1129,799
-            //779,546
-            User32.API.SetCursorPos(1129, 799);
-            Thread.Sleep(100);
-            MouseClick();
-            Thread.Sleep(100);
-            //SK.sendkeyMouseLeft(10);
-            Thread.Sleep(100);
-            User32.API.SetCursorPos(779, 546);
-            MouseClick();
-            Thread.Sleep(100);
-            //SK.sendkeyMouseLeft(10);
-            sendkey("50000");
-            SK.sendkeyEnter(10);
-            Thread.Sleep(100);
-        }
-
 
 
     }

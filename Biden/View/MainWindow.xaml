@@ -6,200 +6,433 @@
         xmlns:local="clr-namespace:Biden.View"
         xmlns:ViewModel="clr-namespace:Biden.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="312" Width="302" ResizeMode="NoResize" Background="Transparent"
-                   WindowStyle="None" WindowStartupLocation="CenterScreen" AllowsTransparency="True" >
+        Title="MainWindow"
+        Height="720"
+        Width="340"
+        ResizeMode="NoResize"
+        Background="Transparent"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True">
+
     <Window.DataContext>
         <ViewModel:ViewModelMain/>
     </Window.DataContext>
-    <Border BorderThickness="1" BorderBrush="#FFD6DFE8" CornerRadius="10" Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor,AncestorType=Border}}">
-        <Border.OpacityMask>
-            <VisualBrush>
-                <VisualBrush.Visual>
-                    <Border Background="Red"
-                            SnapsToDevicePixels="True"
-                            CornerRadius="10" 
-                            Width="{Binding ActualWidth,RelativeSource={RelativeSource FindAncestor, AncestorType=Border}}"
-                            Height="{Binding ActualHeight, RelativeSource={RelativeSource FindAncestor,AncestorType=Border}}"/>
-                </VisualBrush.Visual>
-            </VisualBrush>
-        </Border.OpacityMask>
-        <Canvas x:Name="mainCanvas" Width="300" Height="310" VerticalAlignment="Bottom" Background="#FFE6EFF8">
-            <Button Visibility="Hidden" Content="{Binding Text01}" HorizontalAlignment="Left" x:Name="Btn01" Background ="{Binding ColorBtn01}"  VerticalAlignment="Top" Command="{Binding CmdBtn01}" Height="20" Width="40" BorderBrush="White" Canvas.Left="15" Canvas.Top="112"/>
-            <TextBox Visibility="Hidden" HorizontalAlignment="Left" Height="20" Margin="15,62,0,0" Text="{Binding Num, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"/>
-            <TextBox Visibility="Hidden" HorizontalAlignment="Left" Height="20" Margin="15,87,0,0" Text="{Binding Num2, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" VerticalAlignment="Top" Width="40"/>
-            <Canvas x:Name="topCanvas" MouseLeftButtonDown="OnMouseLeftDown" Canvas.Top="0" Canvas.Left="0" MinWidth="300" MinHeight="30" Height="43" Background="Transparent" ClipToBounds="True">
-                <Button x:Name="closeButton" Content="X" Width="14" Height="14" Click="CloseButton_Click"  FontWeight="Bold" FontFamily="Corbel"
-                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Top"  Canvas.Right ="5" Canvas.Top ="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Foreground="#FF4A4A4A" />
-                <Button x:Name="maxButton" Content="ㅁ" Width="14" Height="14" Click="MaxButton_Click"  FontWeight="Bold" FontFamily="Corbel"
-                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Top"  Canvas.Right ="19" Canvas.Top ="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Foreground="#FF4A4A4A"/>
-                <Button x:Name="minButton" Content="―" Width="14" Height="14" Click="MinButton_Click"  FontWeight="Bold" FontFamily="Corbel"
-                BorderThickness="0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" HorizontalAlignment="Right" VerticalAlignment="Top"  Canvas.Right ="33" Canvas.Top ="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Foreground="#FF4A4A4A"/>
-                <Label Content="Proto Biden" Height="32" Canvas.Left="14" Canvas.Top="5" Width="177" FontWeight="Bold" FontSize="16" Foreground="#FF313131" />
-            </Canvas>
-            <Button Content="Correct" HorizontalAlignment="Left" x:Name="FuncBtn01" VerticalAlignment="Top" Command="{Binding CmdFuncBtn01}" 
-                    Height="40" Width="170" BorderBrush="Transparent" Canvas.Left="18" Canvas.Top="77" BorderThickness="0" SnapsToDevicePixels="True" 
-                    Panel.ZIndex="10" FontSize="16" FontWeight="Bold" Background="#FFE6EFF8" Foreground="#FF29387C">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="White" Direction="135" Softness="0.3" ShadowDepth="5" Opacity="0.6" />
-                </Button.BitmapEffect>
-            </Button>
-            <Button HorizontalAlignment="Left" x:Name="FuncBtn01_1" VerticalAlignment="Top"
-                    Height="40" Width="170" BorderBrush="White" Canvas.Left="18" Canvas.Top="77" BorderThickness="0" SnapsToDevicePixels="True">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
-                </Button.BitmapEffect>
-            </Button>
-            <Button Content="Find And Alert" HorizontalAlignment="Left" x:Name="FuncBtn02" VerticalAlignment="Top" Command="{Binding CmdFuncBtn02}" 
-                    Height="40" Width="170" BorderBrush="Transparent" Canvas.Left="18" Canvas.Top="124" BorderThickness="0" SnapsToDevicePixels="True" 
-                    Panel.ZIndex="10" FontSize="16" FontWeight="Bold" Background="#FFE6EFF8" Foreground="#FF29387C">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="White" Direction="135" Softness="0.3" ShadowDepth="5" Opacity="0.6" />
-                </Button.BitmapEffect>
-            </Button>
-            <Button HorizontalAlignment="Left" x:Name="FuncBtn02_1" VerticalAlignment="Top"
-                    Height="40" Width="170" BorderBrush="White" Canvas.Left="18" Canvas.Top="124" BorderThickness="0" SnapsToDevicePixels="True">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
-                </Button.BitmapEffect>
-            </Button>
-            <Button Content="Multi Clipboard" HorizontalAlignment="Left" x:Name="FuncBtn03" VerticalAlignment="Top" Command="{Binding CmdFuncBtn03}" 
-                    Height="40" Width="170" BorderBrush="Transparent" Canvas.Left="18" Canvas.Top="171" BorderThickness="0" SnapsToDevicePixels="True" 
-                    Panel.ZIndex="10" FontSize="16" FontWeight="Bold" Background="#FFE6EFF8" Foreground="#FF29387C">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="White" Direction="135" Softness="0.3" ShadowDepth="5" Opacity="0.6" />
-                </Button.BitmapEffect>
-            </Button>
-            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1" VerticalAlignment="Top"
-                    Height="40" Width="170" BorderBrush="White" Canvas.Left="18" Canvas.Top="171" BorderThickness="0" SnapsToDevicePixels="True">
-                <Button.Resources>
-                    <Style TargetType="Border">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
-                </Button.BitmapEffect>
-            </Button>
-            <CheckBox  Canvas.Left="205" Canvas.Top="79" Style="{DynamicResource BlueSwitchStyle}" Command="{Binding CmdOnOffBtn01}" IsChecked="{Binding IsChecked01}" CommandParameter="{Binding IsChecked01}">
 
-            </CheckBox>
-            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1_Copy6" VerticalAlignment="Top" Panel.ZIndex="10"
-                Height="35" Width="76" BorderBrush="White" Canvas.Left="205" Canvas.Top="79" BorderThickness="0" SnapsToDevicePixels="True">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
-                </Button.BitmapEffect>
-            </Button>
-            <CheckBox Canvas.Left="205" Canvas.Top="126" Style="{DynamicResource BlueSwitchStyle}" Command="{Binding CmdOnOffBtn02}" IsChecked="{Binding IsChecked02}" CommandParameter="{Binding IsChecked02}"/>
-            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1_Copy" VerticalAlignment="Top" Panel.ZIndex="10"
-                Height="35" Width="76" BorderBrush="White" Canvas.Left="205" Canvas.Top="126" BorderThickness="0" SnapsToDevicePixels="True">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
-                </Button.BitmapEffect>
-            </Button>
-            <CheckBox Canvas.Left="205" Canvas.Top="173" Style="{DynamicResource BlueSwitchStyle}" Command="{Binding CmdOnOffBtn03}" IsChecked="{Binding IsChecked03}" CommandParameter="{Binding IsChecked03}"/>
-            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1_Copy1" VerticalAlignment="Top" Panel.ZIndex="10"
-                Height="35" Width="76" BorderBrush="White" Canvas.Left="205" Canvas.Top="173" BorderThickness="0" SnapsToDevicePixels="True">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
-                </Button.BitmapEffect>
-            </Button>
+    <Window.Resources>
+        <Style x:Key="CardBorderStyle" TargetType="Border">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderBrush" Value="#D9E2EC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
 
-            <Menu Height="20" Canvas.Left="22" Canvas.Top="44" Width="129" Background="#FFE6EFF8">
-                <MenuItem Header="File">
-                    <MenuItem Header="New"/>
-                    <MenuItem Header="Open"/>
-                    <Separator/>
-                    <MenuItem Header="Save"/>
-                    <MenuItem Header="SaveAs"/>
-                    <Separator/>
-                    <MenuItem Header="Exit" Click="CloseButton_Click"/>
-                </MenuItem>
-                <MenuItem Header="Option">
-                    <MenuItem Header="Option1"/>
-                    <MenuItem Header="Option2"/>
-                    <MenuItem Header="Option3"/>
-                    <Separator/>
-                    <MenuItem Header="Setting"/>
-                    <Separator/>
-                </MenuItem>
-            </Menu>
+        <Style x:Key="LabelStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#334E68"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
 
-            <Button Content="Clipboard Macro" HorizontalAlignment="Left" x:Name="FuncBtn03_Copy" VerticalAlignment="Top" Command="{Binding CmdFuncBtn04}" 
-                Height="40" Width="170" BorderBrush="Transparent" Canvas.Left="18" Canvas.Top="220" BorderThickness="0" SnapsToDevicePixels="True" 
-                Panel.ZIndex="10" FontSize="16" FontWeight="Bold" Background="#FFE6EFF8" Foreground="#FF29387C">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="White" Direction="135" Softness="0.3" ShadowDepth="5" Opacity="0.6" />
-                </Button.BitmapEffect>
-            </Button>
-            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1_Copy2" VerticalAlignment="Top"
-                Height="40" Width="170" BorderBrush="White" Canvas.Left="18" Canvas.Top="220" BorderThickness="0" SnapsToDevicePixels="True">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
-                </Button.BitmapEffect>
-            </Button>
-            <CheckBox Canvas.Left="205" Canvas.Top="222" Style="{DynamicResource BlueSwitchStyle}" Command="{Binding CmdOnOffBtn04}" IsChecked="{Binding IsChecked04}" CommandParameter="{Binding IsChecked04}"/>
-            <Button HorizontalAlignment="Left" x:Name="FuncBtn03_1_Copy3" VerticalAlignment="Top" Panel.ZIndex="10"
-                Height="35" Width="76" BorderBrush="White" Canvas.Left="205" Canvas.Top="222" BorderThickness="0" SnapsToDevicePixels="True">
-                <Button.Resources>
-                    <Style TargetType="{x:Type Border}">
-                        <Setter Property="CornerRadius" Value="10"/>
-                    </Style>
-                </Button.Resources>
-                <Button.BitmapEffect>
-                    <DropShadowBitmapEffect Color="Black" Direction="315" Softness="0.5" ShadowDepth="5" Opacity="0.4" />
-                </Button.BitmapEffect>
-            </Button>
-            <TextBox Width="260" Height="20" Canvas.Left="20" Canvas.Top="280" Background="Transparent" BorderBrush="Transparent" Text="{Binding StateString, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-        </Canvas>
+        <Style x:Key="InputTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="8,4"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#BCCCDC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#F8FBFF"/>
+        </Style>
+
+        <Style x:Key="InputComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Padding" Value="6,2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="#BCCCDC"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="#F8FBFF"/>
+        </Style>
+
+        <Style x:Key="CheckStyle" TargetType="CheckBox">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#102A43"/>
+        </Style>
+
+        <Style x:Key="TopToggleStyle" TargetType="ToggleButton">
+            <Setter Property="Width" Value="54"/>
+            <Setter Property="Height" Value="24"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#BCCCDC"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border x:Name="Bg"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="12">
+                            <Grid Margin="2">
+                                <Border x:Name="Knob"
+                                Width="20"
+                                Height="20"
+                                Background="White"
+                                CornerRadius="10"
+                                HorizontalAlignment="Left"/>
+                                <TextBlock x:Name="Label"
+                                   Text="OFF"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   FontWeight="SemiBold"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="Bg" Property="Background" Value="#4C9AFF"/>
+                                <Setter TargetName="Knob" Property="HorizontalAlignment" Value="Right"/>
+                                <Setter TargetName="Label" Property="Text" Value="ON"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Bg" Property="Opacity" Value="0.9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border BorderThickness="1"
+            BorderBrush="#D6DFE8"
+            CornerRadius="12"
+            Background="#EEF4FA">
+
+        <Grid Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="44"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="34"/>
+            </Grid.RowDefinitions>
+
+            <!-- 상단바 -->
+            <Grid Grid.Row="0" Background="Transparent" MouseLeftButtonDown="OnMouseLeftDown">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="24"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Text="Proto Biden"
+                           VerticalAlignment="Center"
+                           Margin="14,0,0,0"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           Foreground="#243B53"/>
+
+                <Button Grid.Column="1" Content="―" Click="MinButton_Click"
+                        Width="18" Height="18" Margin="0,0,4,0"
+                        BorderThickness="0"
+                        Background="Transparent"
+                        Foreground="#486581"/>
+
+                <Button Grid.Column="2" Content="ㅁ" Click="MaxButton_Click"
+                        Width="18" Height="18" Margin="0,0,4,0"
+                        BorderThickness="0"
+                        Background="Transparent"
+                        Foreground="#486581"/>
+
+                <Button Grid.Column="3" Content="X" Click="CloseButton_Click"
+                        Width="18" Height="18" Margin="0,0,8,0"
+                        BorderThickness="0"
+                        Background="Transparent"
+                        Foreground="#D64545"/>
+            </Grid>
+
+            <!-- 본문 -->
+            
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+                
+                <StackPanel Margin="16,8,16,8">
+
+                    <Menu Height="24" Background="#EEF4FA">
+                        <MenuItem Header="File">
+                            <MenuItem Header="New"/>
+                            <MenuItem Header="Open"/>
+                            <Separator/>
+                            <MenuItem Header="Save" Command="{Binding CmdSaveSettings}"/>
+                            <Separator/>
+                            <MenuItem Header="Exit" Click="CloseButton_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="Option">
+                            <MenuItem Header="Option1"/>
+                            <MenuItem Header="Option2"/>
+                            <MenuItem Header="Option3"/>
+                            <Separator/>
+                            <MenuItem Header="Setting"/>
+                        </MenuItem>
+                    </Menu>
+
+
+                    <Border Style="{StaticResource CardBorderStyle}" Padding="10" Margin="0,0,0,12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="매크로 활성화"
+                   VerticalAlignment="Center"
+                   FontSize="13"
+                   FontWeight="SemiBold"
+                   Foreground="#243B53"/>
+
+                            <ToggleButton Grid.Column="1" Width="70"
+                      Style="{StaticResource TopToggleStyle}"
+                      IsChecked="{Binding IsMainEnabled}"
+                      VerticalAlignment="Center"/>
+                        </Grid>
+                    </Border>
+
+
+
+
+                    <!-- 전투 옵션 -->
+                    <Border Style="{StaticResource CardBorderStyle}">
+                        <StackPanel>
+                            <TextBlock Text="전투 옵션"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   Foreground="#102A43"
+                   Margin="0,0,0,10"/>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="34"/>
+                                    <!-- 헬파이어 사용 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 헬파이어 방향 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 평타 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 줍기 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 캡챠 알림 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 힐 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 동동주+공증 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 보호&무장 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 저주 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 첨첨 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 중독 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 사자후 날리기 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 사자후 쿨타임 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 사자후 내용 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 일반채팅 감지 ALT+2 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- ALT+2 쿨타임 -->
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="헬파이어 사용" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="0" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseHellfire}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="헬파이어 방향" Style="{StaticResource LabelStyle}"/>
+                                <ComboBox Grid.Row="1" Grid.Column="1"
+                      Style="{StaticResource InputComboBoxStyle}"
+                      SelectedIndex="{Binding HellfireDirectionIndex}">
+                                    <ComboBoxItem Content="진행방향"/>
+                                    <ComboBoxItem Content="진행반대방향"/>
+                                </ComboBox>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="평타" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="2" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseNormalAttack}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="줍기" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="3" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UsePickup}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="캡챠 알림" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="4" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseCaptchaAlert}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="힐" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="5" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseHeal}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="6" Grid.Column="0" Text="동동주+공증" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="6" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseBuffCombo}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="7" Grid.Column="0" Text="보호+무장" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="7" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseProtectArmor}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="8" Grid.Column="0" Text="저주" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="8" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseCurseOption}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="9" Grid.Column="0" Text="첨첨" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="9" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseExtraCombo}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="10" Grid.Column="0" Text="중독" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="10" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UsePoison}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="11" Grid.Column="0" Text="사자후 날리기(C 고정)" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="11" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseShout}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="12" Grid.Column="0" Text="사자후 쿨타임(초)" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="12" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding ShoutCooldown, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="13" Grid.Column="0" Text="사자후 내용" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="13" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding ShoutMessage, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="14" Grid.Column="0" Text="일반채팅 감지 ALT+2" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="14" Grid.Column="1" Content="사용"
+                      IsChecked="{Binding UseChatDetectAlt2}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="15" Grid.Column="0" Text="ALT+2 쿨타임(초)" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="15" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding ChatDetectAlt2Cooldown, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 마법 번호 -->
+                    <Border Style="{StaticResource CardBorderStyle}">
+                        <StackPanel>
+                            <TextBlock Text="마법별 번호 설정"
+                                       FontSize="15"
+                                       FontWeight="Bold"
+                                       Foreground="#102A43"
+                                       Margin="0,0,0,10"/>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="헬파이어" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoHellfire, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="공증" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoBuff, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="힐" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoHeal, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="저주" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoCurse, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="첨1" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoExtra1, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="첨2" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoExtra2, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="6" Grid.Column="0" Text="중독" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="6" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoPoison, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="7" Grid.Column="0" Text="마비" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoParalyze, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="8" Grid.Column="0" Text="보호" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="8" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoProtect, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="9" Grid.Column="0" Text="무장" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="9" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoArmor, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 기타 -->
+                    <Border Style="{StaticResource CardBorderStyle}">
+                        <StackPanel>
+                            <TextBlock Text="기타 설정"
+                                       FontSize="15"
+                                       FontWeight="Bold"
+                                       Foreground="#102A43"
+                                       Margin="0,0,0,10"/>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="34"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="이동딜레이 (0~2000)" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="0" Grid.Column="1"
+                                         Style="{StaticResource InputTextBoxStyle}"
+                                         Text="{Binding MoveDelay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+
+            <!-- 하단 상태 -->
+            <Border Grid.Row="2" Background="#E6EEF5" CornerRadius="0,0,12,12">
+                <TextBox Margin="10,4"
+                         Background="Transparent"
+                         BorderBrush="Transparent"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding StateString, UpdateSourceTrigger=PropertyChanged}"/>
+            </Border>
+        </Grid>
     </Border>
 </local:BaseWindow>
