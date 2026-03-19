@@ -842,7 +842,15 @@ namespace Biden.Func
                 //    }
                 //}
 
-                
+                //선녀의방10굴 이후
+                //for (int i = 805; i < 819; i++) 
+                //{
+                //    for (int j = 3; j < 24; j++)
+                //    {
+                //        hi2(i, j);
+                //    }
+                //}
+
                 hi();
             }
             if (tempKey.ToString().ToUpper() == "F5")
@@ -876,12 +884,12 @@ namespace Biden.Func
             if (tempKey.ToString().ToUpper() == "F11")
             {
                 //buyRing();
-                sellItemAndBuy();
+                //sellItemAndBuy();
 
             }
             if (tempKey.ToString().ToUpper() == "F12")
             {
-                sellAllItem();
+                //sellAllItem();
             }
             // 토글
             //else if (tempKey.ToString().ToUpper() == "F8")
@@ -897,56 +905,6 @@ namespace Biden.Func
             //        User32.API.keybd_event(0X57, 0, 0, 0);
             //    }
             //}
-            else if (tempKey.ToString().ToUpper() == "F9")
-            {
-                if (Macro.getInstance.Flag_F9)
-                {
-                    Macro.getInstance.Flag_F9 = false;
-                    User32.API.keybd_event(0X01, 0, 0x0002, 0);
-                }
-                else
-                {
-                    Macro.getInstance.Flag_F9 = true;
-                    User32.API.keybd_event(0X01, 0, 0, 0);
-                }
-            }
-            else if (tempKey.ToString().ToUpper() == "F10")
-            {
-                if (Macro.getInstance.Flag_F10)
-                {
-                    Macro.getInstance.Flag_F10 = false;
-                    User32.API.keybd_event(0X46, 0, 0x0002, 0);
-                }
-                else
-                {
-                    Macro.getInstance.Flag_F10 = true;
-                    User32.API.keybd_event(0X46, 0, 0, 0);
-                }
-            }
-            else if (tempKey.ToString().ToUpper() == "F13")
-            {
-                if (Macro.getInstance.Flag_F11)
-                {
-                    Macro.getInstance.Flag_F11 = false;
-                }
-                else
-                {
-                    Thread.Sleep(15000);
-                    Macro.getInstance.Flag_F11 = true;
-                }
-            }
-            else if (tempKey.ToString().ToUpper() == "F13")
-            {
-                if (Macro.getInstance.Flag_F12)
-                {
-                    Macro.getInstance.Flag_F12 = false;
-                    sellAllItem();
-                }
-                else
-                {
-                    Macro.getInstance.Flag_F12 = true;
-                }
-            }
             else
             {
 
@@ -974,7 +932,7 @@ namespace Biden.Func
 
         public void keyUp()
         {
-            User32.API.keybd_event(0X20, 0, 2, 0);
+            //User32.API.keybd_event(0X20, 0, 2, 0);
             //User32.API.keybd_event(0X33, 0, 2, 0);
             User32.API.keybd_event(0X36, 0, 2, 0);
             User32.API.keybd_event(0X34, 0, 2, 0);
@@ -984,7 +942,7 @@ namespace Biden.Func
 
         public void keyDown()
         {
-            User32.API.keybd_event(0X20, 0, 0, 0);
+            //User32.API.keybd_event(0X20, 0, 0, 0);
             //User32.API.keybd_event(0X33, 0, 0, 0);
             User32.API.keybd_event(0X36, 0, 0, 0);
             User32.API.keybd_event(0X34, 0, 0, 0);
@@ -1680,29 +1638,57 @@ namespace Biden.Func
 
         }
 
+        public static string lastDirection = "LEFT";
 
         private void attackUsingHell()
         {
-            Thread.Sleep(500);
+            Thread.Sleep(10);
             SK.sendkeyEsc(5);
-            SK.sendkeyNumber(5, 1);
+            SK.sendkeyNumber(10, 1);
+            SK.sendkeyHome(5);
+            //if (curDirection == "LEFT")
+            //{
+            //    SK.sendkeyRight(5);
+            //}
+            //else if (curDirection == "RIGHT")
+            //{
+            //    SK.sendkeyLeft(5);
+            //}
+            //else if (curDirection == "UP")
+            //{
+            //    SK.sendkeyDown(5);
+            //}
+            //else if (curDirection == "DOWN")
+            //{
+            //    SK.sendkeyUp(5);
+            //}
+            if (curDirection == null)
+            {
+                curDirection = lastDirection;
+            }
             if (curDirection == "LEFT")
             {
-                SK.sendkeyRight(3);
+                SK.sendkeyLeft(5);
             }
             else if (curDirection == "RIGHT")
             {
-                SK.sendkeyLeft(3);
+                SK.sendkeyRight(5);
             }
             else if (curDirection == "UP")
             {
-                SK.sendkeyDown(3);
+                SK.sendkeyUp(5);
             }
             else if (curDirection == "DOWN")
             {
-                SK.sendkeyUp(3);
+                SK.sendkeyDown(5);
             }
+            else
+            {
+                lastDirection = curDirection;
+            }
+            Thread.Sleep(50);
             SK.sendkeyEnter(5);
+            SK.sendkeyEsc(5);
             Thread.Sleep(10);
             SK.sendkeyTab(5);
             SK.sendkeyHome(5);
@@ -1822,8 +1808,8 @@ namespace Biden.Func
 
             //몬스터가 없는 곳을 구분
             bool noMonsterFlag = false;
-            int movingDelay = 350;
-            if (key.Contains("12:"))
+            int movingDelay = 150;
+            if (key.Contains("122:"))
             {
                 noMonsterFlag = true;
             }
@@ -1831,7 +1817,7 @@ namespace Biden.Func
             //몬스터가 없는 곳에서는 빠르게 이동
             if (noMonsterFlag)
             {
-                movingDelay = 100;
+                movingDelay = 10;
             }
             //몬스터가 있는 곳에서 스킬 사용
             else
@@ -1854,7 +1840,7 @@ namespace Biden.Func
                 SK.sendkeyNumber(10, 2);
             }
             //보무
-            if (firstRunFlag || timerForBoMu.ElapsedMs >= 150000)
+            if (firstRunFlag || timerForBoMu.ElapsedMs >= 90000)
             {
                 firstRunFlag = false;
                 SK.sendkeyNumber(5, 9);
@@ -1965,13 +1951,14 @@ namespace Biden.Func
                     //User32.API.keybd_event(0X26, 0, 0x0002, 0);
                     //User32.API.keybd_event(0X27, 0, 0x0002, 0);
                     //User32.API.keybd_event(0X28, 0, 0x0002, 0);
-                    //User32.API.BlockInput(true);   // 사용자 입력 차단
 
-                    //attackUsingHell();
+                    User32.API.BlockInput(true);   // 사용자 입력 차단
+
+                    attackUsingHell();
                 }
                 finally
                 {
-                    //User32.API.BlockInput(false);        // 반드시 해제
+                    User32.API.BlockInput(false);        // 반드시 해제
                 }
                 return;
             }
@@ -1981,7 +1968,19 @@ namespace Biden.Func
 
 
         public static int getMapNumber()
-        {
+
+
+        {   //XY(805,21)  RGB(255,255,255)
+            //XY(805,22)  RGB(255,255,255)
+            //XY(805,23)  RGB(255,255,255)
+            //XY(805,24)  RGB(203,200,196)
+
+
+            //XY(804,23)  RGB(75,75,74)
+            //XY(804,24)  RGB(60,61,59)
+
+
+
             int res = 0;
             //(804, 13) + (809, 6)
             //
@@ -1991,67 +1990,134 @@ namespace Biden.Func
             int mapTitleX2 = 809;
             int mapTitleY2 = 11;
 
+
+            //선녀의방 10번 이후를 위한 좌표 추가
+            int mapTitleX3 = 645;
+            int mapTitleY3 = 23;
+            //XY(806, 3)과 XY(811,13)
+            int mapTitleX4 = 806;
+            int mapTitleY4 = 3;
+            int mapTitleX5 = 811;
+            int mapTitleY5 = 13;
+
             //좌표 색 가져오기
             Color curTitleColor1 = GetColorAt(mapTitleX1, mapTitleY1);
             Color curTitleColor2 = GetColorAt(mapTitleX2, mapTitleY2);
+            Color curTitleColor3 = GetColorAt(mapTitleX3, mapTitleY3);
+            Color curTitleColor4 = GetColorAt(mapTitleX4, mapTitleY4);
+            Color curTitleColor5 = GetColorAt(mapTitleX5, mapTitleY5);
             titleR1 = curTitleColor1.R;
             titleG1 = curTitleColor1.G;
             titleB1 = curTitleColor1.B;
             titleR2 = curTitleColor2.R;
             titleG2 = curTitleColor2.G;
             titleB2 = curTitleColor2.B;
+            titleR3 = curTitleColor3.R;
+            titleG3 = curTitleColor3.G;
+            titleB3 = curTitleColor3.B;
+            titleR4 = curTitleColor4.R;
+            titleG4 = curTitleColor4.G;
+            titleB4 = curTitleColor4.B;
+            titleR5 = curTitleColor5.R;
+            titleG5 = curTitleColor5.G;
+            titleB5 = curTitleColor5.B;
 
-            if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+
+            if (titleR3 == 244 && titleG3 == 244 && titleB3 == 244)
             {
-                res = 1;
-            }
-            else if (titleR1 == 131 && titleG1 == 129 && titleB1 == 131 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
-            {
-                res = 2;
-            }
-            else if (titleR1 == 12 && titleG1 == 9 && titleB1 == 12 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
-            {
-                res = 3;
-            }
-            else if (titleR1 == 135 && titleG1 == 133 && titleB1 == 135 && titleR2 == 75 && titleG2 == 75 && titleB2 == 74)
-            {
-                res = 4;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 60 && titleG2 == 61 && titleB2 == 59)
-            {
-                res = 5;
-            }
-            else if (titleR1 == 130 && titleG1 == 129 && titleB1 == 130 && titleR2 == 60 && titleG2 == 61 && titleB2 == 59)
-            {
-                res = 6;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
-            {
-                res = 7;
-            }
-            else if (titleR1 == 130 && titleG1 == 129 && titleB1 == 130 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
-            {
-                res = 8;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 198 && titleG2 == 199 && titleB2 == 198)
-            {
-                res = 9;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 75 && titleG2 == 75 && titleB2 == 74)
-            {
-                res = 10;
-            }
-            else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
-            {
-                res = 11;
-            }
-            else if (titleR1 == 243 && titleG1 == 243 && titleB1 == 243 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
-            {
-                res = 12;
+                //Console.WriteLine($"if (titleR4 == {titleR4} && titleG4 == {titleG4} && titleB4 == {titleB4} && titleR5 == {titleR5} && titleG5 == {titleG5} && titleB5 == {titleB5} && titleR6 == {titleR6} && titleG6 == {titleG6} && titleB6 == {titleB6})" );
+                if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 18 && titleG5 == 19 && titleB5 == 17)
+                {
+                    res = 10;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 137 && titleG5 == 137 && titleB5 == 136)
+                {
+                    res = 11;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 77 && titleG5 == 78 && titleB5 == 77)
+                {
+                    res = 12;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 78 && titleG5 == 79 && titleB5 == 78)
+                {
+                    res = 13;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 77 && titleG5 == 77 && titleB5 == 76)
+                {
+                    res = 14;
+                }
+                else if (titleR4 == 18 && titleG4 == 15 && titleB4 == 18 && titleR5 == 136 && titleG5 == 137 && titleB5 == 136)
+                {
+                    res = 15;
+                }
+                else if (titleR4 == 6 && titleG4 == 3 && titleB4 == 6 && titleR5 == 136 && titleG5 == 137 && titleB5 == 136)
+                {
+                    res = 16;
+                }
+                else if (titleR4 == 18 && titleG4 == 15 && titleB4 == 18 && titleR5 == 18 && titleG5 == 19 && titleB5 == 17)
+                {
+                    res = 17;
+                }
+                else
+                {
+                    res = 999;
+                }
+
             }
             else
             {
-                res = 0;
+                if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+                {
+                    res = 1;
+                }
+                else if (titleR1 == 131 && titleG1 == 129 && titleB1 == 131 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
+                {
+                    res = 2;
+                }
+                else if (titleR1 == 12 && titleG1 == 9 && titleB1 == 12 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
+                {
+                    res = 3;
+                }
+                else if (titleR1 == 135 && titleG1 == 133 && titleB1 == 135 && titleR2 == 75 && titleG2 == 75 && titleB2 == 74)
+                {
+                    res = 4;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 60 && titleG2 == 61 && titleB2 == 59)
+                {
+                    res = 5;
+                }
+                else if (titleR1 == 130 && titleG1 == 129 && titleB1 == 130 && titleR2 == 60 && titleG2 == 61 && titleB2 == 59)
+                {
+                    res = 6;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
+                {
+                    res = 7;
+                }
+                else if (titleR1 == 130 && titleG1 == 129 && titleB1 == 130 && titleR2 == 102 && titleG2 == 102 && titleB2 == 101)
+                {
+                    res = 8;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 198 && titleG2 == 199 && titleB2 == 198)
+                {
+                    res = 9;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 75 && titleG2 == 75 && titleB2 == 74)
+                {
+                    res = 10;
+                }
+                else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+                {
+                    res = 11;
+                }
+                else if (titleR1 == 243 && titleG1 == 243 && titleB1 == 243 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+                {
+                    res = 12;
+                }
+                else
+                {
+                    res = 0;
+                }
             }
 
 
@@ -2078,12 +2144,12 @@ namespace Biden.Func
             int mapTitleX5 = 1805;
             int mapTitleY5 = 1044;
 
-            int mapTitleX6 = 1724;
-            int mapTitleY6 = 1030;
-            int mapTitleX7 = 1737;
-            int mapTitleY7 = 1030;
-            int mapTitleX8 = 1737;
-            int mapTitleY8 = 1042;
+            int mapTitleX6 = 1725;
+            int mapTitleY6 = 1028;
+            int mapTitleX7 = 1725;
+            int mapTitleY7 = 1037;
+            int mapTitleX8 = 1736;
+            int mapTitleY8 = 1033;
 
             int mapTitleX9 = 1704;
             int mapTitleY9 = 1033;
@@ -2163,7 +2229,7 @@ namespace Biden.Func
 
             int res1 = getMapNumber();
             string res2 = getMapXY();
-            //MainWindow.getInstance.SetStateString(res, res, curColor);
+            //MainWindow.getInstance.SetStateString(res1, res1, curColor);
             //MainWindow.getInstance.SetStateString(res2, res2, curColor);
             MainWindow.getInstance.SetStateString(x2, y2, curColor);
 
