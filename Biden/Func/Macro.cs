@@ -1035,10 +1035,6 @@ namespace Biden.Func
 
         public void keyDown()
         {
-            if (UseCurseOption)
-            {
-                User32.API.keybd_event(0xBC, 0, 0, 0);
-            }
             //저주
             if (UseCurseOption)
             {
