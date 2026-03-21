@@ -790,9 +790,20 @@ namespace Biden.Func
             }
             if (tempKey.ToString().ToUpper() == "END")
             {
+                
                 if (Macro.getInstance.Flag_END)
                 {
                     keyUp();
+                    //평타 종료
+                    if (UseNormalAttack)
+                    {
+                        User32.API.keybd_event(0X20, 0, 2, 0);
+                    }
+                    //줍기 종료
+                    if (UsePickup)
+                    {
+                        User32.API.keybd_event(0xBC, 0, 2, 0);
+                    }
                     Macro.getInstance.Flag_END = false;
                 }
                 else
@@ -804,6 +815,16 @@ namespace Biden.Func
                     firstRunFlag = true;
                     Macro.getInstance.Flag_END = true;
                     setMagicNumber();
+                    //평타 시작
+                    if (UseNormalAttack)
+                    {
+                        User32.API.keybd_event(0X20, 0, 0, 0);
+                    }
+                    //줍기 시작
+                    if (UsePickup)
+                    {
+                        User32.API.keybd_event(0xBC, 0, 0, 0);
+                    }
                 }
             }
             if (tempKey.ToString().ToUpper() == "INSERT")
@@ -995,18 +1016,10 @@ namespace Biden.Func
             return (byte)(0x30 + number);
         }
 
+
+
         public void keyUp()
         {
-            //평타
-            if (UseNormalAttack)
-            {
-                User32.API.keybd_event(0X20, 0, 2, 0);
-            }
-            //줍기
-            if (UsePickup)
-            { 
-                User32.API.keybd_event(0xBC, 0, 2, 0);
-            }
             //저주
             if (UseCurseOption)
             {
@@ -1022,16 +1035,6 @@ namespace Biden.Func
 
         public void keyDown()
         {
-            //평타
-            if (UseNormalAttack)
-            {
-                User32.API.keybd_event(0X20, 0, 0, 0);
-            }
-            //줍기
-            if (UsePickup)
-            {
-                User32.API.keybd_event(0xBC, 0, 0, 0);
-            }
             if (UseCurseOption)
             {
                 User32.API.keybd_event(0xBC, 0, 0, 0);
@@ -1414,6 +1417,16 @@ namespace Biden.Func
             if (UseCaptchaAlert && !(R5 == 6 && G5 == 3 && B5 == 6) && beepCount < 30)
             {
                 keyUp();
+                //평타 종료
+                if (UseNormalAttack)
+                {
+                    User32.API.keybd_event(0X20, 0, 2, 0);
+                }
+                //줍기 종료
+                if (UsePickup)
+                {
+                    User32.API.keybd_event(0xBC, 0, 2, 0);
+                }
                 User32.API.keybd_event(0X25, 0, 2, 0);
                 User32.API.keybd_event(0X26, 0, 2, 0);
                 User32.API.keybd_event(0X27, 0, 2, 0);
@@ -1427,8 +1440,9 @@ namespace Biden.Func
                 //MessageBox.Show("캡챠 발생!!");
                 return;
             }
-            else
+            if (beepCount >= 30)
             {
+                Macro.getInstance.Flag_END = false;
                 beepCount = 0;
             }
 
@@ -1514,7 +1528,7 @@ namespace Biden.Func
             {
                 if (R3 == 8 && G3 == 4 && B3 == 8)
                 {
-                    SK.sendkeyCtrlAndZ(10);
+                    SK.sendkeyCtrlAndZ(50);
                 }
                 if (R2 == 8 && G2 == 4 && B2 == 8)
                 {

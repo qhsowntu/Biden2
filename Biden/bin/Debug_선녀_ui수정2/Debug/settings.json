@@ -8,7 +8,7 @@
   "UseCaptchaAlert": true,
   "UseHeal": true,
   "UseProtectArmor": true,
-  "UseCurseOption": true,
+  "UseCurseOption": false,
   "UseBuffCombo": true,
   "UseExtraCombo": false,
   "UseShout": false,
