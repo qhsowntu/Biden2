@@ -1524,7 +1524,7 @@ namespace Biden.Func
             {
                 if (R3 == 8 && G3 == 4 && B3 == 8)
                 {
-                    SK.sendkeyCtrlAndZ(50);
+                    SK.sendkeyCtrlAndZ(80);
                 }
                 if (R2 == 8 && G2 == 4 && B2 == 8)
                 {
