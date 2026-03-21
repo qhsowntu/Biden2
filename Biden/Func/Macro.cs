@@ -1205,7 +1205,7 @@ namespace Biden.Func
                     if (ct.IsCancellationRequested)
                     {
                         // Clean up here, then...
-                        int abc = 0;
+                        //int abc = 0;
                         //ct.ThrowIfCancellationRequested();
                     }
                 }
