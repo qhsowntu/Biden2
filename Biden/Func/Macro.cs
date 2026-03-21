@@ -1427,6 +1427,10 @@ namespace Biden.Func
                 //MessageBox.Show("캡챠 발생!!");
                 return;
             }
+            else
+            {
+                beepCount = 0;
+            }
 
             
             //일반 채팅 매크로 반응
@@ -1514,7 +1518,9 @@ namespace Biden.Func
                 }
                 if (R2 == 8 && G2 == 4 && B2 == 8)
                 {
-                    SK.sendkeyNumber(10, (byte)magic2);
+                    User32.API.keybd_event((byte)magic2, 0, 0, 0);
+                    Thread.Sleep(10);
+                    User32.API.keybd_event((byte)magic2, 0, 2, 0);
                 }
             }
 
