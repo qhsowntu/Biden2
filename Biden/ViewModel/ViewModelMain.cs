@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Windows.Input;
 using System.Windows.Media;
-
+using System.Collections.ObjectModel;
 namespace Biden.ViewModel
 {
     public class ViewModelMain : INotifyPropertyChanged
@@ -189,6 +189,88 @@ namespace Biden.ViewModel
             get => _useProtectArmor;
             set => SetProperty(ref _useProtectArmor, value);
         }
+        public ObservableCollection<string> HealHpThresholdOptions { get; }
+        = new ObservableCollection<string>
+        {
+            "5%",
+            "10%",
+            "85%"
+        };
+
+        private string _selectedHealHpThreshold = "85%";
+        public string SelectedHealHpThreshold
+        {
+            get => _selectedHealHpThreshold;
+            set
+            {
+                if (_selectedHealHpThreshold != value)
+                {
+                    _selectedHealHpThreshold = value;
+                    OnPropertyChanged(nameof(SelectedHealHpThreshold));
+                }
+            }
+        }
+
+        private bool _useThreeHellEvolution;
+        public bool UseThreeHellEvolution
+        {
+            get => _useThreeHellEvolution;
+            set
+            {
+                _useThreeHellEvolution = value;
+                OnPropertyChanged();
+            }
+        }
+        private int _threeHellEvolutionDelay;
+        public int ThreeHellEvolutionDelay
+        {
+            get => _threeHellEvolutionDelay;
+            set
+            {
+                _threeHellEvolutionDelay = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _useParalysis;
+        public bool UseParalysis
+        {
+            get => _useParalysis;
+            set
+            {
+                _useParalysis = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+        private bool _useJipok;
+        public bool UseJipok
+        {
+            get => _useJipok;
+            set => SetProperty(ref _useJipok, value);
+        }
+
+        private bool _useMagi;
+        public bool UseMagi
+        {
+            get => _useMagi;
+            set => SetProperty(ref _useMagi, value);
+        }
+
+        private bool _useHoche;
+        public bool UseHoche
+        {
+            get => _useHoche;
+            set => SetProperty(ref _useHoche, value);
+        }
+
+        private bool _useNodo;
+        public bool UseNodo
+        {
+            get => _useNodo;
+            set => SetProperty(ref _useNodo, value);
+        }
 
         // =========================
         // 마법 번호
@@ -243,11 +325,11 @@ namespace Biden.ViewModel
             set => SetProperty(ref _magicNoPoison, value);
         }
 
-        private string _magicNoParalyze;
-        public string MagicNoParalyze
+        private string _magicNoThreeHell;
+        public string MagicNoThreeHell
         {
-            get => _magicNoParalyze;
-            set => SetProperty(ref _magicNoParalyze, value);
+            get => _magicNoThreeHell;
+            set => SetProperty(ref _magicNoThreeHell, value);
         }
 
         private string _magicNoProtect;
@@ -262,6 +344,41 @@ namespace Biden.ViewModel
         {
             get => _magicNoArmor;
             set => SetProperty(ref _magicNoArmor, value);
+        }
+
+        private string _magicNoParalysis;
+        public string MagicNoParalysis
+        {
+            get => _magicNoParalysis;
+            set => SetProperty(ref _magicNoParalysis, value);
+        }
+
+        private string _magicNoJipok;
+        public string MagicNoJipok
+        {
+            get => _magicNoJipok;
+            set => SetProperty(ref _magicNoJipok, value);
+        }
+
+        private string _magicNoMagi;
+        public string MagicNoMagi
+        {
+            get => _magicNoMagi;
+            set => SetProperty(ref _magicNoMagi, value);
+        }
+
+        private string _magicNoHoche;
+        public string MagicNoHoche
+        {
+            get => _magicNoHoche;
+            set => SetProperty(ref _magicNoHoche, value);
+        }
+
+        private string _magicNoNodo;
+        public string MagicNoNodo
+        {
+            get => _magicNoNodo;
+            set => SetProperty(ref _magicNoNodo, value);
         }
 
 
@@ -342,8 +459,61 @@ namespace Biden.ViewModel
 
 
         // =========================
+        // 이동 설정
+        // =========================
+
+        private int _nearSegmentMoveIntervalMs;
+        public int NearSegmentMoveIntervalMs
+        {
+            get => _nearSegmentMoveIntervalMs;
+            set => SetProperty(ref _nearSegmentMoveIntervalMs, value);
+        }
+
+        private int _directionChangeDelayMs;
+        public int DirectionChangeDelayMs
+        {
+            get => _directionChangeDelayMs;
+            set => SetProperty(ref _directionChangeDelayMs, value);
+        }
+
+        private int _nearTurnSlowRepeatMs;
+        public int NearTurnSlowRepeatMs
+        {
+            get => _nearTurnSlowRepeatMs;
+            set => SetProperty(ref _nearTurnSlowRepeatMs, value);
+        }
+
+        private int _nearTurnStepThreshold;
+        public int NearTurnStepThreshold
+        {
+            get => _nearTurnStepThreshold;
+            set => SetProperty(ref _nearTurnStepThreshold, value);
+        }
+
+
+        // =========================
         // 기타 설정
         // =========================
+
+        public ObservableCollection<string> MapOptions { get; } =
+        new ObservableCollection<string>
+        {
+            "관령세작",
+            "관령흉가",
+            "선녀",
+            "산적",
+            "선비"
+        };
+
+        private string _selectedMap = "관령흉가";
+        public string SelectedMap
+        {
+            get => _selectedMap;
+            set => SetProperty(ref _selectedMap, value);
+        }
+
+
+
 
         private int _moveDelay;
         public int MoveDelay
@@ -358,6 +528,8 @@ namespace Biden.ViewModel
                 SetProperty(ref _moveDelay, newValue);
             }
         }
+
+
 
         // =========================
         // Commands
@@ -451,17 +623,27 @@ namespace Biden.ViewModel
 
                 UseHellfire = false;
                 HellfireDirectionIndex = 0;
+                UseThreeHellEvolution = false;
+                ThreeHellEvolutionDelay = 5;
                 UseNormalAttack = false;
                 UsePoison = false;
                 UsePickup = true;
                 UseCaptchaAlert = true;
 
                 UseHeal = true;
+                SelectedHealHpThreshold = "85%";
                 UseProtectArmor = true;
                 UseCurseOption = true;
                 UseBuffCombo = true;
                 UseExtraCombo = true;
+                UseParalysis = true;
+                UseJipok = false;
+                UseMagi = false;
+                UseHoche = false;
+                UseNodo = false;
 
+
+                SelectedMap = "관령흉가";
                 UseShout = true;
                 ShoutCooldown = 60;
                 ShoutMessage = "9선녀중";
@@ -477,11 +659,26 @@ namespace Biden.ViewModel
                 MagicNoExtra1 = "5";
                 MagicNoExtra2 = "6";
                 MagicNoPoison = "7";
-                MagicNoParalyze = "8";
+                MagicNoThreeHell = "8";
                 MagicNoProtect = "9";
                 MagicNoArmor = "0";
+                MagicNoParalysis = "11";
+
+
+
+                MagicNoJipok = "11";
+                MagicNoMagi = "11";
+                MagicNoHoche = "11";
+                MagicNoNodo = "11";
 
                 MoveDelay = 200;
+
+                SelectedMap = "관령흉가";
+
+                NearSegmentMoveIntervalMs = 180;
+                DirectionChangeDelayMs = 15;
+                NearTurnSlowRepeatMs = 100;
+                NearTurnStepThreshold = 3;
             }
             finally
             {
@@ -496,17 +693,28 @@ namespace Biden.ViewModel
                 IsMainEnabled = false,
                 UseHellfire = UseHellfire,
                 HellfireDirectionIndex = HellfireDirectionIndex,
+                UseThreeHellEvolution = UseThreeHellEvolution,
+                ThreeHellEvolutionDelay = ThreeHellEvolutionDelay,
+
                 UseNormalAttack = UseNormalAttack,
                 UsePoison = UsePoison,
                 UsePickup = UsePickup,
                 UseCaptchaAlert = UseCaptchaAlert,
 
                 UseHeal = UseHeal,
+                SelectedHealHpThreshold = SelectedHealHpThreshold,
                 UseProtectArmor = UseProtectArmor,
                 UseCurseOption = UseCurseOption,
                 UseBuffCombo = UseBuffCombo,
                 UseExtraCombo = UseExtraCombo,
+                UseParalysis = UseParalysis,
 
+                UseJipok = UseJipok,
+                UseMagi = UseMagi,
+                UseHoche = UseHoche,
+                UseNodo = UseNodo,
+
+                SelectedMap = SelectedMap,
                 UseShout = UseShout,
                 ShoutCooldown = ShoutCooldown,
                 ShoutMessage = ShoutMessage,
@@ -522,9 +730,20 @@ namespace Biden.ViewModel
                 MagicNoExtra1 = MagicNoExtra1,
                 MagicNoExtra2 = MagicNoExtra2,
                 MagicNoPoison = MagicNoPoison,
-                MagicNoParalyze = MagicNoParalyze,
+                MagicNoThreeHell = MagicNoThreeHell,
                 MagicNoProtect = MagicNoProtect,
                 MagicNoArmor = MagicNoArmor,
+                MagicNoParalysis = MagicNoParalysis,
+
+                MagicNoJipok = MagicNoJipok,
+                MagicNoMagi = MagicNoMagi,
+                MagicNoHoche = MagicNoHoche,
+                MagicNoNodo = MagicNoNodo,
+
+                NearSegmentMoveIntervalMs = NearSegmentMoveIntervalMs,
+                DirectionChangeDelayMs = DirectionChangeDelayMs,
+                NearTurnSlowRepeatMs = NearTurnSlowRepeatMs,
+                NearTurnStepThreshold = NearTurnStepThreshold,
 
                 MoveDelay = MoveDelay
             };
@@ -539,17 +758,30 @@ namespace Biden.ViewModel
 
             UseHellfire = settings.UseHellfire;
             HellfireDirectionIndex = settings.HellfireDirectionIndex;
+            UseThreeHellEvolution = settings.UseThreeHellEvolution;
+            ThreeHellEvolutionDelay = settings.ThreeHellEvolutionDelay;
+
             UseNormalAttack = settings.UseNormalAttack;
             UsePickup = settings.UsePickup;
             UseCaptchaAlert = settings.UseCaptchaAlert;
 
             UseHeal = settings.UseHeal;
+            SelectedHealHpThreshold = settings.SelectedHealHpThreshold;
             UseProtectArmor = settings.UseProtectArmor;
             UseBuffCombo = settings.UseBuffCombo;
             UseCurseOption = settings.UseCurseOption;
             UseExtraCombo = settings.UseExtraCombo;
+            UseParalysis = settings.UseParalysis;
             UsePoison = settings.UsePoison;
 
+
+            UseJipok = settings.UseJipok;
+            UseMagi = settings.UseMagi;
+            UseHoche = settings.UseHoche;
+            UseNodo = settings.UseNodo;
+
+
+            SelectedMap = settings.SelectedMap;
             UseShout = settings.UseShout;
             ShoutCooldown = settings.ShoutCooldown;
             ShoutMessage = settings.ShoutMessage;
@@ -564,9 +796,20 @@ namespace Biden.ViewModel
             MagicNoExtra1 = settings.MagicNoExtra1;
             MagicNoExtra2 = settings.MagicNoExtra2;
             MagicNoPoison = settings.MagicNoPoison;
-            MagicNoParalyze = settings.MagicNoParalyze;
+            MagicNoThreeHell = settings.MagicNoThreeHell;
             MagicNoProtect = settings.MagicNoProtect;
             MagicNoArmor = settings.MagicNoArmor;
+            MagicNoParalysis = settings.MagicNoParalysis;
+
+            MagicNoJipok = settings.MagicNoJipok;
+            MagicNoMagi = settings.MagicNoMagi;
+            MagicNoHoche = settings.MagicNoHoche;
+            MagicNoNodo = settings.MagicNoNodo;
+
+            NearSegmentMoveIntervalMs = settings.NearSegmentMoveIntervalMs;
+            DirectionChangeDelayMs = settings.DirectionChangeDelayMs;
+            NearTurnSlowRepeatMs = settings.NearTurnSlowRepeatMs;
+            NearTurnStepThreshold = settings.NearTurnStepThreshold;
 
             MoveDelay = settings.MoveDelay;
         }

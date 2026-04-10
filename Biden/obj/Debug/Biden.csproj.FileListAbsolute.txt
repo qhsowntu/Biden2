@@ -647,7 +647,6 @@ C:\Users\김양수\Downloads\baram_common\baram_common\Biden\bin\Debug\System.Te
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\bin\Debug\System.Text.Json.xml
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\bin\Debug\WindowsInput.xml
-C:\Users\김양수\Downloads\baram_common\baram_common\Biden\obj\Debug\Biden.csproj.AssemblyReference.cache
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\obj\Debug\View\MainWindow.g.cs
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\obj\Debug\App.g.cs
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\obj\Debug\GeneratedInternalTypeHelper.g.cs
@@ -662,3 +661,357 @@ C:\Users\김양수\Downloads\baram_common\baram_common\Biden\obj\Debug\Biden.csp
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\obj\Debug\Biden.csproj.CopyComplete
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\obj\Debug\Biden.exe
 C:\Users\김양수\Downloads\baram_common\baram_common\Biden\obj\Debug\Biden.pdb
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.exe.config
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.exe
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.pdb
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\FontAwesome.WPF.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Modules.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.SQLite.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Wpf.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Buffers.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.IO.Pipelines.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Memory.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Json.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\WindowsInput.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\FontAwesome.WPF.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Modules.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.SQLite.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Wpf.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Buffers.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.IO.Pipelines.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Memory.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Json.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\bin\Debug\WindowsInput.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.AssemblyReference.cache
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\View\MainWindow.g.cs
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\App.g.cs
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden_MarkupCompile.cache
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden_MarkupCompile.lref
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\App.baml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\View\MainWindow.baml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.g.resources
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.Properties.Resources.resources
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.GenerateResource.cache
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.CoreCompileInputs.cache
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.CopyComplete
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.exe
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.pdb
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.exe.config
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.exe
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.pdb
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\FontAwesome.WPF.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Modules.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.SQLite.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Wpf.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Newtonsoft.Json.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Buffers.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.IO.Pipelines.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Memory.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Json.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\WindowsInput.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\FontAwesome.WPF.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Modules.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.SQLite.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Wpf.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Newtonsoft.Json.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Buffers.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.IO.Pipelines.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Memory.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Json.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\bin\Debug\WindowsInput.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.AssemblyReference.cache
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\View\MainWindow.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\App.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden_MarkupCompile.cache
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden_MarkupCompile.lref
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\App.baml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\View\MainWindow.baml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.g.resources
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.Properties.Resources.resources
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.GenerateResource.cache
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.CoreCompileInputs.cache
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.CopyComplete
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.exe
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (3)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.pdb
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.exe.config
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.exe
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.pdb
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\FontAwesome.WPF.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Modules.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.SQLite.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Wpf.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Buffers.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.IO.Pipelines.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Memory.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Json.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\WindowsInput.dll
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\FontAwesome.WPF.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Modules.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.SQLite.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Wpf.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Buffers.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.IO.Pipelines.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Memory.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Json.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\WindowsInput.xml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.AssemblyReference.cache
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\View\MainWindow.g.cs
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\App.g.cs
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden_MarkupCompile.cache
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden_MarkupCompile.lref
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\App.baml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\View\MainWindow.baml
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.g.resources
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.Properties.Resources.resources
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.GenerateResource.cache
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.CoreCompileInputs.cache
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.CopyComplete
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.exe
+C:\Users\kys\Downloads\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.pdb
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.exe.config
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.exe
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Biden.pdb
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\FontAwesome.WPF.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Modules.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.SQLite.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Wpf.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Newtonsoft.Json.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Buffers.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.IO.Pipelines.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Memory.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Json.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\WindowsInput.dll
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\FontAwesome.WPF.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Modules.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.SQLite.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\IronPython.Wpf.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\Newtonsoft.Json.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Buffers.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.IO.Pipelines.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Memory.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Text.Json.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\bin\Debug\WindowsInput.xml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.AssemblyReference.cache
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\View\MainWindow.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\App.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden_MarkupCompile.cache
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden_MarkupCompile.lref
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\App.baml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\View\MainWindow.baml
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.g.resources
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.Properties.Resources.resources
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.GenerateResource.cache
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.CoreCompileInputs.cache
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.csproj.CopyComplete
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.exe
+C:\Users\김양수\Downloads\baram_common_2026_03_23_선녀 (2) (2)\baram_common_2026_03_23_선녀 (3) (2)\baram_common_2026_03_23_선녀\Biden\obj\Debug\Biden.pdb
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Biden.exe.config
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Biden.exe
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Biden.pdb
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\FontAwesome.WPF.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.Modules.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.SQLite.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.Wpf.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Scripting.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Buffers.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.IO.Pipelines.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Memory.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Text.Json.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\WindowsInput.dll
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\FontAwesome.WPF.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.Modules.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.SQLite.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.Wpf.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Scripting.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Buffers.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.IO.Pipelines.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Memory.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Text.Json.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\WindowsInput.xml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.AssemblyReference.cache
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\View\MainWindow.g.cs
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\App.g.cs
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden_MarkupCompile.cache
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden_MarkupCompile.lref
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\App.baml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\View\MainWindow.baml
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.g.resources
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.Properties.Resources.resources
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.GenerateResource.cache
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.CoreCompileInputs.cache
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.CopyComplete
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.exe
+C:\Users\kys\Downloads\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.pdb
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Biden.exe.config
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Biden.exe
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Biden.pdb
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\FontAwesome.WPF.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.Modules.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.SQLite.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.Wpf.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Dynamic.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Scripting.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Scripting.Metadata.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Newtonsoft.Json.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Buffers.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.IO.Pipelines.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Memory.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Text.Encodings.Web.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Text.Json.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\WindowsInput.dll
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\FontAwesome.WPF.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.Modules.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.SQLite.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\IronPython.Wpf.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Dynamic.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Scripting.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Scripting.Metadata.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Microsoft.Xaml.Behaviors.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\Newtonsoft.Json.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Buffers.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.IO.Pipelines.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Memory.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Text.Encodings.Web.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Text.Json.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\bin\Debug\WindowsInput.xml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.AssemblyReference.cache
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\View\MainWindow.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\App.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden_MarkupCompile.cache
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden_MarkupCompile.lref
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\App.baml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\View\MainWindow.baml
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.g.resources
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.Properties.Resources.resources
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.GenerateResource.cache
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.CoreCompileInputs.cache
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.CopyComplete
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.exe
+C:\Users\김양수\Downloads\baram_common_2026_04_07\baram_common_2026_04_02\baram_common_2026_04_02\Biden\obj\Debug\Biden.pdb

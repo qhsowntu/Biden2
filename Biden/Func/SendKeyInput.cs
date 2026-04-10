@@ -11,8 +11,6 @@ namespace Biden.Func
 {
     class SendKeyInput
     {
-
-
         const int KEYEVENTF_KEYDOWN = 0x0000;
         const int KEYEVENTF_KEYUP = 0x0002;
 

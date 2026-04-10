@@ -73,21 +73,21 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="ToggleButton">
                         <Border x:Name="Bg"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="12">
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="12">
                             <Grid Margin="2">
                                 <Border x:Name="Knob"
-                                Width="20"
-                                Height="20"
-                                Background="White"
-                                CornerRadius="10"
-                                HorizontalAlignment="Left"/>
+                                        Width="20"
+                                        Height="20"
+                                        Background="White"
+                                        CornerRadius="10"
+                                        HorizontalAlignment="Left"/>
                                 <TextBlock x:Name="Label"
-                                   Text="OFF"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   Foreground="White"
-                                   FontWeight="SemiBold"/>
+                                           Text="OFF"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Center"
+                                           Foreground="White"
+                                           FontWeight="SemiBold"/>
                             </Grid>
                         </Border>
                         <ControlTemplate.Triggers>
@@ -154,9 +154,7 @@
             </Grid>
 
             <!-- 본문 -->
-            
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-                
                 <StackPanel Margin="16,8,16,8">
 
                     <Menu Height="24" Background="#EEF4FA">
@@ -177,7 +175,6 @@
                         </MenuItem>
                     </Menu>
 
-
                     <Border Style="{StaticResource CardBorderStyle}" Padding="10" Margin="0,0,0,12">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -186,29 +183,27 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="매크로 활성화"
-                   VerticalAlignment="Center"
-                   FontSize="13"
-                   FontWeight="SemiBold"
-                   Foreground="#243B53"/>
+                                       VerticalAlignment="Center"
+                                       FontSize="13"
+                                       FontWeight="SemiBold"
+                                       Foreground="#243B53"/>
 
-                            <ToggleButton Grid.Column="1" Width="70"
-                      Style="{StaticResource TopToggleStyle}"
-                      IsChecked="{Binding IsMainEnabled}"
-                      VerticalAlignment="Center"/>
+                            <ToggleButton Grid.Column="1"
+                                          Width="70"
+                                          Style="{StaticResource TopToggleStyle}"
+                                          IsChecked="{Binding IsMainEnabled}"
+                                          VerticalAlignment="Center"/>
                         </Grid>
                     </Border>
-
-
-
 
                     <!-- 전투 옵션 -->
                     <Border Style="{StaticResource CardBorderStyle}">
                         <StackPanel>
                             <TextBlock Text="전투 옵션"
-                   FontSize="15"
-                   FontWeight="Bold"
-                   Foreground="#102A43"
-                   Margin="0,0,0,10"/>
+                                       FontSize="15"
+                                       FontWeight="Bold"
+                                       Foreground="#102A43"
+                                       Margin="0,0,0,10"/>
 
                             <Grid>
                                 <Grid.RowDefinitions>
@@ -217,33 +212,35 @@
                                     <RowDefinition Height="34"/>
                                     <!-- 헬파이어 방향 -->
                                     <RowDefinition Height="34"/>
+                                    <!-- 삼매진화 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 삼매진화 대기(초) -->
+                                    <RowDefinition Height="34"/>
                                     <!-- 평타 -->
-                                    <RowDefinition Height="34"/>
-                                    <!-- 줍기 -->
-                                    <RowDefinition Height="34"/>
-                                    <!-- 캡챠 알림 -->
                                     <RowDefinition Height="34"/>
                                     <!-- 힐 -->
                                     <RowDefinition Height="34"/>
+                                    <!-- 힐 체력 기준 -->
+                                    <RowDefinition Height="34"/>
                                     <!-- 동동주+공증 -->
                                     <RowDefinition Height="34"/>
-                                    <!-- 보호&무장 -->
+                                    <!-- 보호+무장 -->
                                     <RowDefinition Height="34"/>
                                     <!-- 저주 -->
                                     <RowDefinition Height="34"/>
                                     <!-- 첨첨 -->
                                     <RowDefinition Height="34"/>
+                                    <!-- 마비 -->
+                                    <RowDefinition Height="34"/>
                                     <!-- 중독 -->
                                     <RowDefinition Height="34"/>
-                                    <!-- 사자후 날리기 -->
+                                    <!-- 지폭지술 -->
                                     <RowDefinition Height="34"/>
-                                    <!-- 사자후 쿨타임 -->
+                                    <!-- 마기지체 -->
                                     <RowDefinition Height="34"/>
-                                    <!-- 사자후 내용 -->
+                                    <!-- 호체주술 -->
                                     <RowDefinition Height="34"/>
-                                    <!-- 일반채팅 감지 ALT+2 -->
-                                    <RowDefinition Height="34"/>
-                                    <!-- ALT+2 쿨타임 -->
+                                    <!-- 노도성황 -->
                                 </Grid.RowDefinitions>
 
                                 <Grid.ColumnDefinitions>
@@ -252,87 +249,104 @@
                                 </Grid.ColumnDefinitions>
 
                                 <TextBlock Grid.Row="0" Grid.Column="0" Text="헬파이어 사용" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="0" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseHellfire}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <CheckBox Grid.Row="0" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseHellfire}"
+                                          Style="{StaticResource CheckStyle}"/>
 
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="헬파이어 방향" Style="{StaticResource LabelStyle}"/>
                                 <ComboBox Grid.Row="1" Grid.Column="1"
-                      Style="{StaticResource InputComboBoxStyle}"
-                      SelectedIndex="{Binding HellfireDirectionIndex}">
+                                          Style="{StaticResource InputComboBoxStyle}"
+                                          SelectedIndex="{Binding HellfireDirectionIndex}">
                                     <ComboBoxItem Content="진행방향"/>
                                     <ComboBoxItem Content="진행반대방향"/>
                                 </ComboBox>
 
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="평타" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="2" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseNormalAttack}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="삼매진화" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="2" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseThreeHellEvolution}"
+                                          Style="{StaticResource CheckStyle}"/>
 
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="줍기" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="3" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UsePickup}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="삼매진화 대기(초)" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="1"
+                                         Style="{StaticResource InputTextBoxStyle}"
+                                         Text="{Binding ThreeHellEvolutionDelay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                                <TextBlock Grid.Row="4" Grid.Column="0" Text="캡챠 알림" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="4" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseCaptchaAlert}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="평타" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="4" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseNormalAttack}"
+                                          Style="{StaticResource CheckStyle}"/>
 
                                 <TextBlock Grid.Row="5" Grid.Column="0" Text="힐" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="5" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseHeal}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <CheckBox Grid.Row="5" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseHeal}"
+                                          Style="{StaticResource CheckStyle}"/>
 
-                                <TextBlock Grid.Row="6" Grid.Column="0" Text="동동주+공증" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="6" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseBuffCombo}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="6" Grid.Column="0" Text="힐 체력 기준" Style="{StaticResource LabelStyle}"/>
+                                <ComboBox Grid.Row="6" Grid.Column="1"
+                                          Style="{StaticResource InputComboBoxStyle}"
+                                          ItemsSource="{Binding HealHpThresholdOptions}"
+                                          SelectedItem="{Binding SelectedHealHpThreshold}"
+                                          IsEnabled="{Binding UseHeal}"/>
 
-                                <TextBlock Grid.Row="7" Grid.Column="0" Text="보호+무장" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="7" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseProtectArmor}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="7" Grid.Column="0" Text="동동주+공증" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="7" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseBuffCombo}"
+                                          Style="{StaticResource CheckStyle}"/>
 
-                                <TextBlock Grid.Row="8" Grid.Column="0" Text="저주" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="8" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseCurseOption}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="8" Grid.Column="0" Text="보호+무장" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="8" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseProtectArmor}"
+                                          Style="{StaticResource CheckStyle}"/>
 
-                                <TextBlock Grid.Row="9" Grid.Column="0" Text="첨첨" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="9" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseExtraCombo}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="9" Grid.Column="0" Text="저주" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="9" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseCurseOption}"
+                                          Style="{StaticResource CheckStyle}"/>
 
-                                <TextBlock Grid.Row="10" Grid.Column="0" Text="중독" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="10" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UsePoison}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="10" Grid.Column="0" Text="첨첨" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="10" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseExtraCombo}"
+                                          Style="{StaticResource CheckStyle}"/>
 
-                                <TextBlock Grid.Row="11" Grid.Column="0" Text="사자후 날리기(C 고정)" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="11" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseShout}"
-                      Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="11" Grid.Column="0" Text="마비" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="11" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseParalysis}"
+                                          Style="{StaticResource CheckStyle}"/>
 
-                                <TextBlock Grid.Row="12" Grid.Column="0" Text="사자후 쿨타임(초)" Style="{StaticResource LabelStyle}"/>
-                                <TextBox Grid.Row="12" Grid.Column="1"
-                     Style="{StaticResource InputTextBoxStyle}"
-                     Text="{Binding ShoutCooldown, UpdateSourceTrigger=PropertyChanged}"/>
-
-                                <TextBlock Grid.Row="13" Grid.Column="0" Text="사자후 내용" Style="{StaticResource LabelStyle}"/>
-                                <TextBox Grid.Row="13" Grid.Column="1"
-                     Style="{StaticResource InputTextBoxStyle}"
-                     Text="{Binding ShoutMessage, UpdateSourceTrigger=PropertyChanged}"/>
-
-                                <TextBlock Grid.Row="14" Grid.Column="0" Text="일반채팅 감지 ALT+2" Style="{StaticResource LabelStyle}"/>
-                                <CheckBox Grid.Row="14" Grid.Column="1" Content="사용"
-                      IsChecked="{Binding UseChatDetectAlt2}"
-                      Style="{StaticResource CheckStyle}"/>
-
-                                <TextBlock Grid.Row="15" Grid.Column="0" Text="ALT+2 쿨타임(초)" Style="{StaticResource LabelStyle}"/>
-                                <TextBox Grid.Row="15" Grid.Column="1"
-                     Style="{StaticResource InputTextBoxStyle}"
-                     Text="{Binding ChatDetectAlt2Cooldown, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Grid.Row="12" Grid.Column="0" Text="중독" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="12" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UsePoison}"
+                                          Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="13" Grid.Column="0" Text="지폭지술" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="13" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseJipok}"
+                                          Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="14" Grid.Column="0" Text="마기지체" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="14" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseMagi}"
+                                          Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="15" Grid.Column="0" Text="호체주술" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="15" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseHoche}"
+                                          Style="{StaticResource CheckStyle}"/>
+                                <TextBlock Grid.Row="16" Grid.Column="0" Text="노도성황" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="16" Grid.Column="1"
+                                          Content="사용"
+                                          IsChecked="{Binding UseNodo}"
+                                          Style="{StaticResource CheckStyle}"/>
                             </Grid>
                         </StackPanel>
                     </Border>
@@ -348,6 +362,11 @@
 
                             <Grid>
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
                                     <RowDefinition Height="34"/>
                                     <RowDefinition Height="34"/>
                                     <RowDefinition Height="34"/>
@@ -385,40 +404,165 @@
                                 <TextBlock Grid.Row="6" Grid.Column="0" Text="중독" Style="{StaticResource LabelStyle}"/>
                                 <TextBox Grid.Row="6" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoPoison, UpdateSourceTrigger=PropertyChanged}"/>
 
-                                <TextBlock Grid.Row="7" Grid.Column="0" Text="마비" Style="{StaticResource LabelStyle}"/>
-                                <TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoParalyze, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBlock Grid.Row="7" Grid.Column="0" Text="삼매" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoThreeHell, UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <TextBlock Grid.Row="8" Grid.Column="0" Text="보호" Style="{StaticResource LabelStyle}"/>
                                 <TextBox Grid.Row="8" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoProtect, UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <TextBlock Grid.Row="9" Grid.Column="0" Text="무장" Style="{StaticResource LabelStyle}"/>
                                 <TextBox Grid.Row="9" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoArmor, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="10" Grid.Column="0" Text="마비" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="10" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoParalysis, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="11" Grid.Column="0" Text="지폭지술" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="11" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoJipok, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="12" Grid.Column="0" Text="마기지체" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="12" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoMagi, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="13" Grid.Column="0" Text="호체주술" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="13" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoHoche, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="14" Grid.Column="0" Text="노도성황" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="14" Grid.Column="1" Style="{StaticResource InputTextBoxStyle}" Text="{Binding MagicNoNodo, UpdateSourceTrigger=PropertyChanged}"/>
+
                             </Grid>
                         </StackPanel>
                     </Border>
-
-                    <!-- 기타 -->
+                    <!-- 기타 설정 -->
                     <Border Style="{StaticResource CardBorderStyle}">
                         <StackPanel>
                             <TextBlock Text="기타 설정"
-                                       FontSize="15"
-                                       FontWeight="Bold"
-                                       Foreground="#102A43"
-                                       Margin="0,0,0,10"/>
+                   FontSize="15"
+                   FontWeight="Bold"
+                   Foreground="#102A43"
+                   Margin="0,0,0,10"/>
 
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="34"/>
+                                    <!-- 맵 선택 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 줍기 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 캡챠 알림 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 사자후 날리기 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 사자후 쿨타임 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 사자후 내용 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- 일반채팅 감지 -->
+                                    <RowDefinition Height="34"/>
+                                    <!-- ALT+2 쿨타임 -->
                                 </Grid.RowDefinitions>
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="140"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Grid.Row="0" Grid.Column="0" Text="이동딜레이 (0~2000)" Style="{StaticResource LabelStyle}"/>
+                                <!-- 추가 -->
+                                <TextBlock Grid.Row="0" Grid.Column="0" Text="맵 선택" Style="{StaticResource LabelStyle}"/>
+                                <ComboBox Grid.Row="0" Grid.Column="1"
+                      Style="{StaticResource InputComboBoxStyle}"
+                      ItemsSource="{Binding MapOptions}"
+                      SelectedItem="{Binding SelectedMap}"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="줍기" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="1" Grid.Column="1"
+                      Content="사용"
+                      IsChecked="{Binding UsePickup}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="캡챠 알림" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="2" Grid.Column="1"
+                      Content="사용"
+                      IsChecked="{Binding UseCaptchaAlert}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="사자후 날리기(C 고정)" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="3" Grid.Column="1"
+                      Content="사용"
+                      IsChecked="{Binding UseShout}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="4" Grid.Column="0" Text="사자후 쿨타임(초)" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="4" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding ShoutCooldown, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="5" Grid.Column="0" Text="사자후 내용" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="5" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding ShoutMessage, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="6" Grid.Column="0" Text="일반채팅 감지" Style="{StaticResource LabelStyle}"/>
+                                <CheckBox Grid.Row="6" Grid.Column="1"
+                      Content="사용"
+                      IsChecked="{Binding UseChatDetectAlt2}"
+                      Style="{StaticResource CheckStyle}"/>
+
+                                <TextBlock Grid.Row="7" Grid.Column="0" Text="소리 알림 쿨타임(초)" Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="7" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding ChatDetectAlt2Cooldown, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- 이동 설정 -->
+                    <Border Style="{StaticResource CardBorderStyle}">
+                        <StackPanel>
+                            <TextBlock Text="이동 설정"
+                   FontSize="15"
+                   FontWeight="Bold"
+                   Foreground="#102A43"
+                   Margin="0,0,0,10"/>
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                    <RowDefinition Height="34"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="140"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock Grid.Row="0" Grid.Column="0"
+                       Text="턴 후 지연시간(ms)"
+                       Style="{StaticResource LabelStyle}"/>
                                 <TextBox Grid.Row="0" Grid.Column="1"
-                                         Style="{StaticResource InputTextBoxStyle}"
-                                         Text="{Binding MoveDelay, UpdateSourceTrigger=PropertyChanged}"/>
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding NearSegmentMoveIntervalMs, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="1" Grid.Column="0"
+                       Text="턴 전 제자리 지연(ms)"
+                       Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="1" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding DirectionChangeDelayMs, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="2" Grid.Column="0"
+                       Text="이동키 클릭 지속(ms)"
+                       Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="2" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding NearTurnSlowRepeatMs, UpdateSourceTrigger=PropertyChanged}"/>
+
+                                <TextBlock Grid.Row="3" Grid.Column="0"
+                       Text="감속 시작 칸 수"
+                       Style="{StaticResource LabelStyle}"/>
+                                <TextBox Grid.Row="3" Grid.Column="1"
+                     Style="{StaticResource InputTextBoxStyle}"
+                     Text="{Binding NearTurnStepThreshold, UpdateSourceTrigger=PropertyChanged}"/>
                             </Grid>
                         </StackPanel>
                     </Border>
