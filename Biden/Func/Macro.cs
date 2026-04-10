@@ -273,6 +273,7 @@ namespace Biden.Func
         private System.DateTime lastPositionChangedTime = System.DateTime.MinValue;
         private bool threeHellCastOnCurrentStall = false;
         private int threeHellStationaryMs;
+        private const int StationaryCombatReadyMs = 200;
 
         static SpeechSynthesizer synth;
 
@@ -2433,6 +2434,8 @@ namespace Biden.Func
                 StopMovement();
             }
 
+            SyncStationaryCombatKeys(key);
+
             if (res1 == 12 || (res1 == 0 && SelectedMap != "선비"))
             {
                 //return;
@@ -2647,18 +2650,17 @@ namespace Biden.Func
             //정지 시
             if (ShouldCastThreeHellOnStall(key))
             {
-                //
-                PressChumChumIfRunning();
-
                 //마비 사용 (강한 몹에 둘러쌓였을 경우를 대비)
                 if (UseParalysis && paralysisCount % 8 == 0)
                 {
+                    ReleaseStationaryCombatKeys();
                     paralysis();
                 }
                 paralysisCount++;
                 //중독 돌리기
                 if (UsePoison && poisonCount % 3 == 0)
                 {
+                    ReleaseStationaryCombatKeys();
                     poision();
                 }
                 poisonCount++;
@@ -2666,6 +2668,7 @@ namespace Biden.Func
                 // 내 좌표가 3초 이상 안 움직였을 때만 1회 발동 :: threeHellStationaryMs = 3000;
                 if (UseThreeHellEvolution)
                 {
+                    ReleaseStationaryCombatKeys();
                     User32.API.keybd_event((byte)magic8, 0, 0, 0);
                     Thread.Sleep(10);
                     User32.API.keybd_event((byte)magic8, 0, 2, 0);
@@ -2703,6 +2706,7 @@ namespace Biden.Func
 
                     // 저주 / 첨1 / 첨2 해제
                     ReleaseCurse();
+                    ReleaseStationaryCombatKeys();
 
                     try
                     {
@@ -2815,7 +2819,7 @@ namespace Biden.Func
             if (lastPositionChangedTime == System.DateTime.MinValue)
                 return false;
 
-            return (System.DateTime.Now - lastPositionChangedTime).TotalMilliseconds >= threeHellStationaryMs;
+            return (System.DateTime.Now - lastPositionChangedTime).TotalMilliseconds >= StationaryCombatReadyMs;
         }
 
         private void SyncStationaryCombatKeys(string currentKey)
@@ -3527,17 +3531,18 @@ namespace Biden.Func
                 if (!Macro.getInstance.Flag_END)
                     return;
 
+                int resumeMapNo = getMapNumber();
+                string resumeXY = getMapXY();
+                string resumeKey = resumeMapNo + ":" + resumeXY;
+
                 if (movingOpt)
                 {
-                    int resumeMapNo = getMapNumber();
-                    string resumeXY = getMapXY();
-                    string resumeKey = resumeMapNo + ":" + resumeXY;
                     string resumeMove = GetDirectionFromCache(resumeKey);
-
                     UpdateMove(resumeKey, resumeMove);
                 }
 
                 PressCurseIfRunning();
+                SyncStationaryCombatKeys(resumeKey);
             }
         }
 
@@ -3566,17 +3571,18 @@ namespace Biden.Func
                 if (!Macro.getInstance.Flag_END)
                     return;
 
+                int resumeMapNo = getMapNumber();
+                string resumeXY = getMapXY();
+                string resumeKey = resumeMapNo + ":" + resumeXY;
+
                 if (movingOpt)
                 {
-                    int resumeMapNo = getMapNumber();
-                    string resumeXY = getMapXY();
-                    string resumeKey = resumeMapNo + ":" + resumeXY;
                     string resumeMove = GetDirectionFromCache(resumeKey);
-
                     UpdateMove(resumeKey, resumeMove);
                 }
 
                 PressCurseIfRunning();
+                SyncStationaryCombatKeys(resumeKey);
             }
         }
 

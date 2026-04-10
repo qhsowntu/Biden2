@@ -7,7 +7,7 @@
   "UsePickup": false,
   "UseCaptchaAlert": false,
   "UseThreeHellEvolution": false,
-  "ThreeHellEvolutionDelay": 2,
+  "ThreeHellEvolutionDelay": 1,
   "UseHeal": true,
   "SelectedHealHpThreshold": "85%",
   "UseProtectArmor": true,
