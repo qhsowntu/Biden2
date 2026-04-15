@@ -156,6 +156,13 @@ namespace Biden.ViewModel
             set => SetProperty(ref _hellfireDirectionIndex, value);
         }
 
+        private int _hellfireDelay;
+        public int HellfireDelay
+        {
+            get => _hellfireDelay;
+            set => SetProperty(ref _hellfireDelay, value <= 0 ? 5 : value);
+        }
+
         private bool _useNormalAttack;
         public bool UseNormalAttack
         {
@@ -175,6 +182,20 @@ namespace Biden.ViewModel
         {
             get => _usePickup;
             set => SetProperty(ref _usePickup, value);
+        }
+
+        private bool _usePumpkinSay;
+        public bool UsePumpkinSay
+        {
+            get => _usePumpkinSay;
+            set => SetProperty(ref _usePumpkinSay, value);
+        }
+
+        private bool _useRouteChangeSay;
+        public bool UseRouteChangeSay
+        {
+            get => _useRouteChangeSay;
+            set => SetProperty(ref _useRouteChangeSay, value);
         }
 
         private bool _useCaptchaAlert;
@@ -490,6 +511,80 @@ namespace Biden.ViewModel
             set => SetProperty(ref _nearTurnStepThreshold, value);
         }
 
+        private bool _useSegmentedMove;
+        public bool UseSegmentedMove
+        {
+            get => _useSegmentedMove;
+            set => SetProperty(ref _useSegmentedMove, value);
+        }
+
+        private int _segmentedMovePressMs;
+        public int SegmentedMovePressMs
+        {
+            get => _segmentedMovePressMs;
+            set
+            {
+                int newValue = value;
+                if (newValue < 20) newValue = 20;
+                if (newValue > 1000) newValue = 1000;
+                SetProperty(ref _segmentedMovePressMs, newValue);
+            }
+        }
+
+        private int _segmentedMoveDelayMs;
+        public int SegmentedMoveDelayMs
+        {
+            get => _segmentedMoveDelayMs;
+            set
+            {
+                int newValue = value;
+                if (newValue < 0) newValue = 0;
+                if (newValue > 2000) newValue = 2000;
+                SetProperty(ref _segmentedMoveDelayMs, newValue);
+            }
+        }
+
+        private int _basicSegmentedMoveDelayMs;
+        public int BasicSegmentedMoveDelayMs
+        {
+            get => _basicSegmentedMoveDelayMs;
+            set
+            {
+                int newValue = value;
+                if (newValue < 0) newValue = 0;
+                if (newValue > 2000) newValue = 2000;
+                SetProperty(ref _basicSegmentedMoveDelayMs, newValue);
+                SetProperty(ref _segmentedMoveDelayMs, newValue, nameof(SegmentedMoveDelayMs));
+            }
+        }
+
+        private int _loopSegmentedMoveDelayMs;
+        public int LoopSegmentedMoveDelayMs
+        {
+            get => _loopSegmentedMoveDelayMs;
+            set
+            {
+                int newValue = value;
+                if (newValue < 0) newValue = 0;
+                if (newValue > 2000) newValue = 2000;
+                SetProperty(ref _loopSegmentedMoveDelayMs, newValue);
+            }
+        }
+
+        private bool _useSegmentedMoveOnlyInLoop;
+        public bool UseSegmentedMoveOnlyInLoop
+        {
+            get => _useSegmentedMoveOnlyInLoop;
+            set => SetProperty(ref _useSegmentedMoveOnlyInLoop, value);
+        }
+
+        private bool _useOneTileDeviationRoute;
+        public bool UseOneTileDeviationRoute
+        {
+            get => _useOneTileDeviationRoute;
+            set => SetProperty(ref _useOneTileDeviationRoute, value);
+        }
+
 
         // =========================
         // 기타 설정
@@ -499,13 +594,18 @@ namespace Biden.ViewModel
         new ObservableCollection<string>
         {
             "관령세작",
-            "관령흉가",
+            "관령흉가 1지역",
+            "관령흉가 2지역",
+            "관령흉가 3지역",
+            "관령흉가 4지역",
+            "관령흉가 5지역",
+            "관령흉가 6지역",
             "선녀",
             "산적",
             "선비"
         };
 
-        private string _selectedMap = "관령흉가";
+        private string _selectedMap = "관령흉가 1지역";
         public string SelectedMap
         {
             get => _selectedMap;
@@ -623,11 +723,14 @@ namespace Biden.ViewModel
 
                 UseHellfire = false;
                 HellfireDirectionIndex = 0;
+                HellfireDelay = 5;
                 UseThreeHellEvolution = false;
                 ThreeHellEvolutionDelay = 5;
                 UseNormalAttack = false;
                 UsePoison = false;
                 UsePickup = true;
+                UsePumpkinSay = true;
+                UseRouteChangeSay = true;
                 UseCaptchaAlert = true;
 
                 UseHeal = true;
@@ -643,7 +746,7 @@ namespace Biden.ViewModel
                 UseNodo = false;
 
 
-                SelectedMap = "관령흉가";
+                SelectedMap = "관령흉가 1지역";
                 UseShout = true;
                 ShoutCooldown = 60;
                 ShoutMessage = "9선녀중";
@@ -673,12 +776,18 @@ namespace Biden.ViewModel
 
                 MoveDelay = 200;
 
-                SelectedMap = "관령흉가";
+                SelectedMap = "관령흉가 1지역";
 
                 NearSegmentMoveIntervalMs = 180;
                 DirectionChangeDelayMs = 15;
                 NearTurnSlowRepeatMs = 100;
                 NearTurnStepThreshold = 3;
+                UseSegmentedMove = false;
+                SegmentedMovePressMs = 120;
+                BasicSegmentedMoveDelayMs = 120;
+                LoopSegmentedMoveDelayMs = 120;
+                UseSegmentedMoveOnlyInLoop = false;
+                UseOneTileDeviationRoute = false;
             }
             finally
             {
@@ -693,12 +802,15 @@ namespace Biden.ViewModel
                 IsMainEnabled = false,
                 UseHellfire = UseHellfire,
                 HellfireDirectionIndex = HellfireDirectionIndex,
+                HellfireDelay = HellfireDelay,
                 UseThreeHellEvolution = UseThreeHellEvolution,
                 ThreeHellEvolutionDelay = ThreeHellEvolutionDelay,
 
                 UseNormalAttack = UseNormalAttack,
                 UsePoison = UsePoison,
                 UsePickup = UsePickup,
+                UsePumpkinSay = UsePumpkinSay,
+                UseRouteChangeSay = UseRouteChangeSay,
                 UseCaptchaAlert = UseCaptchaAlert,
 
                 UseHeal = UseHeal,
@@ -744,6 +856,13 @@ namespace Biden.ViewModel
                 DirectionChangeDelayMs = DirectionChangeDelayMs,
                 NearTurnSlowRepeatMs = NearTurnSlowRepeatMs,
                 NearTurnStepThreshold = NearTurnStepThreshold,
+                UseSegmentedMove = UseSegmentedMove,
+                SegmentedMovePressMs = SegmentedMovePressMs,
+                SegmentedMoveDelayMs = BasicSegmentedMoveDelayMs,
+                BasicSegmentedMoveDelayMs = BasicSegmentedMoveDelayMs,
+                LoopSegmentedMoveDelayMs = LoopSegmentedMoveDelayMs,
+                UseSegmentedMoveOnlyInLoop = UseSegmentedMoveOnlyInLoop,
+                UseOneTileDeviationRoute = UseOneTileDeviationRoute,
 
                 MoveDelay = MoveDelay
             };
@@ -758,11 +877,14 @@ namespace Biden.ViewModel
 
             UseHellfire = settings.UseHellfire;
             HellfireDirectionIndex = settings.HellfireDirectionIndex;
+            HellfireDelay = settings.HellfireDelay <= 0 ? 5 : settings.HellfireDelay;
             UseThreeHellEvolution = settings.UseThreeHellEvolution;
             ThreeHellEvolutionDelay = settings.ThreeHellEvolutionDelay;
 
             UseNormalAttack = settings.UseNormalAttack;
             UsePickup = settings.UsePickup;
+            UsePumpkinSay = settings.UsePumpkinSay ?? true;
+            UseRouteChangeSay = settings.UseRouteChangeSay ?? true;
             UseCaptchaAlert = settings.UseCaptchaAlert;
 
             UseHeal = settings.UseHeal;
@@ -781,7 +903,7 @@ namespace Biden.ViewModel
             UseNodo = settings.UseNodo;
 
 
-            SelectedMap = settings.SelectedMap;
+            SelectedMap = settings.SelectedMap == "관령흉가" ? "관령흉가 1지역" : settings.SelectedMap;
             UseShout = settings.UseShout;
             ShoutCooldown = settings.ShoutCooldown;
             ShoutMessage = settings.ShoutMessage;
@@ -810,6 +932,17 @@ namespace Biden.ViewModel
             DirectionChangeDelayMs = settings.DirectionChangeDelayMs;
             NearTurnSlowRepeatMs = settings.NearTurnSlowRepeatMs;
             NearTurnStepThreshold = settings.NearTurnStepThreshold;
+            UseSegmentedMove = settings.UseSegmentedMove;
+            SegmentedMovePressMs = settings.SegmentedMovePressMs <= 0 ? 120 : settings.SegmentedMovePressMs;
+            int oldSegmentedMoveDelayMs = settings.SegmentedMoveDelayMs;
+            BasicSegmentedMoveDelayMs = settings.BasicSegmentedMoveDelayMs.HasValue
+                ? settings.BasicSegmentedMoveDelayMs.Value
+                : oldSegmentedMoveDelayMs;
+            LoopSegmentedMoveDelayMs = settings.LoopSegmentedMoveDelayMs.HasValue
+                ? settings.LoopSegmentedMoveDelayMs.Value
+                : BasicSegmentedMoveDelayMs;
+            UseSegmentedMoveOnlyInLoop = settings.UseSegmentedMoveOnlyInLoop;
+            UseOneTileDeviationRoute = settings.UseOneTileDeviationRoute;
 
             MoveDelay = settings.MoveDelay;
         }

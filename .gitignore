@@ -1,0 +1,16 @@
+# Visual Studio / build output
+.vs/
+bin/
+obj/
+Biden/.vs/
+Biden/bin/
+Biden/obj/
+
+# NuGet packages restored locally
+packages/
+
+# User/local files
+*.user
+*.suo
+*.rsuser
+

@@ -7,9 +7,12 @@ namespace Biden.ViewModel
         public bool IsMainEnabled { get; set; }
         public bool UseHellfire { get; set; }
         public int HellfireDirectionIndex { get; set; }
+        public int HellfireDelay { get; set; }
         public bool UseNormalAttack { get; set; }
         public bool UsePoison { get; set; }
         public bool UsePickup { get; set; }
+        public bool? UsePumpkinSay { get; set; }
+        public bool? UseRouteChangeSay { get; set; }
         public bool UseCaptchaAlert { get; set; }
 
         public bool UseThreeHellEvolution { get; set; }
@@ -61,6 +64,13 @@ namespace Biden.ViewModel
         public int DirectionChangeDelayMs { get; set; }
         public int NearTurnSlowRepeatMs { get; set; }
         public int NearTurnStepThreshold { get; set; }
+        public bool UseSegmentedMove { get; set; }
+        public int SegmentedMovePressMs { get; set; }
+        public int SegmentedMoveDelayMs { get; set; }
+        public int? BasicSegmentedMoveDelayMs { get; set; }
+        public int? LoopSegmentedMoveDelayMs { get; set; }
+        public bool UseSegmentedMoveOnlyInLoop { get; set; }
+        public bool UseOneTileDeviationRoute { get; set; }
 
         public int MoveDelay { get; set; }
     }

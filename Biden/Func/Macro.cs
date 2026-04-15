@@ -74,6 +74,8 @@ namespace Biden.Func
         private static string clipboardChangedResult = "";
 
         private bool stationaryCombatKeysPressed = false;
+        private bool normalAttackKeyPressed = false;
+        private bool pickupKeyPressed = false;
 
         int DO = 523;
         int RE = 587;
@@ -140,6 +142,9 @@ namespace Biden.Func
         private static int death_G1 = 0;
         private static int death_B1 = 0;
 
+        private static int hobak_R1 = 0;
+        private static int hobak_G1 = 0;
+        private static int hobak_B1 = 0;
 
         private static int titleR1 = 0;
         private static int titleG1 = 0;
@@ -226,11 +231,109 @@ namespace Biden.Func
         public static Dictionary<string, string> directionDic;
 
         private readonly object moveLock = new object();
-        private readonly string moveConfigPath = "config.json";
+        private string moveConfigPath { get { return GetMoveConfigPathForSelectedMap(); } }
+        private string downConfigPath { get { return GetDownConfigPathForSelectedMap(); } }
+        private readonly string castleConfigPath = "config_관령성.json";
+        private string moveConfigLoadedPath = "";
         private System.DateTime moveConfigLastWriteTime = System.DateTime.MinValue;
+        private Dictionary<string, string> castleDirectionDic = new Dictionary<string, string>();
+        private System.DateTime castleConfigLastWriteTime = System.DateTime.MinValue;
+
+        private readonly object autoExploreLock = new object();
+        private readonly System.Random autoExploreRandom = new System.Random();
+        private Dictionary<string, AutoExploreNode> autoExploreGraph = new Dictionary<string, AutoExploreNode>();
+        private Dictionary<string, string> autoExploreManualRoute = new Dictionary<string, string>();
+        private Dictionary<string, string> autoExploreManualRouteExpanded = new Dictionary<string, string>();
+        private bool autoExploreMode = false;
+        private bool autoExploreUsingReturnRoute = false;
+        private bool autoExploreReturnRouteResumeAfterEnd = false;
+        private string autoExploreLastKey = "";
+        private string autoExploreLastDir = "";
+        private string autoExploreLastDeviationRouteKey = "";
+        private string autoExploreReturnTapKey = "";
+        private string autoExploreReturnTapDir = "";
+        private bool autoExploreDeviationReturnPending = false;
+        private System.DateTime autoExploreLastMoveTime = System.DateTime.MinValue;
+        private System.DateTime autoExploreReturnTapTime = System.DateTime.MinValue;
+        private int autoExploreSamePointFailCount = 0;
+        private const int HauntedHouseSpecialBounceTarget = 8;
+        private const int AutoExploreStuckMs = 950;
+        private const int AutoExploreSoftBlockedFailCount = 1;
+        private const int AutoExploreWallFailCount = 1;
+        private const int AutoExploreHardWallFailCount = 12;
+        private const int AutoExploreSaveIntervalMs = 1500;
+        private const int AutoExploreRecentBlockDetourMs = 8000;
+        private const int AutoExploreMinMapNo = 1;
+        private const int AutoExploreMainRoutePercent = 88;
+        private const int AutoExploreFrontierRoutePercent = 82;
+        private const int AutoExploreLikelyWallFailCount = 1;
+        private const int AutoExploreManualRoutePercent = 95;
+        private const int AutoExploreMaxManualRouteDeviation = 1;
+        private const int AutoExploreReturnTapRetryMs = 850;
+        private const int GwallyeongCastleMapNo = 0;
+        private const int GwallyeongCastleMaxX = 22;
+        private const int GwallyeongCastleMaxY = 44;
+        private const int GwallyeongHauntedHouse5EntryY = 7;
+        private const int AutoExploreReturnStartMapNo = 10;
+        private const int AutoExploreReturnStartX = 17;
+        private const int AutoExploreReturnStartY = 13;
+        private const int AutoExploreReturnEndMapNo = 5;
+        private const int AutoExploreReturnEndX = 9;
+        private const int AutoExploreReturnEndY = 22;
+        private const int AutoExploreReturnEndStableMs = 1200;
+        private const int GwallyeongHauntedEntranceMapNo = 12;
+        private const int AutoExploreMaxMapNo = 12;
+        private const int SpecialRouteBlockedMs = 2000;
+        private const int SpecialRouteMaxDetourForwardSteps = 4;
 
         private string lastMoveKey = "";
+        private string autoExploreReturnEndCandidateKey = "";
+        private System.DateTime autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
+        private string specialRouteBlockedKey = "";
+        private string specialRouteBlockedDir = "";
+        private System.DateTime specialRouteBlockedSince = System.DateTime.MinValue;
+        private bool specialRouteDetourActive = false;
+        private string[] specialRouteDetourDirs = new string[0];
+        private int specialRouteDetourIndex = 0;
+        private string specialRouteDetourLastKey = "";
+        private string specialRouteDetourBaseDir = "";
         private System.DateTime lastDirectionInputTime = System.DateTime.MinValue;
+        private int hauntedHouse5UpperRoutePhase = 0;
+        private int hauntedHouse5UpperRouteBounceCount = 0;
+        private bool hauntedHouse5UpperRouteReachedEast = false;
+        private bool hauntedHouse5UpperRouteExitRetryPending = false;
+        private int hauntedHouse5UpperRouteLoopIndex = 0;
+        private bool hauntedHouse5UpperRouteCompleted = false;
+        private int hauntedHouse6UpperRoutePhase = 0;
+        private int hauntedHouse6UpperRouteBounceCount = 0;
+        private bool hauntedHouse6UpperRouteReachedWest = false;
+        private bool hauntedHouse6UpperRouteExitRetryPending = false;
+        private int hauntedHouse6UpperRouteLoopIndex = 0;
+        private bool hauntedHouse6UpperRouteCompleted = false;
+        private int hauntedHouse7UpperRoutePhase = 0;
+        private int hauntedHouse7UpperRouteBounceCount = 0;
+        private bool hauntedHouse7UpperRouteReachedNorth = false;
+        private bool hauntedHouse7UpperRouteExitRetryPending = false;
+        private int hauntedHouse7UpperRouteLoopIndex = 0;
+        private bool hauntedHouse7UpperRouteCompleted = false;
+        private int hauntedHouse8UpperRoutePhase = 0;
+        private int hauntedHouse8UpperRouteBounceCount = 0;
+        private bool hauntedHouse8UpperRouteReachedWest = false;
+        private bool hauntedHouse8UpperRouteExitRetryPending = false;
+        private int hauntedHouse8UpperRouteLoopIndex = 0;
+        private bool hauntedHouse8UpperRouteCompleted = false;
+        private int hauntedHouse9UpperRoutePhase = 0;
+        private int hauntedHouse9UpperRouteBounceCount = 0;
+        private bool hauntedHouse9UpperRouteReachedWest = false;
+        private bool hauntedHouse9UpperRouteExitRetryPending = false;
+        private int hauntedHouse9UpperRouteLoopIndex = 0;
+        private bool hauntedHouse9UpperRouteCompleted = false;
+        private int hauntedHouse10UpperRoutePhase = 0;
+        private int hauntedHouse10UpperRouteBounceCount = 0;
+        private bool hauntedHouse10UpperRouteReachedEast = false;
+        private bool hauntedHouse10UpperRouteExitRetryPending = false;
+        private int hauntedHouse10UpperRouteLoopIndex = 0;
+        private bool hauntedHouse10UpperRouteCompleted = false;
         private System.DateTime lastKeyChangeTime = System.DateTime.MinValue;
 
         // 값은 상황에 따라 조금씩 조절 가능
@@ -240,6 +343,10 @@ namespace Biden.Func
         private int directionChangeDelayMs; // 턴 n칸전 제자리 지연시간
         private int nearTurnSlowRepeatMs; // 이동키 클릭 지속시간
         private int nearTurnStepThreshold; // 몇칸 전부터 감속 시작할지
+        private int segmentedMovePressMs = 120;
+        private int basicSegmentedMoveDelayMs = 120;
+        private int loopSegmentedMoveDelayMs = 120;
+        private bool useSegmentedMoveOnlyInLoop = false;
 
 
         private int lookAheadCount = 12;
@@ -255,6 +362,8 @@ namespace Biden.Func
         private int turnStabilizeMs = 80;   // 방향 바꾼 직후, 홀드 재입력 잠깐 금지
 
         private bool lastMoveWasTapMode = false;
+        private string segmentedMoveLastPositionKey = "";
+        private System.DateTime segmentedMovePauseUntil = System.DateTime.MinValue;
 
         private bool justChangedDirection = false;
         private string justChangedDirectionKey = "";
@@ -273,6 +382,10 @@ namespace Biden.Func
         private System.DateTime lastPositionChangedTime = System.DateTime.MinValue;
         private bool threeHellCastOnCurrentStall = false;
         private int threeHellStationaryMs;
+        private int hellfireStationaryMs;
+        private string lastHellfirePositionKey = "";
+        private System.DateTime lastHellfirePositionChangedTime = System.DateTime.MinValue;
+        private System.DateTime lastHellfireCastTime = System.DateTime.MinValue;
         private const int StationaryCombatReadyMs = 200;
 
         static SpeechSynthesizer synth;
@@ -309,6 +422,7 @@ namespace Biden.Func
             setMoveDictionary();
             setMagicNumber();
             synth = new SpeechSynthesizer();
+            synth.Rate = SayRate;
             synth.SetOutputToDefaultAudioDevice();
         }
 
@@ -730,6 +844,7 @@ namespace Biden.Func
 
         public static bool UseHellfire = MainWindow.getInstance.ViewModel.UseHellfire;
         public static int HellfireDirectionIndex = MainWindow.getInstance.ViewModel.HellfireDirectionIndex;
+        public static int HellfireDelay = MainWindow.getInstance.ViewModel.HellfireDelay;
         public static bool UseThreeHellEvolution = MainWindow.getInstance.ViewModel.UseThreeHellEvolution;
         public static int ThreeHellEvolutionDelay = MainWindow.getInstance.ViewModel.ThreeHellEvolutionDelay;
 
@@ -737,6 +852,8 @@ namespace Biden.Func
         public static bool UseNormalAttack = MainWindow.getInstance.ViewModel.UseNormalAttack;
         public static bool UsePoison = MainWindow.getInstance.ViewModel.UsePoison;
         public static bool UsePickup = MainWindow.getInstance.ViewModel.UsePickup;
+        public static bool UsePumpkinSay = MainWindow.getInstance.ViewModel.UsePumpkinSay;
+        public static bool UseRouteChangeSay = MainWindow.getInstance.ViewModel.UseRouteChangeSay;
         public static bool UseCaptchaAlert = MainWindow.getInstance.ViewModel.UseCaptchaAlert;
 
         public static bool UseHeal = MainWindow.getInstance.ViewModel.UseHeal;
@@ -752,7 +869,7 @@ namespace Biden.Func
         public static bool UseNodo = MainWindow.getInstance.ViewModel.UseNodo;
 
 
-        public static string SelectedMap = MainWindow.getInstance.ViewModel.SelectedMap;
+        public static string SelectedMap = "관령흉가 1지역";
         public static bool UseShout = MainWindow.getInstance.ViewModel.UseShout;
         public static int ShoutCooldown = MainWindow.getInstance.ViewModel.ShoutCooldown;
         public static string ShoutMessage = MainWindow.getInstance.ViewModel.ShoutMessage;
@@ -779,6 +896,13 @@ namespace Biden.Func
         public static int DirectionChangeDelayMs;
         public static int NearTurnSlowRepeatMs;
         public static int NearTurnStepThreshold;
+        public static bool UseSegmentedMove;
+        public static int SegmentedMovePressMs;
+        public static int SegmentedMoveDelayMs;
+        public static int BasicSegmentedMoveDelayMs;
+        public static int LoopSegmentedMoveDelayMs;
+        public static bool UseSegmentedMoveOnlyInLoop;
+        public static bool UseOneTileDeviationRoute;
 
 
         public static int movingDelayUI;
@@ -789,11 +913,14 @@ namespace Biden.Func
 
             UseHellfire = MainWindow.getInstance.ViewModel.UseHellfire;
             HellfireDirectionIndex = MainWindow.getInstance.ViewModel.HellfireDirectionIndex;
+            HellfireDelay = MainWindow.getInstance.ViewModel.HellfireDelay;
             UseThreeHellEvolution = MainWindow.getInstance.ViewModel.UseThreeHellEvolution;
             ThreeHellEvolutionDelay = MainWindow.getInstance.ViewModel.ThreeHellEvolutionDelay;
             UseNormalAttack = MainWindow.getInstance.ViewModel.UseNormalAttack;
             UsePoison = MainWindow.getInstance.ViewModel.UsePoison;
             UsePickup = MainWindow.getInstance.ViewModel.UsePickup;
+            UsePumpkinSay = MainWindow.getInstance.ViewModel.UsePumpkinSay;
+            UseRouteChangeSay = MainWindow.getInstance.ViewModel.UseRouteChangeSay;
             UseCaptchaAlert = MainWindow.getInstance.ViewModel.UseCaptchaAlert;
 
             UseHeal = MainWindow.getInstance.ViewModel.UseHeal;
@@ -853,6 +980,13 @@ namespace Biden.Func
             DirectionChangeDelayMs = MainWindow.getInstance.ViewModel.DirectionChangeDelayMs;
             NearTurnSlowRepeatMs = MainWindow.getInstance.ViewModel.NearTurnSlowRepeatMs;
             NearTurnStepThreshold = MainWindow.getInstance.ViewModel.NearTurnStepThreshold;
+            UseSegmentedMove = MainWindow.getInstance.ViewModel.UseSegmentedMove;
+            SegmentedMovePressMs = MainWindow.getInstance.ViewModel.SegmentedMovePressMs;
+            SegmentedMoveDelayMs = MainWindow.getInstance.ViewModel.SegmentedMoveDelayMs;
+            BasicSegmentedMoveDelayMs = MainWindow.getInstance.ViewModel.BasicSegmentedMoveDelayMs;
+            LoopSegmentedMoveDelayMs = MainWindow.getInstance.ViewModel.LoopSegmentedMoveDelayMs;
+            UseSegmentedMoveOnlyInLoop = MainWindow.getInstance.ViewModel.UseSegmentedMoveOnlyInLoop;
+            UseOneTileDeviationRoute = MainWindow.getInstance.ViewModel.UseOneTileDeviationRoute;
 
 
 
@@ -860,10 +994,76 @@ namespace Biden.Func
             directionChangeDelayMs = DirectionChangeDelayMs;
             nearTurnSlowRepeatMs = NearTurnSlowRepeatMs;
             nearTurnStepThreshold = NearTurnStepThreshold;
+            segmentedMovePressMs = SegmentedMovePressMs <= 0 ? 120 : SegmentedMovePressMs;
+            basicSegmentedMoveDelayMs = BasicSegmentedMoveDelayMs < 0 ? 0 : BasicSegmentedMoveDelayMs;
+            loopSegmentedMoveDelayMs = LoopSegmentedMoveDelayMs < 0 ? 0 : LoopSegmentedMoveDelayMs;
+            useSegmentedMoveOnlyInLoop = UseSegmentedMoveOnlyInLoop;
 
             movingDelayUI = MainWindow.getInstance.ViewModel.MoveDelay;
 
             threeHellStationaryMs = ThreeHellEvolutionDelay * 1000;
+            hellfireStationaryMs = (HellfireDelay <= 0 ? 5 : HellfireDelay) * 1000;
+        }
+
+        private static void SyncSelectedMapFromViewModel()
+        {
+            try
+            {
+                string selectedMap = MainWindow.getInstance.ViewModel.SelectedMap;
+                if (!string.IsNullOrEmpty(selectedMap))
+                {
+                    SelectedMap = selectedMap == "관령흉가" ? "관령흉가 1지역" : selectedMap;
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        private static bool IsGwallyeongHauntedHouseMap(string selectedMap)
+        {
+            return selectedMap == "관령흉가" ||
+                   (selectedMap != null && selectedMap.StartsWith("관령흉가 "));
+        }
+
+        private string GetMoveConfigPathForSelectedMap()
+        {
+            SyncSelectedMapFromViewModel();
+
+            if (SelectedMap == "관령흉가" || SelectedMap == "관령흉가 1지역")
+                return Path.Combine("관령흉가", "config_흉가_1지역.json");
+            if (SelectedMap == "관령흉가 2지역")
+                return Path.Combine("관령흉가", "config_흉가_2지역.json");
+            if (SelectedMap == "관령흉가 3지역")
+                return Path.Combine("관령흉가", "config_흉가_3지역.json");
+            if (SelectedMap == "관령흉가 4지역")
+                return Path.Combine("관령흉가", "config_흉가_4지역.json");
+            if (SelectedMap == "관령흉가 5지역")
+                return Path.Combine("관령흉가", "config_흉가_5지역.json");
+            if (SelectedMap == "관령흉가 6지역")
+                return Path.Combine("관령흉가", "config_흉가_6지역.json");
+
+            return "config.json";
+        }
+
+        private string GetDownConfigPathForSelectedMap()
+        {
+            SyncSelectedMapFromViewModel();
+
+            if (SelectedMap == "관령흉가" || SelectedMap == "관령흉가 1지역")
+                return Path.Combine("관령흉가", "config_흉가_1지역_하행.json");
+            if (SelectedMap == "관령흉가 2지역")
+                return Path.Combine("관령흉가", "config_흉가_2지역_하행.json");
+            if (SelectedMap == "관령흉가 3지역")
+                return Path.Combine("관령흉가", "config_흉가_3지역_하행.json");
+            if (SelectedMap == "관령흉가 4지역")
+                return Path.Combine("관령흉가", "config_흉가_4지역_하행.json");
+            if (SelectedMap == "관령흉가 5지역")
+                return Path.Combine("관령흉가", "config_흉가_5지역_하행.json");
+            if (SelectedMap == "관령흉가 6지역")
+                return Path.Combine("관령흉가", "config_흉가_6지역_하행.json");
+
+            return "config_하행.json";
         }
 
         long _lastLeftTick = 0;
@@ -876,6 +1076,14 @@ namespace Biden.Func
         static SimpleTimer timerForAlt2;
 
         private readonly object actionKeyLock = new object();
+        private readonly object pumpkinFullLock = new object();
+        private bool pumpkinFullSequenceRunning = false;
+        private bool pumpkinFullCancelRequested = false;
+        private bool pumpkinFullInternalEndOff = false;
+        private bool pumpkinReturnRouteResumePending = false;
+        private const int PumpkinStepDelayMs = 500;
+        private const int SayRate = 6;
+        private const int FastSayRate = 8;
 
         private void send(Keys tempKey)//Keys tempKey, IntPtr wParam, IntPtr lParam
         {
@@ -915,9 +1123,20 @@ namespace Biden.Func
             }
             if (tempKey.ToString().ToUpper() == "END")
             {
-                if (Macro.getInstance.Flag_END)
+                if (IsPumpkinFullSequenceRunning())
                 {
                     Macro.getInstance.Flag_END = false;
+                    CancelPumpkinFullSequence();
+                    StopMovement();
+                    ResetThreeHellState();
+                    return;
+                }
+
+                if (Macro.getInstance.Flag_END)
+                {
+                    RememberReturnRouteBeforeEndOff();
+                    Macro.getInstance.Flag_END = false;
+                    CancelPumpkinFullSequence();
 
                     lock (actionKeyLock)
                     {
@@ -943,8 +1162,9 @@ namespace Biden.Func
 
                     Macro.getInstance.Flag_END = true;
                     setMagicNumber();
+                    ResumeReturnRouteAfterEndOn();
 
-                    synth.Rate = 3;
+                    synth.Rate = SayRate;
                     synth.Volume = 100;
 
                     lock (actionKeyLock)
@@ -952,19 +1172,13 @@ namespace Biden.Func
                         // 시작 시 저주만 활성화
                         ReleaseStationaryCombatKeys();
                         PressCurseIfRunning();
+                        SyncPickupFromCurrentPositionIfRunning();
                     }
                 }
             }
             if (tempKey.ToString().ToUpper() == "INSERT")
             {
-                if (!movingOpt)
-                {
-                    movingOpt = true;
-                }
-                else
-                {
-                    movingOpt = false;
-                }
+                ToggleAutoExploreMode();
             }
             if (tempKey.ToString().ToUpper() == "HOME")
             {
@@ -1077,12 +1291,12 @@ namespace Biden.Func
             }
             if (tempKey.ToString().ToUpper() == "F5")
             {
-                deleteKey();
+                SaveDownRouteKey();
             }
 
             if (tempKey.ToString().ToUpper() == "F7")
             {
-
+                StartPumpkinFullSequenceAsync();
             }
 
             if (tempKey.ToString().ToUpper() == "F8")
@@ -1150,6 +1364,22 @@ namespace Biden.Func
             synth.Speak(text);
         }
 
+        static void SayPumpkinText(string text)
+        {
+            if (!UsePumpkinSay)
+                return;
+
+            SayText(text);
+        }
+
+        static void SayRouteChangeText(string text)
+        {
+            if (!UseRouteChangeSay)
+                return;
+
+            SayText(text);
+        }
+
         //private bool ShouldCastThreeHellOnStall(string currentKey)
         //{
         //    if (string.IsNullOrEmpty(currentKey))
@@ -1185,6 +1415,40 @@ namespace Biden.Func
             lastPositionKey = "";
             lastPositionChangedTime = System.DateTime.MinValue;
             lastThreeHellCastTime = System.DateTime.MinValue;
+            ResetHellfireStallState();
+        }
+
+        private void ResetHellfireStallState()
+        {
+            lastHellfirePositionKey = "";
+            lastHellfirePositionChangedTime = System.DateTime.MinValue;
+            lastHellfireCastTime = System.DateTime.MinValue;
+        }
+
+        private bool IsHellfireStallReady(string currentKey)
+        {
+            if (string.IsNullOrEmpty(currentKey))
+                return false;
+
+            System.DateTime now = System.DateTime.Now;
+
+            if (lastHellfirePositionKey != currentKey)
+            {
+                lastHellfirePositionKey = currentKey;
+                lastHellfirePositionChangedTime = now;
+                lastHellfireCastTime = System.DateTime.MinValue;
+                return false;
+            }
+
+            if (lastHellfireCastTime == System.DateTime.MinValue)
+                return (now - lastHellfirePositionChangedTime).TotalMilliseconds >= hellfireStationaryMs;
+
+            return (now - lastHellfireCastTime).TotalMilliseconds >= hellfireStationaryMs;
+        }
+
+        private void MarkHellfireStallCast()
+        {
+            lastHellfireCastTime = System.DateTime.Now;
         }
 
         private bool ShouldCastThreeHellOnStall(string currentKey)
@@ -1702,6 +1966,8 @@ namespace Biden.Func
                 lastDirectionInputTime = System.DateTime.MinValue;
                 lastKeyChangeTime = System.DateTime.MinValue;
                 lastInputTime = System.DateTime.MinValue;
+                segmentedMoveLastPositionKey = "";
+                segmentedMovePauseUntil = System.DateTime.MinValue;
                 ClearReservedTurn();
                 ResetThreeHellState();
             }
@@ -1711,24 +1977,31 @@ namespace Biden.Func
 
         private void RefreshMoveDictionaryIfNeeded()
         {
-            if (!File.Exists(moveConfigPath))
+            string path = moveConfigPath;
+
+            if (!File.Exists(path))
             {
                 directionDic = new Dictionary<string, string>();
+                moveConfigLoadedPath = path;
                 moveConfigLastWriteTime = System.DateTime.MinValue;
                 return;
             }
 
-            System.DateTime lastWriteTime = File.GetLastWriteTime(moveConfigPath);
+            System.DateTime lastWriteTime = File.GetLastWriteTime(path);
 
-            if (directionDic != null && directionDic.Count > 0 && lastWriteTime == moveConfigLastWriteTime)
+            if (directionDic != null &&
+                directionDic.Count > 0 &&
+                path == moveConfigLoadedPath &&
+                lastWriteTime == moveConfigLastWriteTime)
             {
                 return;
             }
 
-            string json = File.ReadAllText(moveConfigPath);
+            string json = File.ReadAllText(path);
             directionDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
                            ?? new Dictionary<string, string>();
 
+            moveConfigLoadedPath = path;
             moveConfigLastWriteTime = lastWriteTime;
         }
 
@@ -1736,7 +2009,42 @@ namespace Biden.Func
         {
             RefreshMoveDictionaryIfNeeded();
 
-            if (directionDic != null && directionDic.TryGetValue(key, out string value))
+            if (TryGetRouteDirection(directionDic, key, out string value))
+            {
+                return value;
+            }
+
+            return null;
+        }
+
+        private void RefreshCastleMoveDictionaryIfNeeded()
+        {
+            if (!File.Exists(castleConfigPath))
+            {
+                castleDirectionDic = new Dictionary<string, string>();
+                castleConfigLastWriteTime = System.DateTime.MinValue;
+                return;
+            }
+
+            System.DateTime lastWriteTime = File.GetLastWriteTime(castleConfigPath);
+
+            if (castleDirectionDic != null && castleDirectionDic.Count > 0 && lastWriteTime == castleConfigLastWriteTime)
+            {
+                return;
+            }
+
+            string json = File.ReadAllText(castleConfigPath);
+            castleDirectionDic = JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
+                                 ?? new Dictionary<string, string>();
+
+            castleConfigLastWriteTime = lastWriteTime;
+        }
+
+        private string GetCastleDirectionFromCache(string key)
+        {
+            RefreshCastleMoveDictionaryIfNeeded();
+
+            if (TryGetRouteDirection(castleDirectionDic, key, out string value))
             {
                 return value;
             }
@@ -1757,6 +2065,3073 @@ namespace Biden.Func
                            ?? new Dictionary<string, string>();
         }
 
+        private void ToggleAutoExploreMode()
+        {
+            bool shouldPrimePickup = false;
+
+            lock (autoExploreLock)
+            {
+                autoExploreMode = !autoExploreMode;
+
+                if (autoExploreMode)
+                {
+                    LoadAutoExploreRoute(moveConfigPath);
+                    autoExploreUsingReturnRoute = false;
+                    autoExploreReturnRouteResumeAfterEnd = false;
+                    pumpkinReturnRouteResumePending = false;
+                    movingOpt = true;
+                    autoExploreLastKey = "";
+                    autoExploreLastDir = "";
+                    autoExploreLastDeviationRouteKey = "";
+                    autoExploreReturnTapKey = "";
+                    autoExploreReturnTapDir = "";
+                    autoExploreDeviationReturnPending = false;
+                    autoExploreReturnTapTime = System.DateTime.MinValue;
+                    autoExploreSamePointFailCount = 0;
+                    ResetSpecialRouteDetour();
+                    shouldPrimePickup = true;
+                    SayText("자동 탐색 시작");
+                }
+                else
+                {
+                    autoExploreLastKey = "";
+                    autoExploreLastDir = "";
+                    autoExploreLastDeviationRouteKey = "";
+                    autoExploreReturnTapKey = "";
+                    autoExploreReturnTapDir = "";
+                    autoExploreDeviationReturnPending = false;
+                    autoExploreReturnTapTime = System.DateTime.MinValue;
+                    autoExploreSamePointFailCount = 0;
+                    ResetSpecialRouteDetour();
+                    autoExploreManualRoute = new Dictionary<string, string>();
+                    autoExploreManualRouteExpanded = new Dictionary<string, string>();
+                    autoExploreUsingReturnRoute = false;
+                    autoExploreReturnRouteResumeAfterEnd = false;
+                    pumpkinReturnRouteResumePending = false;
+                    movingOpt = false;
+                    StopMovement();
+                    SayText("자동 탐색 종료");
+                }
+            }
+
+            if (shouldPrimePickup)
+            {
+                SyncPickupFromCurrentPositionIfRunning();
+            }
+        }
+
+        private void RememberReturnRouteBeforeEndOff()
+        {
+            lock (autoExploreLock)
+            {
+                autoExploreReturnRouteResumeAfterEnd = autoExploreMode && autoExploreUsingReturnRoute;
+            }
+        }
+
+        private void ResumeReturnRouteAfterEndOn()
+        {
+            lock (autoExploreLock)
+            {
+                if (!autoExploreMode || !autoExploreReturnRouteResumeAfterEnd)
+                    return;
+
+                LoadAutoExploreRoute(downConfigPath);
+                autoExploreUsingReturnRoute = true;
+                pumpkinReturnRouteResumePending = false;
+                autoExploreReturnRouteResumeAfterEnd = false;
+                SayRouteChangeText("10굴에서 5굴 복귀 경로 유지");
+            }
+        }
+
+        private string GetAutoExploreDirection(int mapNo, string xyText, string currentKey)
+        {
+            lock (autoExploreLock)
+            {
+                if (mapNo == GwallyeongCastleMapNo)
+                {
+                    if (autoExploreUsingReturnRoute)
+                    {
+                        LoadAutoExploreRoute(moveConfigPath);
+                        autoExploreUsingReturnRoute = false;
+                        autoExploreReturnRouteResumeAfterEnd = false;
+                    }
+
+                    string castleDir = GetCastleDirectionFromCache(currentKey);
+                    if (string.IsNullOrEmpty(castleDir))
+                        castleDir = GetGwallyeongCastleHouse5Direction(currentKey);
+
+                    castleDir = GetSpecialRouteDirectionWithDetour(currentKey, castleDir);
+                    TrackAutoExploreSelectedDirection(currentKey, castleDir);
+                    return castleDir;
+                }
+
+                if (mapNo < 1 || mapNo > AutoExploreMaxMapNo || string.IsNullOrEmpty(xyText))
+                {
+                    return GetDirectionFromCache(currentKey);
+                }
+
+                if (mapNo == GwallyeongHauntedEntranceMapNo)
+                {
+                    if (autoExploreUsingReturnRoute)
+                    {
+                        LoadAutoExploreRoute(moveConfigPath);
+                        autoExploreUsingReturnRoute = false;
+                        autoExploreReturnRouteResumeAfterEnd = false;
+                    }
+
+                    string entranceDir = GetConfigOnlyAutoExploreDirection(currentKey);
+                    entranceDir = GetSpecialRouteDirectionWithDetour(currentKey, entranceDir);
+                    TrackAutoExploreSelectedDirection(currentKey, entranceDir);
+                    return entranceDir;
+                }
+
+                if (UpdateAutoExploreRouteByPosition(currentKey))
+                    return "";
+
+                ObserveAutoExplorePosition(currentKey);
+
+                if (TryGetHauntedHouse5UpperRouteDirection(mapNo, xyText, currentKey, out string specialDir))
+                {
+                    TrackAutoExploreSelectedDirection(currentKey, specialDir);
+                    return specialDir;
+                }
+
+                if (TryGetHauntedHouse6UpperRouteDirection(mapNo, xyText, currentKey, out specialDir))
+                {
+                    TrackAutoExploreSelectedDirection(currentKey, specialDir);
+                    return specialDir;
+                }
+
+                if (TryGetHauntedHouse7UpperRouteDirection(mapNo, xyText, currentKey, out specialDir))
+                {
+                    TrackAutoExploreSelectedDirection(currentKey, specialDir);
+                    return specialDir;
+                }
+
+                if (TryGetHauntedHouse8UpperRouteDirection(mapNo, xyText, currentKey, out specialDir))
+                {
+                    TrackAutoExploreSelectedDirection(currentKey, specialDir);
+                    return specialDir;
+                }
+
+                if (TryGetHauntedHouse9UpperRouteDirection(mapNo, xyText, currentKey, out specialDir))
+                {
+                    TrackAutoExploreSelectedDirection(currentKey, specialDir);
+                    return specialDir;
+                }
+
+                if (TryGetHauntedHouse10UpperRouteDirection(mapNo, xyText, currentKey, out specialDir))
+                {
+                    TrackAutoExploreSelectedDirection(currentKey, specialDir);
+                    return specialDir;
+                }
+
+                string selectedDir = ChooseAutoExploreDirection(currentKey, null);
+
+                TrackAutoExploreSelectedDirection(currentKey, selectedDir);
+                return selectedDir;
+            }
+        }
+
+        private string GetConfigOnlyAutoExploreDirection(string currentKey)
+        {
+            if (TryGetManualRouteDirection(currentKey, out string manualDir))
+                return manualDir;
+
+            if (TryGetDirectionTowardManualRoute(currentKey, out string returnDir))
+                return returnDir;
+
+            if (autoExploreUsingReturnRoute)
+                return null;
+
+            return GetDirectionFromCache(currentKey);
+        }
+
+        private bool TryGetHauntedHouse5UpperRouteDirection(int mapNo, string xyText, string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (autoExploreUsingReturnRoute || mapNo != 5)
+            {
+                ResetHauntedHouse5UpperRoute();
+                hauntedHouse5UpperRouteCompleted = false;
+                return false;
+            }
+
+            if (!TryParseMoveKey(currentKey, out _, out int x, out int y))
+                return false;
+
+            if (hauntedHouse5UpperRoutePhase == 0)
+            {
+                if (x != 9 || y != 13)
+                    return false;
+
+                if (hauntedHouse5UpperRouteCompleted)
+                    return false;
+
+                hauntedHouse5UpperRoutePhase = 1;
+                hauntedHouse5UpperRouteBounceCount = 0;
+                hauntedHouse5UpperRouteReachedEast = false;
+                hauntedHouse5UpperRouteLoopIndex = 0;
+                SayRouteChangeText("5굴 상행 특수 경로 시작");
+            }
+
+            if (hauntedHouse5UpperRoutePhase == 1)
+            {
+                if (x == 9 && y == 13)
+                {
+                    if (hauntedHouse5UpperRouteReachedEast)
+                    {
+                        hauntedHouse5UpperRouteBounceCount++;
+                        hauntedHouse5UpperRouteReachedEast = false;
+
+                        if (hauntedHouse5UpperRouteBounceCount >= HauntedHouseSpecialBounceTarget)
+                        {
+                            hauntedHouse5UpperRoutePhase = 2;
+                            hauntedHouse5UpperRouteExitRetryPending = true;
+                            direction = "서";
+                            return true;
+                        }
+                    }
+
+                    direction = "동";
+                    return true;
+                }
+
+                if (x == 10 && y == 13)
+                {
+                    hauntedHouse5UpperRouteReachedEast = true;
+                    direction = "서";
+                    return true;
+                }
+
+                ResetHauntedHouse5UpperRoute();
+                return false;
+            }
+
+            if (hauntedHouse5UpperRoutePhase == 2)
+            {
+                if (x == 8 && y == 13)
+                {
+                    hauntedHouse5UpperRouteExitRetryPending = false;
+                    hauntedHouse5UpperRoutePhase = 3;
+                    hauntedHouse5UpperRouteLoopIndex = 0;
+                    direction = GetHauntedHouse5ClockwiseLoopDirection(x, y);
+                    return true;
+                }
+
+                if (x == 9 && y == 13 && hauntedHouse5UpperRouteExitRetryPending)
+                {
+                    hauntedHouse5UpperRouteExitRetryPending = false;
+                    direction = "서";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 8, 13);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse5UpperRoutePhase == 3)
+            {
+                if (x == 8 && y == 13 && hauntedHouse5UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse5UpperRoutePhase = 4;
+                    direction = "동";
+                    return true;
+                }
+
+                direction = GetHauntedHouse5ClockwiseLoopDirection(x, y);
+                if (string.IsNullOrEmpty(direction) &&
+                    x == 8 && y == 13 &&
+                    hauntedHouse5UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse5UpperRoutePhase = 4;
+                    direction = "동";
+                    return true;
+                }
+
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse5UpperRoutePhase == 4)
+            {
+                if (x == 16 && y == 13)
+                {
+                    ResetHauntedHouse5UpperRoute();
+                    hauntedHouse5UpperRouteCompleted = true;
+                    SayRouteChangeText("5굴 상행 특수 경로 종료");
+                    return false;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 16, 13);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            return false;
+        }
+
+        private string GetHauntedHouse5ClockwiseLoopDirection(int x, int y)
+        {
+            int[,] points = new int[,]
+            {
+                { 8, 13 },
+                { 8, 12 },
+                { 9, 12 },
+                { 10, 12 },
+                { 11, 12 },
+                { 11, 13 },
+                { 11, 14 },
+                { 10, 14 },
+                { 9, 14 },
+                { 8, 14 },
+                { 8, 13 }
+            };
+
+            if (hauntedHouse5UpperRouteLoopIndex >= 10)
+                return "";
+
+            int currentX = points[hauntedHouse5UpperRouteLoopIndex, 0];
+            int currentY = points[hauntedHouse5UpperRouteLoopIndex, 1];
+            int nextX = points[hauntedHouse5UpperRouteLoopIndex + 1, 0];
+            int nextY = points[hauntedHouse5UpperRouteLoopIndex + 1, 1];
+
+            if (x == nextX && y == nextY)
+            {
+                hauntedHouse5UpperRouteLoopIndex++;
+                return GetHauntedHouse5ClockwiseLoopDirection(x, y);
+            }
+
+            if (x != currentX || y != currentY)
+                return GetDirectionTowardPoint(x, y, currentX, currentY);
+
+            return GetDirectionTowardPoint(x, y, nextX, nextY);
+        }
+
+        private string GetDirectionTowardPoint(int x, int y, int targetX, int targetY)
+        {
+            if (x < targetX) return "동";
+            if (x > targetX) return "서";
+            if (y < targetY) return "남";
+            if (y > targetY) return "북";
+            return "";
+        }
+
+        private int GetUpperRouteExitRetryPressMs()
+        {
+            return Math.Max(segmentedMovePressMs, nearTurnSlowRepeatMs);
+        }
+
+        private int GetUpperRouteStepPressMs(string key)
+        {
+            int pressMs = GetUpperRouteExitRetryPressMs();
+
+            if (!IsHauntedHouse10StallPoint(key))
+                return pressMs;
+
+            pressMs = Math.Max(pressMs, 180);
+
+            if (autoExploreSamePointFailCount > 0)
+                pressMs = Math.Max(pressMs, Math.Min(320, 220 + (autoExploreSamePointFailCount * 40)));
+
+            return pressMs;
+        }
+
+        private bool IsHauntedHouse10StallPoint(string key)
+        {
+            if (hauntedHouse10UpperRoutePhase != 3 && hauntedHouse10UpperRoutePhase != 4)
+                return false;
+
+            if (!TryParseMoveKey(key, out int mapNo, out int x, out int y))
+                return false;
+
+            return mapNo == 10 && y == 14 && (x == 14 || x == 15);
+        }
+
+        private void ResetHauntedHouse5UpperRoute()
+        {
+            hauntedHouse5UpperRoutePhase = 0;
+            hauntedHouse5UpperRouteBounceCount = 0;
+            hauntedHouse5UpperRouteReachedEast = false;
+            hauntedHouse5UpperRouteExitRetryPending = false;
+            hauntedHouse5UpperRouteLoopIndex = 0;
+        }
+
+        private bool TryGetHauntedHouse6UpperRouteDirection(int mapNo, string xyText, string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (autoExploreUsingReturnRoute || mapNo != 6)
+            {
+                ResetHauntedHouse6UpperRoute();
+                hauntedHouse6UpperRouteCompleted = false;
+                return false;
+            }
+
+            if (!TryParseMoveKey(currentKey, out _, out int x, out int y))
+                return false;
+
+            if (hauntedHouse6UpperRoutePhase == 0)
+            {
+                if (y != 23 || x < 10 || x > 14)
+                    return false;
+
+                if (hauntedHouse6UpperRouteCompleted)
+                    return false;
+
+                hauntedHouse6UpperRouteBounceCount = 0;
+                hauntedHouse6UpperRouteReachedWest = false;
+                hauntedHouse6UpperRouteLoopIndex = 0;
+                SayRouteChangeText("6굴 상행 특수 경로 시작");
+
+                if (x == 10)
+                {
+                    hauntedHouse6UpperRoutePhase = 2;
+                    hauntedHouse6UpperRouteReachedWest = true;
+                }
+                else if (x == 11)
+                {
+                    hauntedHouse6UpperRoutePhase = 2;
+                }
+                else
+                {
+                    hauntedHouse6UpperRoutePhase = 1;
+                }
+            }
+
+            if (hauntedHouse6UpperRoutePhase == 1)
+            {
+                if (x == 11 && y == 23)
+                {
+                    hauntedHouse6UpperRoutePhase = 2;
+                    direction = "서";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 11, 23);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse6UpperRoutePhase == 2)
+            {
+                if (x == 11 && y == 23)
+                {
+                    if (hauntedHouse6UpperRouteReachedWest)
+                    {
+                        hauntedHouse6UpperRouteBounceCount++;
+                        hauntedHouse6UpperRouteReachedWest = false;
+
+                        if (hauntedHouse6UpperRouteBounceCount >= HauntedHouseSpecialBounceTarget)
+                        {
+                            hauntedHouse6UpperRoutePhase = 3;
+                            hauntedHouse6UpperRouteExitRetryPending = true;
+                            direction = "서";
+                            return true;
+                        }
+                    }
+
+                    direction = "서";
+                    return true;
+                }
+
+                if (x == 10 && y == 23)
+                {
+                    hauntedHouse6UpperRouteReachedWest = true;
+                    direction = "동";
+                    return true;
+                }
+
+                ResetHauntedHouse6UpperRoute();
+                return false;
+            }
+
+            if (hauntedHouse6UpperRoutePhase == 3)
+            {
+                if (x == 9 && y == 23)
+                {
+                    hauntedHouse6UpperRouteExitRetryPending = false;
+                    hauntedHouse6UpperRoutePhase = 4;
+                    hauntedHouse6UpperRouteLoopIndex = 0;
+                    direction = GetHauntedHouse6ClockwiseLoopDirection(x, y);
+                    return true;
+                }
+
+                if (x == 11 && y == 23 && hauntedHouse6UpperRouteExitRetryPending)
+                {
+                    hauntedHouse6UpperRouteExitRetryPending = false;
+                    direction = "서";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 9, 23);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse6UpperRoutePhase == 4)
+            {
+                if (x == 9 && y == 23 && hauntedHouse6UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse6UpperRoutePhase = 5;
+                    direction = "동";
+                    return true;
+                }
+
+                direction = GetHauntedHouse6ClockwiseLoopDirection(x, y);
+                if (string.IsNullOrEmpty(direction) &&
+                    x == 9 && y == 23 &&
+                    hauntedHouse6UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse6UpperRoutePhase = 5;
+                    direction = "동";
+                    return true;
+                }
+
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse6UpperRoutePhase == 5)
+            {
+                if (x == 14 && y == 23)
+                {
+                    ResetHauntedHouse6UpperRoute();
+                    hauntedHouse6UpperRouteCompleted = true;
+                    SayRouteChangeText("6굴 상행 특수 경로 종료");
+                    return false;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 14, 23);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            return false;
+        }
+
+        private string GetHauntedHouse6ClockwiseLoopDirection(int x, int y)
+        {
+            int[,] points = new int[,]
+            {
+                { 9, 23 },
+                { 9, 22 },
+                { 10, 22 },
+                { 11, 22 },
+                { 12, 22 },
+                { 12, 23 },
+                { 12, 24 },
+                { 11, 24 },
+                { 10, 24 },
+                { 9, 24 },
+                { 9, 23 }
+            };
+
+            if (hauntedHouse6UpperRouteLoopIndex >= 10)
+                return "";
+
+            int currentX = points[hauntedHouse6UpperRouteLoopIndex, 0];
+            int currentY = points[hauntedHouse6UpperRouteLoopIndex, 1];
+            int nextX = points[hauntedHouse6UpperRouteLoopIndex + 1, 0];
+            int nextY = points[hauntedHouse6UpperRouteLoopIndex + 1, 1];
+
+            if (x == nextX && y == nextY)
+            {
+                hauntedHouse6UpperRouteLoopIndex++;
+                return GetHauntedHouse6ClockwiseLoopDirection(x, y);
+            }
+
+            if (x != currentX || y != currentY)
+                return GetDirectionTowardPoint(x, y, currentX, currentY);
+
+            return GetDirectionTowardPoint(x, y, nextX, nextY);
+        }
+
+        private void ResetHauntedHouse6UpperRoute()
+        {
+            hauntedHouse6UpperRoutePhase = 0;
+            hauntedHouse6UpperRouteBounceCount = 0;
+            hauntedHouse6UpperRouteReachedWest = false;
+            hauntedHouse6UpperRouteExitRetryPending = false;
+            hauntedHouse6UpperRouteLoopIndex = 0;
+        }
+
+        private bool TryGetHauntedHouse7UpperRouteDirection(int mapNo, string xyText, string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (autoExploreUsingReturnRoute || mapNo != 7)
+            {
+                ResetHauntedHouse7UpperRoute();
+                hauntedHouse7UpperRouteCompleted = false;
+                return false;
+            }
+
+            if (!TryParseMoveKey(currentKey, out _, out int x, out int y))
+                return false;
+
+            if (hauntedHouse7UpperRoutePhase == 0)
+            {
+                if (x != 14 || y != 10)
+                    return false;
+
+                if (hauntedHouse7UpperRouteCompleted)
+                    return false;
+
+                hauntedHouse7UpperRoutePhase = 1;
+                hauntedHouse7UpperRouteBounceCount = 0;
+                hauntedHouse7UpperRouteReachedNorth = false;
+                hauntedHouse7UpperRouteLoopIndex = 0;
+                SayRouteChangeText("7굴 상행 특수 경로 시작");
+            }
+
+            if (hauntedHouse7UpperRoutePhase == 1)
+            {
+                if (x == 14 && y == 10)
+                {
+                    if (hauntedHouse7UpperRouteReachedNorth)
+                    {
+                        hauntedHouse7UpperRouteBounceCount++;
+                        hauntedHouse7UpperRouteReachedNorth = false;
+
+                        if (hauntedHouse7UpperRouteBounceCount >= HauntedHouseSpecialBounceTarget)
+                        {
+                            hauntedHouse7UpperRoutePhase = 2;
+                            hauntedHouse7UpperRouteExitRetryPending = true;
+                            direction = "북";
+                            return true;
+                        }
+                    }
+
+                    direction = "북";
+                    return true;
+                }
+
+                if (x == 14 && y == 9)
+                {
+                    hauntedHouse7UpperRouteReachedNorth = true;
+                    direction = "남";
+                    return true;
+                }
+
+                ResetHauntedHouse7UpperRoute();
+                return false;
+            }
+
+            if (hauntedHouse7UpperRoutePhase == 2)
+            {
+                if (x == 14 && y == 8)
+                {
+                    hauntedHouse7UpperRouteExitRetryPending = false;
+                    hauntedHouse7UpperRoutePhase = 3;
+                    hauntedHouse7UpperRouteLoopIndex = 0;
+                    direction = GetHauntedHouse7ClockwiseLoopDirection(x, y);
+                    return true;
+                }
+
+                if (x == 14 && y == 10 && hauntedHouse7UpperRouteExitRetryPending)
+                {
+                    hauntedHouse7UpperRouteExitRetryPending = false;
+                    direction = "북";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 14, 8);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse7UpperRoutePhase == 3)
+            {
+                if (x == 14 && y == 8 && hauntedHouse7UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse7UpperRoutePhase = 4;
+                    direction = "남";
+                    return true;
+                }
+
+                direction = GetHauntedHouse7ClockwiseLoopDirection(x, y);
+                if (string.IsNullOrEmpty(direction) &&
+                    x == 14 && y == 8 &&
+                    hauntedHouse7UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse7UpperRoutePhase = 4;
+                    direction = "남";
+                    return true;
+                }
+
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse7UpperRoutePhase == 4)
+            {
+                if (x == 14 && y == 10)
+                {
+                    ResetHauntedHouse7UpperRoute();
+                    hauntedHouse7UpperRouteCompleted = true;
+                    SayRouteChangeText("7굴 상행 특수 경로 종료");
+                    return false;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 14, 10);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            return false;
+        }
+
+        private string GetHauntedHouse7ClockwiseLoopDirection(int x, int y)
+        {
+            int[,] points = new int[,]
+            {
+                { 14, 8 },
+                { 15, 8 },
+                { 15, 9 },
+                { 15, 10 },
+                { 15, 11 },
+                { 14, 11 },
+                { 13, 11 },
+                { 13, 10 },
+                { 13, 9 },
+                { 13, 8 },
+                { 14, 8 }
+            };
+
+            if (hauntedHouse7UpperRouteLoopIndex >= 10)
+                return "";
+
+            int currentX = points[hauntedHouse7UpperRouteLoopIndex, 0];
+            int currentY = points[hauntedHouse7UpperRouteLoopIndex, 1];
+            int nextX = points[hauntedHouse7UpperRouteLoopIndex + 1, 0];
+            int nextY = points[hauntedHouse7UpperRouteLoopIndex + 1, 1];
+
+            if (x == nextX && y == nextY)
+            {
+                hauntedHouse7UpperRouteLoopIndex++;
+                return GetHauntedHouse7ClockwiseLoopDirection(x, y);
+            }
+
+            if (x != currentX || y != currentY)
+                return GetDirectionTowardPoint(x, y, currentX, currentY);
+
+            return GetDirectionTowardPoint(x, y, nextX, nextY);
+        }
+
+        private void ResetHauntedHouse7UpperRoute()
+        {
+            hauntedHouse7UpperRoutePhase = 0;
+            hauntedHouse7UpperRouteBounceCount = 0;
+            hauntedHouse7UpperRouteReachedNorth = false;
+            hauntedHouse7UpperRouteExitRetryPending = false;
+            hauntedHouse7UpperRouteLoopIndex = 0;
+        }
+
+        private bool TryGetHauntedHouse8UpperRouteDirection(int mapNo, string xyText, string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (autoExploreUsingReturnRoute || mapNo != 8)
+            {
+                ResetHauntedHouse8UpperRoute();
+                hauntedHouse8UpperRouteCompleted = false;
+                return false;
+            }
+
+            if (!TryParseMoveKey(currentKey, out _, out int x, out int y))
+                return false;
+
+            if (hauntedHouse8UpperRoutePhase == 0)
+            {
+                if (x != 18 || y != 16)
+                    return false;
+
+                if (hauntedHouse8UpperRouteCompleted)
+                    return false;
+
+                hauntedHouse8UpperRoutePhase = 1;
+                hauntedHouse8UpperRouteBounceCount = 0;
+                hauntedHouse8UpperRouteReachedWest = false;
+                hauntedHouse8UpperRouteLoopIndex = 0;
+                SayRouteChangeText("8굴 상행 특수 경로 시작");
+            }
+
+            if (hauntedHouse8UpperRoutePhase == 1)
+            {
+                if (x == 18 && y == 16)
+                {
+                    if (hauntedHouse8UpperRouteReachedWest)
+                    {
+                        hauntedHouse8UpperRouteBounceCount++;
+                        hauntedHouse8UpperRouteReachedWest = false;
+
+                        if (hauntedHouse8UpperRouteBounceCount >= HauntedHouseSpecialBounceTarget)
+                        {
+                            hauntedHouse8UpperRoutePhase = 2;
+                            hauntedHouse8UpperRouteExitRetryPending = true;
+                            direction = "서";
+                            return true;
+                        }
+                    }
+
+                    direction = "서";
+                    return true;
+                }
+
+                if (x == 17 && y == 16)
+                {
+                    hauntedHouse8UpperRouteReachedWest = true;
+                    direction = "동";
+                    return true;
+                }
+
+                ResetHauntedHouse8UpperRoute();
+                return false;
+            }
+
+            if (hauntedHouse8UpperRoutePhase == 2)
+            {
+                if (x == 16 && y == 16)
+                {
+                    hauntedHouse8UpperRouteExitRetryPending = false;
+                    hauntedHouse8UpperRoutePhase = 3;
+                    hauntedHouse8UpperRouteLoopIndex = 0;
+                    direction = GetHauntedHouse8ClockwiseLoopDirection(x, y);
+                    return true;
+                }
+
+                if (x == 18 && y == 16 && hauntedHouse8UpperRouteExitRetryPending)
+                {
+                    hauntedHouse8UpperRouteExitRetryPending = false;
+                    direction = "서";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 16, 16);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse8UpperRoutePhase == 3)
+            {
+                if (x == 16 && y == 16 && hauntedHouse8UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse8UpperRoutePhase = 4;
+                    direction = "동";
+                    return true;
+                }
+
+                direction = GetHauntedHouse8ClockwiseLoopDirection(x, y);
+                if (string.IsNullOrEmpty(direction) &&
+                    x == 16 && y == 16 &&
+                    hauntedHouse8UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse8UpperRoutePhase = 4;
+                    direction = "동";
+                    return true;
+                }
+
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse8UpperRoutePhase == 4)
+            {
+                if (x == 18 && y == 16)
+                {
+                    ResetHauntedHouse8UpperRoute();
+                    hauntedHouse8UpperRouteCompleted = true;
+                    SayRouteChangeText("8굴 상행 특수 경로 종료");
+                    return false;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 18, 16);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            return false;
+        }
+
+        private string GetHauntedHouse8ClockwiseLoopDirection(int x, int y)
+        {
+            int[,] points = new int[,]
+            {
+                { 16, 16 },
+                { 16, 15 },
+                { 17, 15 },
+                { 18, 15 },
+                { 19, 15 },
+                { 19, 16 },
+                { 19, 17 },
+                { 18, 17 },
+                { 17, 17 },
+                { 16, 17 },
+                { 16, 16 }
+            };
+
+            if (hauntedHouse8UpperRouteLoopIndex >= 10)
+                return "";
+
+            int currentX = points[hauntedHouse8UpperRouteLoopIndex, 0];
+            int currentY = points[hauntedHouse8UpperRouteLoopIndex, 1];
+            int nextX = points[hauntedHouse8UpperRouteLoopIndex + 1, 0];
+            int nextY = points[hauntedHouse8UpperRouteLoopIndex + 1, 1];
+
+            if (x == nextX && y == nextY)
+            {
+                hauntedHouse8UpperRouteLoopIndex++;
+                return GetHauntedHouse8ClockwiseLoopDirection(x, y);
+            }
+
+            if (x != currentX || y != currentY)
+                return GetDirectionTowardPoint(x, y, currentX, currentY);
+
+            return GetDirectionTowardPoint(x, y, nextX, nextY);
+        }
+
+        private void ResetHauntedHouse8UpperRoute()
+        {
+            hauntedHouse8UpperRoutePhase = 0;
+            hauntedHouse8UpperRouteBounceCount = 0;
+            hauntedHouse8UpperRouteReachedWest = false;
+            hauntedHouse8UpperRouteExitRetryPending = false;
+            hauntedHouse8UpperRouteLoopIndex = 0;
+        }
+
+        private bool TryGetHauntedHouse9UpperRouteDirection(int mapNo, string xyText, string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (autoExploreUsingReturnRoute || mapNo != 9)
+            {
+                ResetHauntedHouse9UpperRoute();
+                hauntedHouse9UpperRouteCompleted = false;
+                return false;
+            }
+
+            if (!TryParseMoveKey(currentKey, out _, out int x, out int y))
+                return false;
+
+            if (hauntedHouse9UpperRoutePhase == 0)
+            {
+                if (x != 14 || y != 10)
+                    return false;
+
+                if (hauntedHouse9UpperRouteCompleted)
+                    return false;
+
+                hauntedHouse9UpperRoutePhase = 1;
+                hauntedHouse9UpperRouteBounceCount = 0;
+                hauntedHouse9UpperRouteReachedWest = false;
+                hauntedHouse9UpperRouteLoopIndex = 0;
+                SayRouteChangeText("9굴 상행 특수 경로 시작");
+            }
+
+            if (hauntedHouse9UpperRoutePhase == 1)
+            {
+                if (x == 14 && y == 10)
+                {
+                    if (hauntedHouse9UpperRouteReachedWest)
+                    {
+                        hauntedHouse9UpperRouteBounceCount++;
+                        hauntedHouse9UpperRouteReachedWest = false;
+
+                        if (hauntedHouse9UpperRouteBounceCount >= HauntedHouseSpecialBounceTarget)
+                        {
+                            hauntedHouse9UpperRoutePhase = 2;
+                            hauntedHouse9UpperRouteExitRetryPending = true;
+                            direction = "서";
+                            return true;
+                        }
+                    }
+
+                    direction = "서";
+                    return true;
+                }
+
+                if (x == 13 && y == 10)
+                {
+                    hauntedHouse9UpperRouteReachedWest = true;
+                    direction = "동";
+                    return true;
+                }
+
+                ResetHauntedHouse9UpperRoute();
+                return false;
+            }
+
+            if (hauntedHouse9UpperRoutePhase == 2)
+            {
+                if (x == 12 && y == 10)
+                {
+                    hauntedHouse9UpperRouteExitRetryPending = false;
+                    hauntedHouse9UpperRoutePhase = 3;
+                    hauntedHouse9UpperRouteLoopIndex = 0;
+                    direction = GetHauntedHouse9ClockwiseLoopDirection(x, y);
+                    return true;
+                }
+
+                if (x == 14 && y == 10 && hauntedHouse9UpperRouteExitRetryPending)
+                {
+                    hauntedHouse9UpperRouteExitRetryPending = false;
+                    direction = "서";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 12, 10);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse9UpperRoutePhase == 3)
+            {
+                if (x == 12 && y == 10 && hauntedHouse9UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse9UpperRoutePhase = 4;
+                    direction = "동";
+                    return true;
+                }
+
+                direction = GetHauntedHouse9ClockwiseLoopDirection(x, y);
+                if (string.IsNullOrEmpty(direction) &&
+                    x == 12 && y == 10 &&
+                    hauntedHouse9UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse9UpperRoutePhase = 4;
+                    direction = "동";
+                    return true;
+                }
+
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse9UpperRoutePhase == 4)
+            {
+                if (x == 13 && y == 10)
+                {
+                    ResetHauntedHouse9UpperRoute();
+                    hauntedHouse9UpperRouteCompleted = true;
+                    SayRouteChangeText("9굴 상행 특수 경로 종료");
+                    return false;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 13, 10);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            return false;
+        }
+
+        private string GetHauntedHouse9ClockwiseLoopDirection(int x, int y)
+        {
+            int[,] points = new int[,]
+            {
+                { 12, 10 },
+                { 12, 9 },
+                { 13, 9 },
+                { 14, 9 },
+                { 15, 9 },
+                { 15, 10 },
+                { 15, 11 },
+                { 14, 11 },
+                { 13, 11 },
+                { 12, 11 },
+                { 12, 10 }
+            };
+
+            if (hauntedHouse9UpperRouteLoopIndex >= 10)
+                return "";
+
+            int currentX = points[hauntedHouse9UpperRouteLoopIndex, 0];
+            int currentY = points[hauntedHouse9UpperRouteLoopIndex, 1];
+            int nextX = points[hauntedHouse9UpperRouteLoopIndex + 1, 0];
+            int nextY = points[hauntedHouse9UpperRouteLoopIndex + 1, 1];
+
+            if (x == nextX && y == nextY)
+            {
+                hauntedHouse9UpperRouteLoopIndex++;
+                return GetHauntedHouse9ClockwiseLoopDirection(x, y);
+            }
+
+            if (x != currentX || y != currentY)
+                return GetDirectionTowardPoint(x, y, currentX, currentY);
+
+            return GetDirectionTowardPoint(x, y, nextX, nextY);
+        }
+
+        private void ResetHauntedHouse9UpperRoute()
+        {
+            hauntedHouse9UpperRoutePhase = 0;
+            hauntedHouse9UpperRouteBounceCount = 0;
+            hauntedHouse9UpperRouteReachedWest = false;
+            hauntedHouse9UpperRouteExitRetryPending = false;
+            hauntedHouse9UpperRouteLoopIndex = 0;
+        }
+
+        private bool TryGetHauntedHouse10UpperRouteDirection(int mapNo, string xyText, string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (autoExploreUsingReturnRoute || mapNo != 10)
+            {
+                ResetHauntedHouse10UpperRoute();
+                hauntedHouse10UpperRouteCompleted = false;
+                return false;
+            }
+
+            if (!TryParseMoveKey(currentKey, out _, out int x, out int y))
+                return false;
+
+            if (hauntedHouse10UpperRoutePhase == 0)
+            {
+                if (x != 16 || y != 9)
+                    return false;
+
+                if (hauntedHouse10UpperRouteCompleted)
+                    return false;
+
+                hauntedHouse10UpperRoutePhase = 1;
+                hauntedHouse10UpperRouteBounceCount = 0;
+                hauntedHouse10UpperRouteReachedEast = false;
+                hauntedHouse10UpperRouteLoopIndex = 0;
+                SayRouteChangeText("10굴 상행 특수 경로 시작");
+            }
+
+            if (hauntedHouse10UpperRoutePhase == 1)
+            {
+                if (x == 16 && y == 14)
+                {
+                    hauntedHouse10UpperRoutePhase = 2;
+                    direction = "서";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 16, 14);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse10UpperRoutePhase == 2)
+            {
+                if (x == 14 && y == 14)
+                {
+                    hauntedHouse10UpperRoutePhase = 3;
+                    direction = "동";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 14, 14);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse10UpperRoutePhase == 3)
+            {
+                if (x == 14 && y == 14)
+                {
+                    if (hauntedHouse10UpperRouteReachedEast)
+                    {
+                        hauntedHouse10UpperRouteBounceCount++;
+                        hauntedHouse10UpperRouteReachedEast = false;
+
+                        if (hauntedHouse10UpperRouteBounceCount >= HauntedHouseSpecialBounceTarget)
+                        {
+                            hauntedHouse10UpperRoutePhase = 4;
+                            hauntedHouse10UpperRouteExitRetryPending = true;
+                            direction = "서";
+                            return true;
+                        }
+                    }
+
+                    direction = "동";
+                    return true;
+                }
+
+                if (x == 15 && y == 14)
+                {
+                    hauntedHouse10UpperRouteReachedEast = true;
+                    direction = "서";
+                    return true;
+                }
+
+                ResetHauntedHouse10UpperRoute();
+                return false;
+            }
+
+            if (hauntedHouse10UpperRoutePhase == 4)
+            {
+                if (x == 13 && y == 14)
+                {
+                    hauntedHouse10UpperRouteExitRetryPending = false;
+                    hauntedHouse10UpperRoutePhase = 5;
+                    hauntedHouse10UpperRouteLoopIndex = 0;
+                    direction = GetHauntedHouse10ClockwiseLoopDirection(x, y);
+                    return true;
+                }
+
+                if (x == 14 && y == 14 && hauntedHouse10UpperRouteExitRetryPending)
+                {
+                    hauntedHouse10UpperRouteExitRetryPending = false;
+                    direction = "서";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 13, 14);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse10UpperRoutePhase == 5)
+            {
+                if (x == 13 && y == 14 && hauntedHouse10UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse10UpperRoutePhase = 6;
+                    direction = "동";
+                    return true;
+                }
+
+                direction = GetHauntedHouse10ClockwiseLoopDirection(x, y);
+                if (string.IsNullOrEmpty(direction) &&
+                    x == 13 && y == 14 &&
+                    hauntedHouse10UpperRouteLoopIndex >= 10)
+                {
+                    hauntedHouse10UpperRoutePhase = 6;
+                    direction = "동";
+                    return true;
+                }
+
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse10UpperRoutePhase == 6)
+            {
+                if (x == 16 && y == 14)
+                {
+                    hauntedHouse10UpperRoutePhase = 7;
+                    direction = "북";
+                    return true;
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 16, 14);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            if (hauntedHouse10UpperRoutePhase == 7)
+            {
+                if (x == 16 && y == 9)
+                {
+                    StartReverseAutoExploreRouteFromUpperRoute();
+                    ResetHauntedHouse10UpperRoute();
+                    SayRouteChangeText("10굴 하행 시작");
+                    direction = GetConfigOnlyAutoExploreDirection(currentKey);
+                    return !string.IsNullOrEmpty(direction);
+                }
+
+                direction = GetDirectionTowardPoint(x, y, 16, 9);
+                return !string.IsNullOrEmpty(direction);
+            }
+
+            return false;
+        }
+
+        private string GetHauntedHouse10ClockwiseLoopDirection(int x, int y)
+        {
+            int[,] points = new int[,]
+            {
+                { 13, 14 },
+                { 13, 13 },
+                { 14, 13 },
+                { 15, 13 },
+                { 16, 13 },
+                { 16, 14 },
+                { 16, 15 },
+                { 15, 15 },
+                { 14, 15 },
+                { 13, 15 },
+                { 13, 14 }
+            };
+
+            if (hauntedHouse10UpperRouteLoopIndex >= 10)
+                return "";
+
+            int currentX = points[hauntedHouse10UpperRouteLoopIndex, 0];
+            int currentY = points[hauntedHouse10UpperRouteLoopIndex, 1];
+            int nextX = points[hauntedHouse10UpperRouteLoopIndex + 1, 0];
+            int nextY = points[hauntedHouse10UpperRouteLoopIndex + 1, 1];
+
+            if (x == nextX && y == nextY)
+            {
+                hauntedHouse10UpperRouteLoopIndex++;
+                return GetHauntedHouse10ClockwiseLoopDirection(x, y);
+            }
+
+            if (x != currentX || y != currentY)
+                return GetDirectionTowardPoint(x, y, currentX, currentY);
+
+            return GetDirectionTowardPoint(x, y, nextX, nextY);
+        }
+
+        private void StartReverseAutoExploreRouteFromUpperRoute()
+        {
+            Dictionary<string, string> downRoute = LoadMoveDictionary(downConfigPath);
+
+            autoExploreManualRoute = CloneManualRouteDictionary(downRoute);
+            autoExploreManualRouteExpanded = BuildExpandedManualRoute(autoExploreManualRoute);
+            autoExploreUsingReturnRoute = true;
+            pumpkinReturnRouteResumePending = false;
+            autoExploreReturnRouteResumeAfterEnd = false;
+            autoExploreReturnEndCandidateKey = "";
+            autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
+            autoExploreReturnTapKey = "";
+            autoExploreReturnTapDir = "";
+            autoExploreDeviationReturnPending = false;
+            autoExploreReturnTapTime = System.DateTime.MinValue;
+        }
+
+        private Dictionary<string, string> BuildReverseRoute(Dictionary<string, string> route)
+        {
+            Dictionary<string, string> reverseRoute = new Dictionary<string, string>();
+
+            if (route == null)
+                return reverseRoute;
+
+            foreach (KeyValuePair<string, string> item in route)
+            {
+                if (string.IsNullOrEmpty(item.Value))
+                    continue;
+
+                if (!TryGetNextMoveKey(item.Key, item.Value, out string nextKey))
+                    continue;
+
+                string oppositeDir = GetOppositeDirection(item.Value);
+                if (!string.IsNullOrEmpty(oppositeDir))
+                    reverseRoute[nextKey] = oppositeDir;
+            }
+
+            return reverseRoute;
+        }
+
+        private void ResetHauntedHouse10UpperRoute()
+        {
+            hauntedHouse10UpperRoutePhase = 0;
+            hauntedHouse10UpperRouteBounceCount = 0;
+            hauntedHouse10UpperRouteReachedEast = false;
+            hauntedHouse10UpperRouteExitRetryPending = false;
+            hauntedHouse10UpperRouteLoopIndex = 0;
+        }
+
+        private string GetSpecialRouteDirectionWithDetour(string currentKey, string baseDir)
+        {
+            if (string.IsNullOrEmpty(currentKey) || string.IsNullOrEmpty(baseDir))
+            {
+                ResetSpecialRouteDetour();
+                return baseDir;
+            }
+
+            if (!IsCastleSpecialRouteDetourKey(currentKey))
+            {
+                ResetSpecialRouteDetour();
+                return baseDir;
+            }
+
+            System.DateTime now = System.DateTime.Now;
+
+            if (specialRouteDetourActive)
+            {
+                if (currentKey != specialRouteDetourLastKey)
+                {
+                    specialRouteDetourLastKey = currentKey;
+                    specialRouteDetourIndex++;
+                    specialRouteBlockedSince = now;
+                }
+                else if ((now - specialRouteBlockedSince).TotalMilliseconds >= SpecialRouteBlockedMs &&
+                         TrySwitchBlockedCastleDetourSide(currentKey, out string retryDir))
+                {
+                    SayText("길막힘 반대 우회");
+                    return retryDir;
+                }
+
+                if (specialRouteDetourIndex < specialRouteDetourDirs.Length)
+                    return specialRouteDetourDirs[specialRouteDetourIndex];
+
+                ResetSpecialRouteDetour();
+                return baseDir;
+            }
+
+            if (specialRouteBlockedKey != currentKey || specialRouteBlockedDir != baseDir)
+            {
+                specialRouteBlockedKey = currentKey;
+                specialRouteBlockedDir = baseDir;
+                specialRouteBlockedSince = now;
+                return baseDir;
+            }
+
+            if ((now - specialRouteBlockedSince).TotalMilliseconds < SpecialRouteBlockedMs)
+                return baseDir;
+
+            StartSpecialRouteDetour(currentKey, baseDir);
+            if (specialRouteDetourDirs.Length == 0)
+                return baseDir;
+
+            SayText("길막힘 우회");
+            return specialRouteDetourDirs[0];
+        }
+
+        private void StartSpecialRouteDetour(string currentKey, string baseDir)
+        {
+            if (!TryBuildCastleDShapeDetour(currentKey, baseDir, out string[] detourDirs))
+            {
+                string sideDir = GetRightDirection(baseDir);
+                string restoreDir = GetOppositeDirection(sideDir);
+
+                detourDirs = string.IsNullOrEmpty(sideDir) || string.IsNullOrEmpty(restoreDir)
+                    ? new string[0]
+                    : BuildDShapeDetourDirs(sideDir, baseDir, 2);
+            }
+
+            specialRouteDetourDirs = detourDirs;
+            specialRouteDetourIndex = 0;
+            specialRouteDetourLastKey = currentKey;
+            specialRouteDetourBaseDir = baseDir;
+            specialRouteDetourActive = specialRouteDetourDirs.Length > 0;
+            specialRouteBlockedSince = System.DateTime.Now;
+        }
+
+        private bool IsCastleSpecialRouteDetourKey(string currentKey)
+        {
+            if (!TryParseMoveKey(currentKey, out int mapNo, out _, out _))
+                return false;
+
+            return mapNo == GwallyeongCastleMapNo;
+        }
+
+        private bool TrySwitchBlockedCastleDetourSide(string currentKey, out string retryDir)
+        {
+            retryDir = "";
+
+            if (specialRouteDetourIndex != 0 ||
+                specialRouteDetourDirs.Length == 0 ||
+                string.IsNullOrEmpty(specialRouteDetourBaseDir))
+            {
+                return false;
+            }
+
+            string blockedSideDir = specialRouteDetourDirs[0];
+            if (!TryBuildCastleDShapeDetour(currentKey, specialRouteDetourBaseDir, out string[] retryDirs, blockedSideDir))
+            {
+                string alternateSideDir = GetOppositeDirection(blockedSideDir);
+                retryDirs = BuildDShapeDetourDirs(alternateSideDir, specialRouteDetourBaseDir, 2);
+            }
+
+            if (retryDirs.Length == 0 || retryDirs[0] == blockedSideDir)
+                return false;
+
+            specialRouteDetourDirs = retryDirs;
+            specialRouteDetourIndex = 0;
+            specialRouteDetourLastKey = currentKey;
+            specialRouteBlockedSince = System.DateTime.Now;
+
+            retryDir = specialRouteDetourDirs[0];
+            return true;
+        }
+
+        private bool TryBuildCastleDShapeDetour(string currentKey, string baseDir, out string[] detourDirs, string skipSideDir = "")
+        {
+            detourDirs = new string[0];
+
+            string rightDir = GetRightDirection(baseDir);
+            string leftDir = GetLeftDirection(baseDir);
+            string[] sideDirs = new string[] { rightDir, leftDir };
+
+            string[] bestDirs = new string[0];
+            int bestScore = int.MaxValue;
+
+            for (int sideIndex = 0; sideIndex < sideDirs.Length; sideIndex++)
+            {
+                string sideDir = sideDirs[sideIndex];
+                if (string.IsNullOrEmpty(sideDir) || sideDir == skipSideDir)
+                    continue;
+
+                for (int forwardSteps = 2; forwardSteps <= SpecialRouteMaxDetourForwardSteps; forwardSteps++)
+                {
+                    string[] candidateDirs = BuildDShapeDetourDirs(sideDir, baseDir, forwardSteps);
+                    if (!TryGetKeyAfterDirections(currentKey, candidateDirs, out string rejoinKey))
+                        continue;
+
+                    if (!TryGetCastleDetourRejoinScore(rejoinKey, baseDir, forwardSteps, sideIndex, out int score))
+                        continue;
+
+                    if (score >= bestScore)
+                        continue;
+
+                    bestScore = score;
+                    bestDirs = candidateDirs;
+                }
+            }
+
+            if (bestDirs.Length == 0)
+                return false;
+
+            detourDirs = bestDirs;
+            return true;
+        }
+
+        private string[] BuildDShapeDetourDirs(string sideDir, string baseDir, int forwardSteps)
+        {
+            string restoreDir = GetOppositeDirection(sideDir);
+            if (string.IsNullOrEmpty(sideDir) || string.IsNullOrEmpty(baseDir) || string.IsNullOrEmpty(restoreDir) || forwardSteps <= 0)
+                return new string[0];
+
+            string[] dirs = new string[forwardSteps + 2];
+            dirs[0] = sideDir;
+
+            for (int i = 0; i < forwardSteps; i++)
+                dirs[i + 1] = baseDir;
+
+            dirs[dirs.Length - 1] = restoreDir;
+            return dirs;
+        }
+
+        private bool TryGetKeyAfterDirections(string currentKey, string[] dirs, out string resultKey)
+        {
+            resultKey = currentKey;
+
+            if (string.IsNullOrEmpty(currentKey) || dirs == null || dirs.Length == 0)
+                return false;
+
+            foreach (string dir in dirs)
+            {
+                if (!TryGetNextMoveKey(resultKey, dir, out string nextKey))
+                    return false;
+
+                resultKey = nextKey;
+            }
+
+            return true;
+        }
+
+        private bool TryGetCastleDetourRejoinScore(string rejoinKey, string baseDir, int forwardSteps, int sideIndex, out int score)
+        {
+            score = int.MaxValue;
+
+            if (!IsCastleSpecialRouteDetourKey(rejoinKey))
+                return false;
+
+            string rejoinDir = GetCastleRouteDirectionForDetour(rejoinKey);
+            if (rejoinDir != baseDir)
+                return false;
+
+            int routeDistance = GetDistanceFromCastleRoute(rejoinKey);
+            if (routeDistance < 0)
+                routeDistance = 0;
+
+            score = routeDistance * 20 + forwardSteps * 2 + sideIndex;
+            return true;
+        }
+
+        private string GetCastleRouteDirectionForDetour(string currentKey)
+        {
+            RefreshCastleMoveDictionaryIfNeeded();
+
+            if (TryGetRouteDirection(castleDirectionDic, currentKey, out string direction))
+                return direction;
+
+            return GetGwallyeongCastleHouse5Direction(currentKey);
+        }
+
+        private int GetDistanceFromCastleRoute(string key)
+        {
+            RefreshCastleMoveDictionaryIfNeeded();
+
+            if (castleDirectionDic == null || castleDirectionDic.Count == 0)
+                return -1;
+
+            if (!TryParseMoveKey(key, out int mapNo, out int x, out int y))
+                return -1;
+
+            int best = int.MaxValue;
+
+            foreach (KeyValuePair<string, string> item in castleDirectionDic)
+            {
+                if (!TryParseMoveKey(item.Key, out int savedMap, out int savedX, out int savedY))
+                    continue;
+
+                if (savedMap != mapNo)
+                    continue;
+
+                int pointDistance = Math.Abs(x - savedX) + Math.Abs(y - savedY);
+                if (pointDistance < best)
+                    best = pointDistance;
+
+                if (TryGetNearestRoutePointAhead(castleDirectionDic, item.Key, item.Value, out string nextRouteKey) &&
+                    TryParseMoveKey(nextRouteKey, out int nextMap, out int nextX, out int nextY) &&
+                    nextMap == mapNo)
+                {
+                    int segmentDistance = GetManhattanDistanceToRouteSegment(x, y, savedX, savedY, nextX, nextY);
+                    if (segmentDistance < best)
+                        best = segmentDistance;
+                }
+            }
+
+            return best == int.MaxValue ? -1 : best;
+        }
+
+        private void ResetSpecialRouteDetour()
+        {
+            specialRouteDetourActive = false;
+            specialRouteDetourDirs = new string[0];
+            specialRouteDetourIndex = 0;
+            specialRouteDetourLastKey = "";
+            specialRouteDetourBaseDir = "";
+            specialRouteBlockedKey = "";
+            specialRouteBlockedDir = "";
+            specialRouteBlockedSince = System.DateTime.MinValue;
+        }
+
+        private string GetRightDirection(string dir)
+        {
+            if (dir == "북") return "동";
+            if (dir == "동") return "남";
+            if (dir == "남") return "서";
+            if (dir == "서") return "북";
+            return "";
+        }
+
+        private string GetLeftDirection(string dir)
+        {
+            if (dir == "북") return "서";
+            if (dir == "서") return "남";
+            if (dir == "남") return "동";
+            if (dir == "동") return "북";
+            return "";
+        }
+
+        private void TrackAutoExploreSelectedDirection(string currentKey, string selectedDir)
+        {
+            if (string.IsNullOrEmpty(selectedDir))
+                return;
+
+            bool isNewAttempt = autoExploreLastKey != currentKey || autoExploreLastDir != selectedDir;
+
+            if (isNewAttempt)
+            {
+                autoExploreLastKey = currentKey;
+                autoExploreLastDir = selectedDir;
+                autoExploreLastMoveTime = System.DateTime.Now;
+            }
+        }
+
+        private string GetGwallyeongCastleHouse5Direction(string currentKey)
+        {
+            if (!TryParseMoveKey(currentKey, out int mapNo, out int x, out int y))
+                return "";
+
+            if (mapNo != GwallyeongCastleMapNo)
+                return "";
+
+            if (x < 0 || y < 0 || y > GwallyeongCastleMaxY)
+                return "";
+
+            if (x >= GwallyeongCastleMaxX && y == GwallyeongHauntedHouse5EntryY)
+                return "동";
+
+            if (y < GwallyeongHauntedHouse5EntryY)
+                return "남";
+
+            if (y > GwallyeongHauntedHouse5EntryY)
+                return "북";
+
+            if (x < GwallyeongCastleMaxX)
+                return "동";
+
+            return "";
+        }
+
+        private bool UpdateAutoExploreRouteByPosition(string currentKey)
+        {
+            if (!TryParseMoveKey(currentKey, out int mapNo, out int x, out int y))
+                return false;
+
+            if (autoExploreUsingReturnRoute && mapNo < AutoExploreReturnEndMapNo)
+            {
+                LoadAutoExploreRoute(moveConfigPath);
+                autoExploreUsingReturnRoute = false;
+                autoExploreReturnRouteResumeAfterEnd = false;
+                pumpkinReturnRouteResumePending = false;
+                autoExploreReturnEndCandidateKey = "";
+                autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
+                SayRouteChangeText("복귀 경로 이탈 기본 경로 복구");
+                return false;
+            }
+
+            if (pumpkinReturnRouteResumePending &&
+                mapNo >= AutoExploreReturnEndMapNo &&
+                mapNo <= AutoExploreReturnStartMapNo)
+            {
+                LoadAutoExploreRoute(downConfigPath);
+                autoExploreUsingReturnRoute = true;
+                pumpkinReturnRouteResumePending = false;
+                autoExploreReturnEndCandidateKey = "";
+                autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
+                SayRouteChangeText("10굴에서 5굴 복귀 경로 재개");
+                return false;
+            }
+
+            if (autoExploreUsingReturnRoute &&
+                mapNo == 5 &&
+                x == 9 &&
+                y == 13)
+            {
+                LoadAutoExploreRoute(moveConfigPath);
+                autoExploreUsingReturnRoute = false;
+                autoExploreReturnRouteResumeAfterEnd = false;
+                pumpkinReturnRouteResumePending = false;
+                autoExploreReturnEndCandidateKey = "";
+                autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
+                SayRouteChangeText("5굴 9 13 상행 전환");
+                return false;
+            }
+
+            if (!autoExploreUsingReturnRoute &&
+                mapNo == AutoExploreReturnStartMapNo &&
+                x == AutoExploreReturnStartX &&
+                y == AutoExploreReturnStartY)
+            {
+                LoadAutoExploreRoute(downConfigPath);
+                autoExploreUsingReturnRoute = true;
+                pumpkinReturnRouteResumePending = false;
+                autoExploreReturnEndCandidateKey = "";
+                autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
+                SayRouteChangeText("10굴에서 5굴 복귀 경로 시작");
+                return false;
+            }
+
+            if (autoExploreUsingReturnRoute &&
+                mapNo == AutoExploreReturnEndMapNo &&
+                x == AutoExploreReturnEndX &&
+                y == AutoExploreReturnEndY)
+            {
+                System.DateTime now = System.DateTime.Now;
+                if (autoExploreReturnEndCandidateKey != currentKey)
+                {
+                    autoExploreReturnEndCandidateKey = currentKey;
+                    autoExploreReturnEndCandidateSince = now;
+                    return true;
+                }
+
+                if ((now - autoExploreReturnEndCandidateSince).TotalMilliseconds < AutoExploreReturnEndStableMs)
+                    return true;
+
+                LoadAutoExploreRoute(moveConfigPath);
+                autoExploreUsingReturnRoute = false;
+                autoExploreReturnRouteResumeAfterEnd = false;
+                pumpkinReturnRouteResumePending = false;
+                autoExploreReturnEndCandidateKey = "";
+                autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
+                SayRouteChangeText("기본 경로 복귀");
+                return false;
+            }
+
+            if (autoExploreUsingReturnRoute)
+            {
+                autoExploreReturnEndCandidateKey = "";
+                autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
+            }
+
+            return false;
+        }
+
+        private void LoadAutoExploreRoute(string path)
+        {
+            Dictionary<string, string> route = LoadMoveDictionary(path);
+
+            autoExploreManualRoute = CloneManualRouteDictionary(route);
+            autoExploreManualRouteExpanded = BuildExpandedManualRoute(autoExploreManualRoute);
+            autoExploreLastKey = "";
+            autoExploreLastDir = "";
+            autoExploreLastDeviationRouteKey = "";
+            autoExploreReturnTapKey = "";
+            autoExploreReturnTapDir = "";
+            autoExploreDeviationReturnPending = false;
+            autoExploreReturnTapTime = System.DateTime.MinValue;
+            autoExploreSamePointFailCount = 0;
+            ResetSpecialRouteDetour();
+            ResetHauntedHouse5UpperRoute();
+            hauntedHouse5UpperRouteCompleted = false;
+            ResetHauntedHouse6UpperRoute();
+            hauntedHouse6UpperRouteCompleted = false;
+            ResetHauntedHouse7UpperRoute();
+            hauntedHouse7UpperRouteCompleted = false;
+            ResetHauntedHouse8UpperRoute();
+            hauntedHouse8UpperRouteCompleted = false;
+            ResetHauntedHouse9UpperRoute();
+            hauntedHouse9UpperRouteCompleted = false;
+            ResetHauntedHouse10UpperRoute();
+            hauntedHouse10UpperRouteCompleted = false;
+        }
+
+        private void RefreshActiveManualRouteAfterF4Save()
+        {
+            lock (autoExploreLock)
+            {
+                if (!autoExploreMode || autoExploreUsingReturnRoute)
+                    return;
+
+                autoExploreManualRoute = CloneManualRouteDictionary(directionDic);
+                autoExploreManualRouteExpanded = BuildExpandedManualRoute(autoExploreManualRoute);
+                autoExploreReturnTapKey = "";
+                autoExploreReturnTapDir = "";
+                autoExploreDeviationReturnPending = false;
+                autoExploreReturnTapTime = System.DateTime.MinValue;
+                ResetSpecialRouteDetour();
+            }
+        }
+
+        private Dictionary<string, string> LoadMoveDictionary(string path)
+        {
+            if (!File.Exists(path))
+                return new Dictionary<string, string>();
+
+            string json = File.ReadAllText(path);
+            return JsonConvert.DeserializeObject<Dictionary<string, string>>(json)
+                   ?? new Dictionary<string, string>();
+        }
+
+        private string GetMoveDirectionForCurrentMode(int mapNo, string xyText, string currentKey)
+        {
+            if (autoExploreMode)
+                return GetAutoExploreDirection(mapNo, xyText, currentKey);
+
+            return GetDirectionFromCache(currentKey);
+        }
+
+        private void ObserveAutoExplorePosition(string currentKey)
+        {
+            if (string.IsNullOrEmpty(currentKey))
+                return;
+
+            if (string.IsNullOrEmpty(autoExploreLastKey) || string.IsNullOrEmpty(autoExploreLastDir))
+                return;
+
+            if (currentKey != autoExploreLastKey)
+            {
+                autoExploreSamePointFailCount = 0;
+                autoExploreLastKey = currentKey;
+                autoExploreLastDir = "";
+                autoExploreReturnTapKey = "";
+                autoExploreReturnTapDir = "";
+                autoExploreReturnTapTime = System.DateTime.MinValue;
+                return;
+            }
+
+            if ((System.DateTime.Now - autoExploreLastMoveTime).TotalMilliseconds < AutoExploreStuckMs)
+                return;
+
+            autoExploreSamePointFailCount++;
+
+            autoExploreLastMoveTime = System.DateTime.Now;
+            autoExploreLastDir = "";
+        }
+
+        private string ChooseAutoExploreDirection(string currentKey, AutoExploreNode node)
+        {
+            int routeDistance = GetDistanceFromManualRoute(currentKey);
+
+            if (routeDistance > 0)
+            {
+                autoExploreDeviationReturnPending = true;
+
+                if (TryGetDirectionTowardManualRoute(currentKey, out string returnDir))
+                    return returnDir;
+
+                return null;
+            }
+
+            bool mustResumeMainRoute = autoExploreDeviationReturnPending;
+
+            if (TryGetManualRouteDirection(currentKey, out string manualRouteDir))
+            {
+                autoExploreReturnTapKey = "";
+                autoExploreReturnTapDir = "";
+                autoExploreReturnTapTime = System.DateTime.MinValue;
+
+                if (mustResumeMainRoute)
+                {
+                    autoExploreDeviationReturnPending = false;
+                    return manualRouteDir;
+                }
+
+                if (UseOneTileDeviationRoute &&
+                    !autoExploreUsingReturnRoute &&
+                    currentKey != autoExploreLastDeviationRouteKey &&
+                    autoExploreRandom.Next(100) >= AutoExploreManualRoutePercent &&
+                    TryGetManualRouteDeviationDirection(currentKey, manualRouteDir, out string deviationDir))
+                {
+                    autoExploreDeviationReturnPending = true;
+                    autoExploreLastDeviationRouteKey = currentKey;
+                    return deviationDir;
+                }
+
+                return manualRouteDir;
+            }
+
+            return null;
+        }
+
+        private Dictionary<string, string> CloneManualRouteDictionary(Dictionary<string, string> source)
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            if (source == null)
+                return result;
+
+            foreach (KeyValuePair<string, string> item in source)
+            {
+                if (IsValidMoveDirectionText(item.Value))
+                {
+                    result[item.Key] = item.Value;
+                }
+            }
+
+            return result;
+        }
+
+        private Dictionary<string, string> BuildExpandedManualRoute(Dictionary<string, string> source)
+        {
+            Dictionary<string, string> result = new Dictionary<string, string>();
+
+            if (source == null || source.Count == 0)
+                return result;
+
+            foreach (KeyValuePair<string, string> item in source)
+            {
+                if (!IsValidMoveDirectionText(item.Value))
+                    continue;
+
+                result[item.Key] = item.Value;
+            }
+
+            foreach (KeyValuePair<string, string> item in source)
+            {
+                string startKey = item.Key;
+                string dir = item.Value;
+
+                if (!IsValidMoveDirectionText(dir))
+                    continue;
+
+                if (!TryParseMoveKey(startKey, out int startMap, out int startX, out int startY))
+                    continue;
+
+                int maxDistance = lookAheadCount;
+
+                if (TryGetNearestRoutePointAhead(source, startKey, dir, out string nextRouteKey) &&
+                    TryParseMoveKey(nextRouteKey, out int nextMap, out _, out _) &&
+                    nextMap == startMap)
+                {
+                    int distanceToNext = CalcDistanceOnDirection(startKey, nextRouteKey, dir);
+                    if (distanceToNext > 0)
+                        maxDistance = distanceToNext - 1;
+                }
+
+                for (int i = 1; i <= maxDistance; i++)
+                {
+                    int x = startX;
+                    int y = startY;
+
+                    if (dir == "동") x += i;
+                    else if (dir == "서") x -= i;
+                    else if (dir == "남") y += i;
+                    else if (dir == "북") y -= i;
+
+                    string key = MakeMoveKey(startMap, x, y);
+
+                    if (source.ContainsKey(key))
+                        continue;
+
+                    if (!result.ContainsKey(key))
+                        result[key] = dir;
+                }
+            }
+
+            foreach (KeyValuePair<string, string> item in source)
+            {
+                if (IsValidMoveDirectionText(item.Value))
+                    result[item.Key] = item.Value;
+            }
+
+            return result;
+        }
+
+        private void MergeManualRouteToMoveCache()
+        {
+            if (autoExploreManualRoute == null || autoExploreManualRoute.Count == 0)
+                return;
+
+            if (directionDic == null)
+            {
+                directionDic = new Dictionary<string, string>();
+            }
+
+            foreach (KeyValuePair<string, string> item in autoExploreManualRoute)
+            {
+                directionDic[item.Key] = item.Value;
+            }
+        }
+
+        private bool TryGetManualRouteDirection(string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (GetDistanceFromManualRoute(currentKey) != 0)
+                return false;
+
+            if (autoExploreManualRouteExpanded != null &&
+                autoExploreManualRouteExpanded.TryGetValue(currentKey, out string expandedDir) &&
+                IsValidMoveDirectionText(expandedDir))
+            {
+                if (!IsWithinManualRouteDeviationAfterMove(currentKey, expandedDir))
+                    return false;
+
+                direction = expandedDir;
+                return true;
+            }
+
+            string exactDir = "";
+            bool exactRoutePoint = autoExploreManualRoute != null &&
+                                   autoExploreManualRoute.TryGetValue(currentKey, out exactDir) &&
+                                   IsValidMoveDirectionText(exactDir);
+
+            string manualDir = "";
+
+            if (exactRoutePoint)
+            {
+                manualDir = exactDir;
+            }
+            else if (!TryGetInterpolatedRouteDirection(autoExploreManualRoute, currentKey, out manualDir))
+            {
+                return false;
+            }
+
+            if (!exactRoutePoint &&
+                !string.IsNullOrEmpty(lastMove) &&
+                manualDir == GetOppositeDirection(lastMove) &&
+                IsInterpolatedRouteContinuation(currentKey, lastMove))
+            {
+                manualDir = lastMove;
+            }
+
+            if (!IsWithinManualRouteDeviationAfterMove(currentKey, manualDir))
+                return false;
+
+            direction = manualDir;
+            return true;
+        }
+
+        private bool TryPickBestDirection(List<AutoExploreDirectionScore> scores, out string direction)
+        {
+            direction = "";
+
+            if (scores == null || scores.Count == 0)
+                return false;
+
+            int bestScore = int.MinValue;
+
+            foreach (AutoExploreDirectionScore item in scores)
+            {
+                if (item.Score > bestScore)
+                {
+                    bestScore = item.Score;
+                    direction = item.Direction;
+                }
+            }
+
+            return !string.IsNullOrEmpty(direction);
+        }
+
+        private bool DoesDirectionLeadToKey(string currentKey, string dir, string targetKey)
+        {
+            if (string.IsNullOrEmpty(currentKey) || string.IsNullOrEmpty(dir) || string.IsNullOrEmpty(targetKey))
+                return false;
+
+            if (!TryGetNextMoveKey(currentKey, dir, out string nextKey))
+                return false;
+
+            return nextKey == targetKey;
+        }
+
+        private bool IsInterpolatedRouteContinuation(string currentKey, string dir)
+        {
+            if (string.IsNullOrEmpty(currentKey) || string.IsNullOrEmpty(dir))
+                return false;
+
+            if (!TryGetNextMoveKey(currentKey, dir, out string nextKey))
+                return false;
+
+            return GetDistanceFromManualRoute(nextKey) == 0;
+        }
+
+        private bool TryGetManualRouteDeviationDirection(string currentKey, string manualRouteDir, out string direction)
+        {
+            direction = "";
+
+            if (string.IsNullOrEmpty(currentKey) || string.IsNullOrEmpty(manualRouteDir))
+                return false;
+
+            List<AutoExploreDirectionScore> scores = new List<AutoExploreDirectionScore>();
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+
+            foreach (string dir in dirs)
+            {
+                if (dir == manualRouteDir)
+                    continue;
+
+                if (!IsWithinManualRouteDeviationAfterMove(currentKey, dir))
+                    continue;
+
+                if (!TryGetNextMoveKey(currentKey, dir, out string nextKey))
+                    continue;
+
+                if (GetDistanceFromManualRoute(nextKey) != 1)
+                    continue;
+
+                int score = 20;
+
+                if (IsSideDirection(dir, manualRouteDir))
+                    score += 120;
+
+                if (!string.IsNullOrEmpty(lastMove) && dir == GetOppositeDirection(lastMove))
+                    score -= 80;
+
+                if (score > 0)
+                    scores.Add(new AutoExploreDirectionScore { Direction = dir, Score = score });
+            }
+
+            if (scores.Count == 0)
+                return false;
+
+            int total = 0;
+            foreach (AutoExploreDirectionScore item in scores)
+            {
+                total += item.Score;
+            }
+
+            int pick = autoExploreRandom.Next(1, total + 1);
+            int cursor = 0;
+
+            foreach (AutoExploreDirectionScore item in scores)
+            {
+                cursor += item.Score;
+                if (pick <= cursor)
+                {
+                    direction = item.Direction;
+                    return true;
+                }
+            }
+
+            direction = scores[scores.Count - 1].Direction;
+            return true;
+        }
+
+        private bool TryGetDirectionTowardManualRoute(string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (autoExploreManualRoute == null || autoExploreManualRoute.Count == 0)
+                return false;
+
+            int currentDistance = GetDistanceFromManualRoute(currentKey);
+            if (currentDistance < 0)
+                return false;
+
+            List<AutoExploreDirectionScore> scores = new List<AutoExploreDirectionScore>();
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+
+            foreach (string dir in dirs)
+            {
+                if (!TryGetNextMoveKey(currentKey, dir, out string nextKey))
+                    continue;
+
+                int nextDistance = GetDistanceFromManualRoute(nextKey);
+                if (nextDistance < 0)
+                    continue;
+
+                if (currentDistance > AutoExploreMaxManualRouteDeviation)
+                {
+                    if (nextDistance >= currentDistance)
+                        continue;
+                }
+                else if (nextDistance > AutoExploreMaxManualRouteDeviation)
+                {
+                    continue;
+                }
+
+                if (currentDistance > 0 && nextDistance >= currentDistance)
+                    continue;
+
+                int score = 100 + Math.Max(0, currentDistance - nextDistance) * 80;
+
+                if (nextDistance == 0)
+                    score += 180;
+
+                if (!string.IsNullOrEmpty(lastMove) && dir == GetOppositeDirection(lastMove))
+                    score -= 60;
+
+                if (score > 0)
+                    scores.Add(new AutoExploreDirectionScore { Direction = dir, Score = score });
+            }
+
+            if (autoExploreUsingReturnRoute)
+                return TryPickBestDirection(scores, out direction);
+
+            return TryPickWeightedDirection(scores, out direction);
+        }
+
+        private bool TryPickWeightedDirection(List<AutoExploreDirectionScore> scores, out string direction)
+        {
+            direction = "";
+
+            if (scores == null || scores.Count == 0)
+                return false;
+
+            int total = 0;
+            foreach (AutoExploreDirectionScore item in scores)
+            {
+                total += item.Score;
+            }
+
+            if (total <= 0)
+                return false;
+
+            int pick = autoExploreRandom.Next(1, total + 1);
+            int cursor = 0;
+
+            foreach (AutoExploreDirectionScore item in scores)
+            {
+                cursor += item.Score;
+                if (pick <= cursor)
+                {
+                    direction = item.Direction;
+                    return true;
+                }
+            }
+
+            direction = scores[scores.Count - 1].Direction;
+            return true;
+        }
+
+        private bool TryGetRouteDirection(Dictionary<string, string> route, string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (route == null || string.IsNullOrEmpty(currentKey))
+                return false;
+
+            if (route.TryGetValue(currentKey, out string exactDir) && IsValidMoveDirectionText(exactDir))
+            {
+                direction = exactDir;
+                return true;
+            }
+
+            return TryGetInterpolatedRouteDirection(route, currentKey, out direction);
+        }
+
+        private bool TryGetInterpolatedRouteDirection(Dictionary<string, string> route, string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (route == null || !TryParseMoveKey(currentKey, out int currentMap, out _, out _))
+                return false;
+
+            string bestDir = "";
+            int bestDistance = int.MaxValue;
+
+            foreach (KeyValuePair<string, string> item in route)
+            {
+                string savedKey = item.Key;
+                string savedDir = item.Value;
+
+                if (!IsValidMoveDirectionText(savedDir))
+                    continue;
+
+                if (!TryParseMoveKey(savedKey, out int savedMap, out _, out _))
+                    continue;
+
+                if (savedMap != currentMap)
+                    continue;
+
+                int distanceFromSaved = CalcDistanceOnDirection(savedKey, currentKey, savedDir);
+                if (distanceFromSaved <= 0 || distanceFromSaved >= bestDistance)
+                    continue;
+
+                bool hasRoutePointAhead = HasRoutePointAhead(route, savedKey, savedDir, distanceFromSaved);
+                if (!hasRoutePointAhead && distanceFromSaved > lookAheadCount)
+                    continue;
+
+                bestDistance = distanceFromSaved;
+                bestDir = savedDir;
+            }
+
+            if (string.IsNullOrEmpty(bestDir))
+                return false;
+
+            direction = bestDir;
+            return true;
+        }
+
+        private bool HasRoutePointAhead(Dictionary<string, string> route, string savedKey, string savedDir, int minDistance)
+        {
+            if (route == null || string.IsNullOrEmpty(savedKey) || string.IsNullOrEmpty(savedDir))
+                return false;
+
+            foreach (KeyValuePair<string, string> item in route)
+            {
+                if (item.Key == savedKey)
+                    continue;
+
+                int distance = CalcDistanceOnDirection(savedKey, item.Key, savedDir);
+                if (distance > minDistance)
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool IsWithinManualRouteDeviationAfterMove(string currentKey, string dir)
+        {
+            if (autoExploreManualRoute == null || autoExploreManualRoute.Count == 0)
+                return true;
+
+            if (!TryGetNextMoveKey(currentKey, dir, out string nextKey))
+                return false;
+
+            int distance = GetDistanceFromManualRoute(nextKey);
+            return distance >= 0 && distance <= AutoExploreMaxManualRouteDeviation;
+        }
+
+        private int GetDistanceFromManualRoute(string key)
+        {
+            if (autoExploreManualRoute == null || autoExploreManualRoute.Count == 0)
+                return -1;
+
+            if (!TryParseMoveKey(key, out int mapNo, out int x, out int y))
+                return -1;
+
+            if (autoExploreManualRouteExpanded != null && autoExploreManualRouteExpanded.Count > 0)
+            {
+                int expandedBest = int.MaxValue;
+
+                foreach (string routeKey in autoExploreManualRouteExpanded.Keys)
+                {
+                    if (!TryParseMoveKey(routeKey, out int routeMap, out int routeX, out int routeY))
+                        continue;
+
+                    if (routeMap != mapNo)
+                        continue;
+
+                    int distance = Math.Abs(x - routeX) + Math.Abs(y - routeY);
+                    if (distance < expandedBest)
+                        expandedBest = distance;
+                }
+
+                return expandedBest == int.MaxValue ? -1 : expandedBest;
+            }
+
+            int best = int.MaxValue;
+
+            foreach (KeyValuePair<string, string> item in autoExploreManualRoute)
+            {
+                if (!TryParseMoveKey(item.Key, out int savedMap, out int savedX, out int savedY))
+                    continue;
+
+                if (savedMap != mapNo)
+                    continue;
+
+                int pointDistance = Math.Abs(x - savedX) + Math.Abs(y - savedY);
+                if (pointDistance < best)
+                    best = pointDistance;
+
+                if (!IsValidMoveDirectionText(item.Value))
+                    continue;
+
+                if (IsOnRouteForwardRay(item.Key, item.Value, key, lookAheadCount))
+                {
+                    best = 0;
+                    continue;
+                }
+
+                if (TryGetNearestRoutePointAhead(autoExploreManualRoute, item.Key, item.Value, out string nextRouteKey) &&
+                    TryParseMoveKey(nextRouteKey, out int nextMap, out int nextX, out int nextY) &&
+                    nextMap == mapNo)
+                {
+                    int segmentDistance = GetManhattanDistanceToRouteSegment(x, y, savedX, savedY, nextX, nextY);
+                    if (segmentDistance < best)
+                        best = segmentDistance;
+                }
+            }
+
+            return best == int.MaxValue ? -1 : best;
+        }
+
+        private bool IsOnManualRouteForwardRay(string currentKey, string dir)
+        {
+            if (autoExploreManualRoute == null || string.IsNullOrEmpty(currentKey) || string.IsNullOrEmpty(dir))
+                return false;
+
+            foreach (KeyValuePair<string, string> item in autoExploreManualRoute)
+            {
+                if (item.Value != dir)
+                    continue;
+
+                if (IsOnRouteForwardRay(item.Key, item.Value, currentKey, lookAheadCount))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool IsOnRouteForwardRay(string routeKey, string routeDir, string targetKey, int maxDistance)
+        {
+            int distance = CalcDistanceOnDirection(routeKey, targetKey, routeDir);
+            return distance > 0 && distance <= maxDistance;
+        }
+
+        private bool TryGetNearestRoutePointAhead(Dictionary<string, string> route, string savedKey, string savedDir, out string nextRouteKey)
+        {
+            nextRouteKey = "";
+
+            if (route == null || string.IsNullOrEmpty(savedKey) || string.IsNullOrEmpty(savedDir))
+                return false;
+
+            int bestDistance = int.MaxValue;
+
+            foreach (KeyValuePair<string, string> item in route)
+            {
+                if (item.Key == savedKey)
+                    continue;
+
+                int distance = CalcDistanceOnDirection(savedKey, item.Key, savedDir);
+                if (distance <= 0 || distance >= bestDistance)
+                    continue;
+
+                bestDistance = distance;
+                nextRouteKey = item.Key;
+            }
+
+            return !string.IsNullOrEmpty(nextRouteKey);
+        }
+
+        private int GetManhattanDistanceToRouteSegment(int x, int y, int x1, int y1, int x2, int y2)
+        {
+            if (x1 == x2)
+            {
+                int minY = Math.Min(y1, y2);
+                int maxY = Math.Max(y1, y2);
+
+                if (y >= minY && y <= maxY)
+                    return Math.Abs(x - x1);
+
+                return Math.Min(Math.Abs(x - x1) + Math.Abs(y - y1),
+                                Math.Abs(x - x2) + Math.Abs(y - y2));
+            }
+
+            if (y1 == y2)
+            {
+                int minX = Math.Min(x1, x2);
+                int maxX = Math.Max(x1, x2);
+
+                if (x >= minX && x <= maxX)
+                    return Math.Abs(y - y1);
+
+                return Math.Min(Math.Abs(x - x1) + Math.Abs(y - y1),
+                                Math.Abs(x - x2) + Math.Abs(y - y2));
+            }
+
+            return Math.Min(Math.Abs(x - x1) + Math.Abs(y - y1),
+                            Math.Abs(x - x2) + Math.Abs(y - y2));
+        }
+
+        private bool TryGetNextMoveKey(string currentKey, string dir, out string nextKey)
+        {
+            nextKey = "";
+
+            if (!TryParseMoveKey(currentKey, out int mapNo, out int x, out int y))
+                return false;
+
+            int dx = 0;
+            int dy = 0;
+
+            if (dir == "동") dx = 1;
+            else if (dir == "서") dx = -1;
+            else if (dir == "남") dy = 1;
+            else if (dir == "북") dy = -1;
+            else return false;
+
+            nextKey = mapNo + ":(" + (x + dx).ToString("00") + "," + (y + dy).ToString("00") + ")";
+            return true;
+        }
+
+        private string MakeMoveKey(int mapNo, int x, int y)
+        {
+            return mapNo + ":(" + x.ToString("00") + "," + y.ToString("00") + ")";
+        }
+
+        private void ApplyManualRouteEdgeConfidence(string currentKey, string selectedDir, AutoExploreEdge selectedEdge)
+        {
+            if (selectedEdge == null || !IsManualRouteDirection(currentKey, selectedDir))
+                return;
+
+            selectedEdge.Type = "open";
+            selectedEdge.SuccessCount = Math.Max(selectedEdge.SuccessCount, 1);
+            selectedEdge.ConsecutiveFailCount = 0;
+            selectedEdge.Blocked = false;
+        }
+
+        private bool IsManualRouteDirection(string currentKey, string dir)
+        {
+            if (string.IsNullOrEmpty(currentKey) || string.IsNullOrEmpty(dir) || autoExploreManualRoute == null)
+                return false;
+
+            return autoExploreManualRoute.TryGetValue(currentKey, out string manualDir) && manualDir == dir;
+        }
+
+        private bool IsValidMoveDirectionText(string dir)
+        {
+            return dir == "동" || dir == "서" || dir == "남" || dir == "북";
+        }
+
+        private bool TryGetFrontierRouteDirection(string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (!TryParseMoveKey(currentKey, out int currentMap, out _, out _))
+                return false;
+
+            Queue<string> queue = new Queue<string>();
+            Dictionary<string, string> firstDirectionByKey = new Dictionary<string, string>();
+            HashSet<string> visited = new HashSet<string>();
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+
+            queue.Enqueue(currentKey);
+            visited.Add(currentKey);
+            firstDirectionByKey[currentKey] = "";
+
+            while (queue.Count > 0)
+            {
+                string key = queue.Dequeue();
+                string firstDir = firstDirectionByKey[key];
+
+                foreach (string dir in dirs)
+                {
+                    AutoExploreEdge edge = GetAutoExploreEdge(key, dir);
+                    RepairInvalidDirectionalEdge(key, dir, edge);
+
+                    if (IsLowerMapEdge(key, edge))
+                        continue;
+
+                    if (!IsWithinManualRouteDeviationAfterMove(key, dir))
+                        continue;
+
+                    if (IsExpandableFrontierEdge(edge))
+                    {
+                        direction = string.IsNullOrEmpty(firstDir) ? dir : firstDir;
+                        return true;
+                    }
+
+                    if (edge.Type != "open" || string.IsNullOrEmpty(edge.To))
+                        continue;
+
+                    if (IsLikelyWallEdge(edge))
+                        continue;
+
+                    if (!TryParseMoveKey(edge.To, out int nextMap, out _, out _))
+                        continue;
+
+                    if (nextMap != currentMap)
+                        continue;
+
+                    if (visited.Contains(edge.To))
+                        continue;
+
+                    visited.Add(edge.To);
+                    firstDirectionByKey[edge.To] = string.IsNullOrEmpty(firstDir) ? dir : firstDir;
+                    queue.Enqueue(edge.To);
+                }
+            }
+
+            return false;
+        }
+
+        private bool IsExpandableFrontierEdge(AutoExploreEdge edge)
+        {
+            if (edge == null)
+                return false;
+
+            if (edge.Type == "wall" || edge.Type == "wall_candidate" || edge.Blocked)
+                return false;
+
+            if (edge.SuccessCount > 0)
+                return false;
+
+            if (IsLikelyWallEdge(edge))
+                return false;
+
+            return edge.Type == "unknown" || string.IsNullOrEmpty(edge.Type) || edge.Type == "blocked_candidate";
+        }
+
+        private bool IsLikelyWallEdge(AutoExploreEdge edge)
+        {
+            if (edge == null)
+                return false;
+
+            if (edge.SuccessCount > 0)
+                return false;
+
+            if (edge.Type == "wall" || edge.Type == "wall_candidate" || edge.Blocked)
+                return true;
+
+            return edge.ConsecutiveFailCount >= AutoExploreSoftBlockedFailCount ||
+                   edge.FailCount >= AutoExploreLikelyWallFailCount;
+        }
+
+        private bool TryGetMainRouteDirection(string currentKey, out string direction)
+        {
+            direction = "";
+
+            if (!TryParseMoveKey(currentKey, out int currentMap, out _, out _))
+                return false;
+
+            if (currentMap >= 10)
+                return false;
+
+            Queue<string> queue = new Queue<string>();
+            Dictionary<string, string> firstDirectionByKey = new Dictionary<string, string>();
+            HashSet<string> visited = new HashSet<string>();
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+
+            queue.Enqueue(currentKey);
+            visited.Add(currentKey);
+            firstDirectionByKey[currentKey] = "";
+
+            while (queue.Count > 0)
+            {
+                string key = queue.Dequeue();
+                string firstDir = firstDirectionByKey[key];
+
+                foreach (string dir in dirs)
+                {
+                    AutoExploreEdge edge = GetAutoExploreEdge(key, dir);
+                    RepairInvalidDirectionalEdge(key, dir, edge);
+
+                    if (edge.Type == "wall" || edge.Type == "wall_candidate" || edge.Blocked)
+                        continue;
+
+                    if (IsLowerMapEdge(key, edge))
+                        continue;
+
+                    if (!IsWithinManualRouteDeviationAfterMove(key, dir))
+                        continue;
+
+                    if (edge.Type == "portal" && edge.PortalScore > 0)
+                    {
+                        if (TryParseMoveKey(edge.To, out int portalMap, out _, out _) && portalMap == currentMap + 1)
+                        {
+                            direction = string.IsNullOrEmpty(firstDir) ? dir : firstDir;
+                            return true;
+                        }
+
+                        if (string.IsNullOrEmpty(edge.To))
+                        {
+                            direction = string.IsNullOrEmpty(firstDir) ? dir : firstDir;
+                            return true;
+                        }
+                    }
+
+                    if (edge.Type != "open" || string.IsNullOrEmpty(edge.To))
+                        continue;
+
+                    if (!TryParseMoveKey(edge.To, out int nextMap, out _, out _))
+                        continue;
+
+                    if (nextMap != currentMap)
+                        continue;
+
+                    if (visited.Contains(edge.To))
+                        continue;
+
+                    visited.Add(edge.To);
+                    firstDirectionByKey[edge.To] = string.IsNullOrEmpty(firstDir) ? dir : firstDir;
+                    queue.Enqueue(edge.To);
+                }
+            }
+
+            return false;
+        }
+
+        private string GetBlockedKnownOpenDirection(string currentKey, AutoExploreNode node)
+        {
+            if (string.IsNullOrEmpty(currentKey) || node == null)
+                return "";
+
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+            string bestDir = "";
+            int bestScore = int.MinValue;
+
+            foreach (string dir in dirs)
+            {
+                AutoExploreEdge edge = GetAutoExploreEdge(currentKey, dir);
+
+                RepairInvalidDirectionalEdge(currentKey, dir, edge);
+
+                if (edge.Type != "open" || edge.SuccessCount <= 0 || edge.ConsecutiveFailCount <= 0)
+                    continue;
+
+                if (IsLowerMapEdge(currentKey, edge))
+                    continue;
+
+                if (string.IsNullOrEmpty(edge.To))
+                    continue;
+
+                int score = edge.ConsecutiveFailCount * 100 + edge.MonsterScore * 20 + edge.SuccessCount;
+                if (edge.LastFailedAt != System.DateTime.MinValue)
+                    score += (int)Math.Max(0, 60 - Math.Min(60, (System.DateTime.Now - edge.LastFailedAt).TotalSeconds));
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestDir = dir;
+                }
+            }
+
+            return bestDir;
+        }
+
+        private string GetRecentNonOpenBlockedDirection(string currentKey, AutoExploreNode node)
+        {
+            if (string.IsNullOrEmpty(currentKey) || node == null)
+                return "";
+
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+            string recentDir = "";
+            System.DateTime recentAt = System.DateTime.MinValue;
+
+            foreach (string dir in dirs)
+            {
+                AutoExploreEdge edge = GetAutoExploreEdge(currentKey, dir);
+                if (edge.Type == "open" && edge.SuccessCount > 0)
+                    continue;
+
+                if (edge.LastFailedAt == System.DateTime.MinValue)
+                    continue;
+
+                if ((System.DateTime.Now - edge.LastFailedAt).TotalMilliseconds > AutoExploreRecentBlockDetourMs)
+                    continue;
+
+                if (edge.LastFailedAt > recentAt)
+                {
+                    recentAt = edge.LastFailedAt;
+                    recentDir = dir;
+                }
+            }
+
+            return recentDir;
+        }
+
+        private bool IsSideDirection(string dir, string blockedDir)
+        {
+            if (string.IsNullOrEmpty(dir) || string.IsNullOrEmpty(blockedDir))
+                return false;
+
+            if (blockedDir == "동" || blockedDir == "서")
+                return dir == "남" || dir == "북";
+
+            if (blockedDir == "남" || blockedDir == "북")
+                return dir == "동" || dir == "서";
+
+            return false;
+        }
+
+        private bool IsImmediateReturnDirection(string currentKey, string dir, AutoExploreEdge edge)
+        {
+            if (!string.IsNullOrEmpty(lastMove) && dir == GetOppositeDirection(lastMove))
+                return true;
+
+            return false;
+        }
+
+        private string GetDirectionBetweenKeys(string fromKey, string toKey)
+        {
+            if (!TryParseMoveKey(fromKey, out int fromMap, out int fromX, out int fromY))
+                return "";
+
+            if (!TryParseMoveKey(toKey, out int toMap, out int toX, out int toY))
+                return "";
+
+            if (fromMap != toMap)
+                return "";
+
+            int dx = toX - fromX;
+            int dy = toY - fromY;
+
+            if (dy == 0 && dx == 1)
+                return "동";
+
+            if (dy == 0 && dx == -1)
+                return "서";
+
+            if (dx == 0 && dy == 1)
+                return "남";
+
+            if (dx == 0 && dy == -1)
+                return "북";
+
+            return "";
+        }
+
+        private bool IsDirectionConsistentWithMove(string fromKey, string toKey, string dir)
+        {
+            string actualDir = GetDirectionBetweenKeys(fromKey, toKey);
+            return !string.IsNullOrEmpty(actualDir) && actualDir == dir;
+        }
+
+        private void MarkMismatchedAutoExploreEdge(AutoExploreEdge edge)
+        {
+            if (edge == null)
+                return;
+
+            edge.To = "";
+            edge.SuccessCount = 0;
+            edge.FailCount = Math.Max(edge.FailCount, AutoExploreWallFailCount);
+            edge.ConsecutiveFailCount = Math.Max(edge.ConsecutiveFailCount, AutoExploreSoftBlockedFailCount);
+            edge.Type = "wall_candidate";
+            edge.Blocked = true;
+            edge.LastFailedAt = System.DateTime.Now;
+        }
+
+        private void RepairInvalidDirectionalEdge(string currentKey, string dir, AutoExploreEdge edge)
+        {
+            if (edge == null || string.IsNullOrEmpty(edge.To))
+                return;
+
+            if (edge.Type != "open" && edge.Type != "portal")
+                return;
+
+            if (!TryParseMoveKey(currentKey, out int currentMap, out _, out _))
+                return;
+
+            if (!TryParseMoveKey(edge.To, out int targetMap, out _, out _))
+                return;
+
+            if (currentMap != targetMap)
+                return;
+
+            if (IsDirectionConsistentWithMove(currentKey, edge.To, dir))
+                return;
+
+            MarkMismatchedAutoExploreEdge(edge);
+        }
+
+        private bool IsLowerMapEdge(string currentKey, AutoExploreEdge edge)
+        {
+            if (edge == null)
+                return false;
+
+            if (edge.Type == "back_portal")
+                return true;
+
+            if (!TryParseMoveKey(currentKey, out int currentMap, out _, out _))
+                return false;
+
+            if (currentMap <= AutoExploreMinMapNo && edge.Type == "portal" && edge.PortalScore < 0)
+                return true;
+
+            if (string.IsNullOrEmpty(edge.To))
+                return false;
+
+            if (!TryParseMoveKey(edge.To, out int targetMap, out _, out _))
+                return false;
+
+            return targetMap < AutoExploreMinMapNo || targetMap < currentMap;
+        }
+
+        private string ChooseLeastBadAutoExploreDirection(string currentKey, AutoExploreNode node)
+        {
+            string forcedKnownOpenDir = GetBlockedKnownOpenDirection(currentKey, node);
+            if (!string.IsNullOrEmpty(forcedKnownOpenDir))
+                return forcedKnownOpenDir;
+
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+            string bestDir = "";
+            int bestScore = int.MinValue;
+            string recentBlockedDir = GetRecentNonOpenBlockedDirection(currentKey, node);
+
+            foreach (string dir in dirs)
+            {
+                AutoExploreEdge edge = GetAutoExploreEdge(currentKey, dir);
+
+                RepairInvalidDirectionalEdge(currentKey, dir, edge);
+
+                if (edge.Type == "wall")
+                    continue;
+
+                if (IsLikelyWallEdge(edge))
+                    continue;
+
+                if (IsLowerMapEdge(currentKey, edge))
+                    continue;
+
+                if (!IsWithinManualRouteDeviationAfterMove(currentKey, dir))
+                    continue;
+
+                bool isImmediateReturn = IsImmediateReturnDirection(currentKey, dir, edge);
+                int score = 0;
+
+                if (edge.Type == "unknown" || string.IsNullOrEmpty(edge.Type))
+                    score += 260;
+
+                if (edge.Type == "open")
+                    score += 30;
+
+                if (edge.Type == "open" && edge.SuccessCount > 0 && edge.ConsecutiveFailCount > 0)
+                {
+                    score += 1800 + Math.Min(300, edge.MonsterScore * 35);
+                }
+
+                if (edge.Type == "portal" && edge.PortalScore > 0)
+                    score += 1400 + (edge.PortalScore * 120);
+
+                if (edge.Type == "portal" && edge.PortalScore < 0)
+                    score -= 900;
+
+                score += Math.Min(120, edge.MonsterScore * 20);
+                if (edge.Type == "open" && edge.SuccessCount > 0)
+                    score -= Math.Min(80, edge.ConsecutiveFailCount * 10);
+                else
+                    score -= edge.ConsecutiveFailCount * 220;
+
+                score -= edge.FailCount * 40;
+                score -= edge.ChooseCount * 22;
+
+                if (!string.IsNullOrEmpty(edge.To) && autoExploreGraph.TryGetValue(edge.To, out AutoExploreNode targetNode))
+                {
+                    if (!targetNode.Visited)
+                        score += 500;
+                    else if (HasExpandableAutoExploreDirection(targetNode))
+                        score += 320;
+                    else if (targetNode.LastVisitedAt != System.DateTime.MinValue &&
+                             (System.DateTime.Now - targetNode.LastVisitedAt).TotalSeconds < 90)
+                        score -= 260;
+                }
+
+                if (!string.IsNullOrEmpty(lastMove) && dir == GetOppositeDirection(lastMove))
+                    score -= 180;
+
+                if (isImmediateReturn)
+                    score -= string.IsNullOrEmpty(edge.To) ? 900 : 1300;
+
+                if (!string.IsNullOrEmpty(recentBlockedDir))
+                {
+                    if (dir == recentBlockedDir)
+                        score -= 800;
+                    else if (IsSideDirection(dir, recentBlockedDir))
+                        score += 220;
+                    else if (dir == GetOppositeDirection(recentBlockedDir))
+                        score -= 60;
+                }
+
+                if (!(edge.Type == "open" && edge.SuccessCount > 0) &&
+                    edge.LastFailedAt != System.DateTime.MinValue &&
+                    (System.DateTime.Now - edge.LastFailedAt).TotalSeconds < 15)
+                {
+                    score -= 600;
+                }
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestDir = dir;
+                }
+            }
+
+            return bestDir;
+        }
+
+        private bool HasUnknownAutoExploreDirection(AutoExploreNode node)
+        {
+            if (node == null)
+                return false;
+
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+
+            foreach (string dir in dirs)
+            {
+                if (node.Edges == null || !node.Edges.TryGetValue(dir, out AutoExploreEdge edge))
+                    return true;
+
+                if (edge.Type == "unknown" || string.IsNullOrEmpty(edge.Type))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool HasExpandableAutoExploreDirection(AutoExploreNode node)
+        {
+            if (node == null)
+                return false;
+
+            string[] dirs = new string[] { "동", "서", "남", "북" };
+
+            foreach (string dir in dirs)
+            {
+                if (node.Edges == null || !node.Edges.TryGetValue(dir, out AutoExploreEdge edge))
+                    return true;
+
+                if (edge.Type == "unknown" || string.IsNullOrEmpty(edge.Type))
+                    return true;
+
+                if (edge.Type == "blocked_candidate" && !IsLikelyWallEdge(edge))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private AutoExploreNode GetAutoExploreNode(string key)
+        {
+            if (!autoExploreGraph.TryGetValue(key, out AutoExploreNode node))
+            {
+                node = new AutoExploreNode();
+                node.Key = key;
+                node.Edges = new Dictionary<string, AutoExploreEdge>();
+                autoExploreGraph[key] = node;
+            }
+
+            if (node.Edges == null)
+                node.Edges = new Dictionary<string, AutoExploreEdge>();
+
+            return node;
+        }
+
+        private AutoExploreEdge GetAutoExploreEdge(string key, string dir)
+        {
+            AutoExploreNode node = GetAutoExploreNode(key);
+
+            if (!node.Edges.TryGetValue(dir, out AutoExploreEdge edge))
+            {
+                edge = new AutoExploreEdge();
+                edge.Direction = dir;
+                edge.Type = "unknown";
+                node.Edges[dir] = edge;
+            }
+
+            return edge;
+        }
+
+        private string GetOppositeDirection(string dir)
+        {
+            if (dir == "동") return "서";
+            if (dir == "서") return "동";
+            if (dir == "남") return "북";
+            if (dir == "북") return "남";
+            return "";
+        }
+
+        private void LoadAutoExploreGraphIfNeeded()
+        {
+            autoExploreGraph = new Dictionary<string, AutoExploreNode>();
+        }
+
+        private void SaveAutoExploreGraph(bool force)
+        {
+        }
+
 
         private System.DateTime lastInputTime = System.DateTime.MinValue;
 
@@ -1772,8 +5147,8 @@ namespace Biden.Func
 
                 System.DateTime now = System.DateTime.Now;
 
-                // 현재 칸에 방향이 있으면 그걸 우선 사용, 없으면 직전 방향 유지
-                string desiredDir = !string.IsNullOrEmpty(curMove) ? curMove : lastMove;
+                // 자동 탐색 중에는 방향이 없으면 반드시 멈춘다.
+                string desiredDir = !string.IsNullOrEmpty(curMove) ? curMove : (autoExploreMode ? "" : lastMove);
 
                 if (string.IsNullOrEmpty(desiredDir))
                 {
@@ -1784,8 +5159,51 @@ namespace Biden.Func
                     return;
                 }
 
+                bool useSegmentedMoveInCombat = UseSegmentedMove && ShouldUseSegmentedMoveForCurrentRoute(key);
+                if (useSegmentedMoveInCombat)
+                {
+                    if (segmentedMoveLastPositionKey != key)
+                    {
+                        bool movedToNewPosition = !string.IsNullOrEmpty(segmentedMoveLastPositionKey);
+                        segmentedMoveLastPositionKey = key;
+
+                        int segmentedMoveDelayMs = GetSegmentedMoveDelayMs();
+                        if (movedToNewPosition && segmentedMoveDelayMs > 0)
+                        {
+                            segmentedMovePauseUntil = now.AddMilliseconds(segmentedMoveDelayMs);
+                            ReleaseDirection(lastMove);
+                            lastMove = "";
+                            lastMoveKey = key;
+                            lastMoveWasTapMode = true;
+                            lastInputTime = now;
+                            return;
+                        }
+                    }
+
+                    if (segmentedMovePauseUntil != System.DateTime.MinValue &&
+                        now < segmentedMovePauseUntil)
+                    {
+                        ReleaseDirection(lastMove);
+                        lastMove = "";
+                        lastMoveKey = key;
+                        lastMoveWasTapMode = true;
+                        return;
+                    }
+
+                    segmentedMovePauseUntil = System.DateTime.MinValue;
+                }
+                else
+                {
+                    segmentedMoveLastPositionKey = "";
+                    segmentedMovePauseUntil = System.DateTime.MinValue;
+                }
+
                 // ===== 누르기 전에 먼저 앞 탐색 =====
-                bool useTapMode = ShouldUseTapMoveBeforePress(key, desiredDir);
+                bool useAutoExploreReturnTap = ShouldUseAutoExploreReturnTapMove(key, desiredDir);
+                bool useHauntedHouseUpperRouteStep = IsHauntedHouseUpperRouteStepActive();
+                bool useTapMode = useAutoExploreReturnTap ||
+                                  useHauntedHouseUpperRouteStep ||
+                                  ShouldUseTapMoveBeforePress(key, desiredDir);
 
                 // 방향이 바뀌면 기존 방향 해제
                 if (desiredDir != lastMove)
@@ -1806,10 +5224,49 @@ namespace Biden.Func
                         Thread.Sleep(directionChangeDelayMs);
                     }
 
+                    if (useAutoExploreReturnTap && !CanSendAutoExploreReturnTap(key, desiredDir, now))
+                    {
+                        lastMove = desiredDir;
+                        lastMoveKey = key;
+                        lastMoveWasTapMode = true;
+                        return;
+                    }
+
                     if ((now - lastInputTime).TotalMilliseconds >= nearSegmentMoveIntervalMs)
                     {
-                        TapDirection(desiredDir, turnTapMs);
+                        int tapPressMs = useHauntedHouseUpperRouteStep
+                            ? GetUpperRouteStepPressMs(key)
+                            : turnTapMs;
+
+                        TapDirection(desiredDir, tapPressMs);
                         lastInputTime = now;
+
+                        if (useAutoExploreReturnTap)
+                        {
+                            autoExploreReturnTapKey = key;
+                            autoExploreReturnTapDir = desiredDir;
+                            autoExploreReturnTapTime = now;
+                        }
+                    }
+
+                    lastMove = desiredDir;
+                    lastMoveKey = key;
+                    lastMoveWasTapMode = true;
+                    return;
+                }
+
+                if (useSegmentedMoveInCombat)
+                {
+                    if (!lastMoveWasTapMode)
+                    {
+                        ReleaseDirection(desiredDir);
+                        Thread.Sleep(directionChangeDelayMs);
+                    }
+
+                    if ((now - lastInputTime).TotalMilliseconds >= segmentedMovePressMs)
+                    {
+                        lastInputTime = now;
+                        TapDirection(desiredDir, segmentedMovePressMs);
                     }
 
                     lastMove = desiredDir;
@@ -2102,6 +5559,52 @@ namespace Biden.Func
         }
 
 
+        private bool ShouldUseSegmentedMoveForCurrentRoute(string key)
+        {
+            if (!IsCombatDungeonKey(key))
+                return false;
+
+            if (!useSegmentedMoveOnlyInLoop)
+                return true;
+
+            return IsHauntedHouseClockwiseLoopActive();
+        }
+
+        private int GetSegmentedMoveDelayMs()
+        {
+            return useSegmentedMoveOnlyInLoop && IsHauntedHouseClockwiseLoopActive()
+                ? loopSegmentedMoveDelayMs
+                : basicSegmentedMoveDelayMs;
+        }
+
+        private bool IsHauntedHouseClockwiseLoopActive()
+        {
+            return hauntedHouse5UpperRoutePhase == 3 ||
+                   hauntedHouse6UpperRoutePhase == 4 ||
+                   hauntedHouse7UpperRoutePhase == 3 ||
+                   hauntedHouse8UpperRoutePhase == 3 ||
+                   hauntedHouse9UpperRoutePhase == 3 ||
+                   hauntedHouse10UpperRoutePhase == 5;
+        }
+
+        private bool IsHauntedHouseUpperRouteStepActive()
+        {
+            return hauntedHouse5UpperRoutePhase == 1 ||
+                   hauntedHouse5UpperRoutePhase == 2 ||
+                   hauntedHouse6UpperRoutePhase == 2 ||
+                   hauntedHouse6UpperRoutePhase == 3 ||
+                   hauntedHouse7UpperRoutePhase == 1 ||
+                   hauntedHouse7UpperRoutePhase == 2 ||
+                   hauntedHouse8UpperRoutePhase == 1 ||
+                   hauntedHouse8UpperRoutePhase == 2 ||
+                   hauntedHouse9UpperRoutePhase == 1 ||
+                   hauntedHouse9UpperRoutePhase == 2 ||
+                   hauntedHouse10UpperRoutePhase == 2 ||
+                   hauntedHouse10UpperRoutePhase == 3 ||
+                   hauntedHouse10UpperRoutePhase == 4;
+        }
+
+
         private bool ShouldUseTapMoveBeforePress(string key, string dir)
         {
             if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(dir))
@@ -2113,6 +5616,41 @@ namespace Biden.Func
             }
 
             return false;
+        }
+
+        private bool ShouldUseAutoExploreReturnTapMove(string key, string dir)
+        {
+            if (!autoExploreMode)
+                return false;
+
+            if (autoExploreManualRoute == null || autoExploreManualRoute.Count == 0)
+                return false;
+
+            int currentDistance = GetDistanceFromManualRoute(key);
+            if (currentDistance <= 0)
+                return false;
+
+            if (!TryGetNextMoveKey(key, dir, out string nextKey))
+                return false;
+
+            int nextDistance = GetDistanceFromManualRoute(nextKey);
+            return nextDistance >= 0 && nextDistance < currentDistance;
+        }
+
+        private bool CanSendAutoExploreReturnTap(string key, string dir, System.DateTime now)
+        {
+            if (key != autoExploreReturnTapKey || dir != autoExploreReturnTapDir)
+                return true;
+
+            return (now - autoExploreReturnTapTime).TotalMilliseconds >= GetAutoExploreReturnTapRetryMs();
+        }
+
+        private int GetAutoExploreReturnTapRetryMs()
+        {
+            if (UseSegmentedMove && !useSegmentedMoveOnlyInLoop)
+                return Math.Max(basicSegmentedMoveDelayMs, nearSegmentMoveIntervalMs);
+
+            return AutoExploreReturnTapRetryMs;
         }
 
 
@@ -2187,8 +5725,8 @@ namespace Biden.Func
         private void activate234()
         {
             //좌표 설정
-            int x = 1750; //좀더빠르게 공증
-            //int x = 1801;
+            //int x = 1750; //좀더빠르게 공증
+            int x = 1801;
             int y = 950;
 
             int x0 = 1703;
@@ -2221,6 +5759,12 @@ namespace Biden.Func
 
             int x3 = 1843;
             int y3 = 942;
+
+            
+            //호박
+            //XY(1691, 260)    RGB(6, 3, 6)
+            int x1_hobak = 1691;
+            int y1_hobak = 260;
 
             //차원의조각 채팅 확인 :: 
             //XY(60, 972)  RGB(11, 9, 172)
@@ -2272,6 +5816,8 @@ namespace Biden.Func
 
             Color curColorDeath = GetColorAt(x1_death, y1_death);
 
+            Color curColorHobak = GetColorAt(x1_hobak, y1_hobak);
+
             R0 = curColor0.R;
             G0 = curColor0.G;
             B0 = curColor0.B;
@@ -2316,6 +5862,10 @@ namespace Biden.Func
             death_G1 = curColorDeath.G;
             death_B1 = curColorDeath.B;
 
+            hobak_R1 = curColorHobak.R;
+            hobak_G1 = curColorHobak.G;
+            hobak_B1 = curColorHobak.B;
+
 
 
             //사망 확인
@@ -2354,27 +5904,11 @@ namespace Biden.Func
             if (UseCaptchaAlert && !(R5 == 6 && G5 == 3 && B5 == 6) && beepCount < 30)
             {
                 StopMovement();
-                //평타 종료
-                if (UseNormalAttack)
+                lock (actionKeyLock)
                 {
-                    User32.API.keybd_event(0X20, 0, 2, 0);
-                }
-
-                //줍기 종료
-                if (UsePickup)
-                {
-                    User32.API.keybd_event(0xBC, 0, 2, 0);
-                }
-                //저주 종료
-                if (UseCurseOption)
-                {
-                    User32.API.keybd_event((byte)magic4, 0, 2, 0);
-                }
-                //첨1,첨2 종료
-                if (UseExtraCombo)
-                {
-                    User32.API.keybd_event((byte)magic5, 0, 2, 0);
-                    User32.API.keybd_event((byte)magic6, 0, 2, 0);
+                    ReleaseStationaryCombatKeys();
+                    ReleasePickup();
+                    ReleaseCurse();
                 }
 
                 beepCount++;
@@ -2390,30 +5924,23 @@ namespace Biden.Func
                 Macro.getInstance.Flag_END = false;
                 beepCount = 0;
                 StopMovement();
-                //평타 종료
-                if (UseNormalAttack)
+                lock (actionKeyLock)
                 {
-                    User32.API.keybd_event(0X20, 0, 2, 0);
-                }
-
-                //줍기 종료
-                if (UsePickup)
-                {
-                    User32.API.keybd_event(0xBC, 0, 2, 0);
-                }
-                //저주 종료
-                if (UseCurseOption)
-                {
-                    User32.API.keybd_event((byte)magic4, 0, 2, 0);
-                }
-                //첨1,첨2 종료
-                if (UseExtraCombo)
-                {
-                    User32.API.keybd_event((byte)magic5, 0, 2, 0);
-                    User32.API.keybd_event((byte)magic6, 0, 2, 0);
+                    ReleaseStationaryCombatKeys();
+                    ReleasePickup();
+                    ReleaseCurse();
                 }
                 SayText("captcha chacha");
                 return;
+            }
+
+
+            //호박 100개 참
+            if (!(hobak_R1 == 6 && hobak_G1 == 3 && hobak_B1 == 6))
+            {
+                SayPumpkinText("호박 is full");
+                StartPumpkinFullSequenceAsync();
+
             }
 
             //현재 맵 타이틀과 좌표를 통해 key 추출
@@ -2424,7 +5951,7 @@ namespace Biden.Func
             //무빙
             if (movingOpt)
             {
-                curMove = GetDirectionFromCache(key);
+                curMove = GetMoveDirectionForCurrentMode(res1, res2, key);
                 UpdateMove(key, curMove);
                 Console.WriteLine($"KEY={key}, CUR={curMove ?? "null"}, LAST={lastMove ?? "null"}, HAS={(directionDic != null && directionDic.ContainsKey(key))}");
  
@@ -2478,13 +6005,6 @@ namespace Biden.Func
                     Console.Beep(FA, 150);
                     Console.Beep(SOL, 150);
                     SayText("일반채팅 감지");
-                    User32.API.keybd_event(0X10, 0, 0, 0);
-                    Thread.Sleep(5);
-                    User32.API.keybd_event(0X5A, 0, 0, 0);
-                    Thread.Sleep(5);
-                    User32.API.keybd_event(0X5A, 0, 2, 0);
-                    Thread.Sleep(5);
-                    User32.API.keybd_event(0X43, 0, 0, 0);
                 }
             }
 
@@ -2658,7 +6178,7 @@ namespace Biden.Func
                 }
                 paralysisCount++;
                 //중독 돌리기
-                if (UsePoison && poisonCount % 3 == 0)
+                if (UsePoison && poisonCount % 4 == 0)
                 {
                     ReleaseStationaryCombatKeys();
                     poision();
@@ -2692,8 +6212,8 @@ namespace Biden.Func
             {
                 HellPosibleFlag = false;
             }
-            // 헬파이어
-            if (UseHellfire && HellPosibleFlag && !(R0 == 8 && G0 == 4 && B0 == 8))
+            // 헬파이어: 삼매처럼 좌표가 막혀 있을 때만 발동
+            if (UseHellfire && IsHellfireStallReady(key) && HellPosibleFlag && !(R0 == 8 && G0 == 4 && B0 == 8))
             {
                 lock (actionKeyLock)
                 {
@@ -2719,6 +6239,8 @@ namespace Biden.Func
                         {
                             attackUsingHell();
                         }
+
+                        MarkHellfireStallCast();
                     }
                     finally
                     {
@@ -2736,7 +6258,7 @@ namespace Biden.Func
                         int resumeMapNo = getMapNumber();
                         string resumeXY = getMapXY();
                         string resumeKey = resumeMapNo + ":" + resumeXY;
-                        string resumeMove = GetDirectionFromCache(resumeKey);
+                        string resumeMove = GetMoveDirectionForCurrentMode(resumeMapNo, resumeXY, resumeKey);
 
                         UpdateMove(resumeKey, resumeMove);
                     }
@@ -2758,10 +6280,8 @@ namespace Biden.Func
 
         private void ReleaseNormalAttack()
         {
-            if (UseNormalAttack)
-            {
-                User32.API.keybd_event(0X20, 0, 2, 0);
-            }
+            User32.API.keybd_event(0X20, 0, 2, 0);
+            normalAttackKeyPressed = false;
         }
 
         private void PressNormalAttackIfRunning()
@@ -2782,19 +6302,20 @@ namespace Biden.Func
             stationaryCombatKeysPressed = false;
         }
 
-        private void PressStationaryCombatKeysIfRunning()
+        private void PressStationaryCombatKeysIfRunning(bool allowNormalAttack)
         {
             if (!Macro.getInstance.Flag_END)
                 return;
 
-            if (stationaryCombatKeysPressed)
+            if (stationaryCombatKeysPressed && (!allowNormalAttack || !UseNormalAttack || normalAttackKeyPressed))
                 return;
 
             bool pressedAny = false;
 
-            if (UseNormalAttack)
+            if (allowNormalAttack && UseNormalAttack && !normalAttackKeyPressed)
             {
                 User32.API.keybd_event(0X20, 0, 0, 0);
+                normalAttackKeyPressed = true;
                 pressedAny = true;
             }
 
@@ -2806,6 +6327,43 @@ namespace Biden.Func
             }
 
             stationaryCombatKeysPressed = pressedAny;
+        }
+
+        private void SyncPickupKeyIfRunning(string currentKey)
+        {
+            if (!Macro.getInstance.Flag_END || !UsePickup || !IsCombatDungeonKey(currentKey))
+            {
+                ReleasePickup();
+                return;
+            }
+
+            if (pickupKeyPressed)
+                return;
+
+            User32.API.keybd_event(0xBC, 0, 0, 0);
+            pickupKeyPressed = true;
+        }
+
+        private void SyncPickupFromCurrentPositionIfRunning()
+        {
+            int mapNo = getMapNumber();
+            string xyText = getMapXY();
+
+            if (string.IsNullOrEmpty(xyText))
+            {
+                ReleasePickup();
+                return;
+            }
+
+            SyncPickupKeyIfRunning(mapNo + ":" + xyText);
+        }
+
+        private bool IsCombatDungeonKey(string currentKey)
+        {
+            if (!TryParseMoveKey(currentKey, out int mapNo, out _, out _))
+                return false;
+
+            return mapNo >= 1 && mapNo <= 10;
         }
 
         private bool IsStationaryCombatReady(string currentKey)
@@ -2829,12 +6387,20 @@ namespace Biden.Func
                 if (!Macro.getInstance.Flag_END)
                 {
                     ReleaseStationaryCombatKeys();
+                    ReleasePickup();
                     return;
                 }
 
+                bool isCombatDungeon = IsCombatDungeonKey(currentKey);
+
+                SyncPickupKeyIfRunning(currentKey);
+
+                if (!isCombatDungeon)
+                    ReleaseNormalAttack();
+
                 if (IsStationaryCombatReady(currentKey))
                 {
-                    PressStationaryCombatKeysIfRunning();
+                    PressStationaryCombatKeysIfRunning(isCombatDungeon);
                 }
                 else
                 {
@@ -2846,6 +6412,454 @@ namespace Biden.Func
         private void ReleaseLoopKeys()
         {
             ReleaseCurse();
+            ReleasePickup();
+        }
+
+        private void StartPumpkinFullSequenceAsync()
+        {
+            SyncSelectedMapFromViewModel();
+            if (!IsGwallyeongHauntedHouseMap(SelectedMap))
+            {
+                SayPumpkinText("관령흉가 아님 호박 처리 안함");
+                return;
+            }
+
+            if (!Macro.getInstance.Flag_END)
+            {
+                SayPumpkinText("자동마법 꺼짐 호박 처리 안함");
+                return;
+            }
+
+            lock (pumpkinFullLock)
+            {
+                if (pumpkinFullSequenceRunning)
+                    return;
+
+                pumpkinFullCancelRequested = false;
+                pumpkinFullSequenceRunning = true;
+            }
+
+            Task.Run(() =>
+            {
+                try
+                {
+                    RunPumpkinFullSequence();
+                }
+                catch (OperationCanceledException)
+                {
+                    SayPumpkinText("호박 처리 중단");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Pumpkin full sequence failed: " + ex.Message);
+                    SayPumpkinText("호박 처리 실패");
+                }
+                finally
+                {
+                    lock (pumpkinFullLock)
+                    {
+                        pumpkinFullSequenceRunning = false;
+                        pumpkinFullInternalEndOff = false;
+                    }
+                }
+            });
+        }
+
+        private void CancelPumpkinFullSequence()
+        {
+            lock (pumpkinFullLock)
+            {
+                pumpkinFullCancelRequested = true;
+            }
+
+            ReleaseDirection("서");
+            ReleaseDirection("동");
+            ReleaseDirection("북");
+            ReleaseDirection("남");
+        }
+
+        private bool IsPumpkinFullSequenceRunning()
+        {
+            lock (pumpkinFullLock)
+            {
+                return pumpkinFullSequenceRunning;
+            }
+        }
+
+        private void EnsurePumpkinFullSequenceActive()
+        {
+            lock (pumpkinFullLock)
+            {
+                if (!Macro.getInstance.Flag_END && !pumpkinFullInternalEndOff)
+                    pumpkinFullCancelRequested = true;
+
+                if (pumpkinFullCancelRequested)
+                    throw new OperationCanceledException();
+            }
+        }
+
+        private void RunPumpkinFullSequence()
+        {
+            SayPumpkinText("호박 처리 시작");
+            SayPumpkinText("기존 동작 종료 및 부여성 비서 사용");
+            StopAllAutomationForPumpkinFull();
+            UseBuyCastleScroll();
+            PumpkinStepDelay();
+            EnsurePumpkinFullSequenceActive();
+
+            SayPumpkinText("비영사천문 북쪽 이동");
+            UseBiyoungPortal();
+            PumpkinStepDelay();
+            EnsurePumpkinFullSequenceActive();
+
+            SayPumpkinText("장터 이동 시작");
+            MoveFromBuyCastleToMarket();
+            PumpkinStepDelay();
+            EnsurePumpkinFullSequenceActive();
+
+            SayPumpkinText("호박 판매 시작");
+            SellPumpkinsAtMarket();
+            PumpkinStepDelay();
+            EnsurePumpkinFullSequenceActive();
+
+            SayPumpkinText("관령성 복귀 시작");
+            ReturnToGwallyeongCastle();
+            PumpkinStepDelay();
+            EnsurePumpkinFullSequenceActive();
+
+            SayPumpkinText("자동 사냥 재시작");
+            StartAutomationAfterPumpkinFull();
+        }
+
+        private void StopAllAutomationForPumpkinFull()
+        {
+            pumpkinFullInternalEndOff = true;
+            Macro.getInstance.Flag_END = false;
+
+            lock (autoExploreLock)
+            {
+                pumpkinReturnRouteResumePending = autoExploreUsingReturnRoute;
+                autoExploreMode = false;
+                autoExploreUsingReturnRoute = false;
+                autoExploreReturnRouteResumeAfterEnd = false;
+                autoExploreLastKey = "";
+                autoExploreLastDir = "";
+                autoExploreLastDeviationRouteKey = "";
+                autoExploreReturnTapKey = "";
+                autoExploreReturnTapDir = "";
+                autoExploreDeviationReturnPending = false;
+                autoExploreReturnTapTime = System.DateTime.MinValue;
+                autoExploreSamePointFailCount = 0;
+            }
+
+            movingOpt = false;
+            StopMovement();
+
+            lock (actionKeyLock)
+            {
+                ReleaseStationaryCombatKeys();
+                ReleaseLoopKeys();
+                ReleaseChumChum();
+            }
+        }
+
+        private void UseBuyCastleScroll()
+        {
+            PressUseItemKey();
+            Thread.Sleep(180);
+            PressKey(0x43, 80);
+        }
+
+        private void UseYellowScroll()
+        {
+            PressUseItemKey();
+            Thread.Sleep(180);
+            PressKey(0x42, 80);
+        }
+
+        private void PressUseItemKey()
+        {
+            Thread.Sleep(400);
+            PressKey(0x55, 120);
+        }
+
+        private void UseBiyoungPortal()
+        {
+            UseBiyoungPortal(4);
+        }
+
+        private void UseBiyoungPortal(int portalNumber)
+        {
+            User32.API.keybd_event(0xA0, 0, 0, 0);
+            Thread.Sleep(50);
+            PressKey(0x5A);
+            User32.API.keybd_event(0xA0, 0, 2, 0);
+            Thread.Sleep(120);
+            PressKey(0x5A);
+            Thread.Sleep(120);
+            PressKey(0x30 + portalNumber);
+            Thread.Sleep(120);
+            PressKey(0x0D);
+        }
+
+        private void MoveFromBuyCastleToMarket()
+        {
+            System.DateTime deadline = System.DateTime.Now.AddSeconds(75);
+            System.DateTime forceWestUntil = System.DateTime.Now.AddSeconds(20);
+            string lastMarketMoveStage = "";
+            bool reachedCastleX13 = false;
+            bool startedNorthToMarket = false;
+            string forceWestLastPosition = "";
+            System.DateTime forceWestLastPositionChanged = System.DateTime.Now;
+
+            SayMarketMoveStage("장터 이동 서쪽 20초 유지", ref lastMarketMoveStage);
+            PressDirection("서");
+            try
+            {
+                while (System.DateTime.Now < forceWestUntil)
+                {
+                    EnsurePumpkinFullSequenceActive();
+
+                    if (TryGetCurrentMapXY(out int _, out int forceWestX, out int forceWestY))
+                    {
+                        string currentPosition = forceWestX + "," + forceWestY;
+                        if (currentPosition != forceWestLastPosition)
+                        {
+                            forceWestLastPosition = currentPosition;
+                            forceWestLastPositionChanged = System.DateTime.Now;
+                        }
+                        else if ((System.DateTime.Now - forceWestLastPositionChanged).TotalSeconds >= 2)
+                        {
+                            SayMarketMoveStage("서쪽 길막힘 우회", ref lastMarketMoveStage);
+                            ReleaseDirection("서");
+                            ExecuteMarketWestDetour();
+                            PressDirection("서");
+                            forceWestLastPositionChanged = System.DateTime.Now;
+                        }
+                    }
+
+                    Thread.Sleep(100);
+                }
+            }
+            finally
+            {
+                ReleaseDirection("서");
+            }
+
+            while (System.DateTime.Now < deadline)
+            {
+                EnsurePumpkinFullSequenceActive();
+
+                if (!TryGetCurrentMapXY(out int _, out int x, out int y))
+                {
+                    Thread.Sleep(150);
+                    continue;
+                }
+
+                if (startedNorthToMarket)
+                {
+                    if (reachedCastleX13 && x == 22)
+                    {
+                        SayPumpkinText("장터 도착");
+                        return;
+                    }
+
+                    SayMarketMoveStage("장터 진입 북쪽", ref lastMarketMoveStage);
+                    TapDirection("북", 120);
+                    Thread.Sleep(120);
+                    continue;
+                }
+
+                if (y < 13)
+                {
+                    SayMarketMoveStage("장터 이동 y 보정 남쪽", ref lastMarketMoveStage);
+                    TapDirection("남", 80);
+                }
+                else if (y > 13)
+                {
+                    SayMarketMoveStage("장터 이동 y 보정 북쪽", ref lastMarketMoveStage);
+                    TapDirection("북", 80);
+                }
+                else if (x > 13)
+                {
+                    SayMarketMoveStage("장터 이동 서쪽", ref lastMarketMoveStage);
+                    TapDirection("서", 80);
+                }
+                else if (x < 13)
+                {
+                    SayMarketMoveStage("장터 이동 동쪽 복귀", ref lastMarketMoveStage);
+                    TapDirection("동", 80);
+                }
+                else
+                {
+                    reachedCastleX13 = true;
+                    startedNorthToMarket = true;
+                    SayMarketMoveStage("장터 진입 북쪽", ref lastMarketMoveStage);
+                    TapDirection("북", 120);
+                }
+
+                Thread.Sleep(120);
+            }
+        }
+
+        private void ExecuteMarketWestDetour()
+        {
+            TapDirection("남", 120);
+            PumpkinStepDelay();
+            TapDirection("서", 120);
+            PumpkinStepDelay();
+            TapDirection("서", 120);
+            PumpkinStepDelay();
+            TapDirection("북", 120);
+            PumpkinStepDelay();
+        }
+
+        private void SellPumpkinsAtMarket()
+        {
+            EnsurePumpkinFullSequenceActive();
+            SayPumpkinText("알트 육 판매");
+            PressAltNumber(6);
+            PumpkinStepDelay();
+
+            EnsurePumpkinFullSequenceActive();
+            SayPumpkinText("알트 칠 판매");
+            PressAltNumber(7);
+            PumpkinStepDelay();
+
+            EnsurePumpkinFullSequenceActive();
+            SayPumpkinText("알트 팔 판매");
+            PressAltNumber(8);
+            PumpkinStepDelay();
+        }
+
+        private void ReturnToGwallyeongCastle()
+        {
+            System.DateTime deadline = System.DateTime.Now.AddMinutes(3);
+
+            while (System.DateTime.Now < deadline)
+            {
+                EnsurePumpkinFullSequenceActive();
+
+                SayPumpkinText("노란 비서 사용");
+                UseYellowScroll();
+                PumpkinStepDelay();
+
+                EnsurePumpkinFullSequenceActive();
+                SayPumpkinText("비영사천문 남쪽 이동");
+                UseBiyoungPortal(3);
+                PumpkinStepDelay();
+
+                if (IsGwallyeongCastleByPixels())
+                {
+                    SayPumpkinText("관령성 도착");
+                    return;
+                }
+            }
+
+            SayPumpkinText("관령성 확인 실패");
+        }
+
+        private void StartAutomationAfterPumpkinFull()
+        {
+            timerForBoMu.Start();
+            timerForMovingFlag.Start();
+            timerForSajahu.Start();
+            timerForAlt2.Start();
+
+            firstRunFlag = true;
+            ResetThreeHellState();
+            setMagicNumber();
+
+            Macro.getInstance.Flag_END = true;
+
+            lock (actionKeyLock)
+            {
+                ReleaseStationaryCombatKeys();
+                PressCurseIfRunning();
+            }
+
+            lock (autoExploreLock)
+            {
+                LoadAutoExploreRoute(moveConfigPath);
+                autoExploreUsingReturnRoute = false;
+                autoExploreReturnRouteResumeAfterEnd = false;
+                autoExploreMode = true;
+                movingOpt = true;
+            }
+
+            pumpkinFullInternalEndOff = false;
+        }
+
+        private bool TryGetCurrentMapXY(out int mapNo, out int x, out int y)
+        {
+            mapNo = getMapNumber();
+            x = 0;
+            y = 0;
+
+            string xyText = getMapXY();
+            string key = mapNo + ":" + xyText;
+
+            return TryParseMoveKey(key, out _, out x, out y);
+        }
+
+        private bool IsGwallyeongCastleByPixels()
+        {
+            return IsPixel(720, 3, 255, 255, 255) &&
+                   IsPixel(730, 4, 198, 192, 192) &&
+                   IsPixel(734, 25, 255, 255, 255) &&
+                   IsPixel(736, 26, 244, 244, 244) &&
+                   IsPixel(748, 12, 136, 137, 136) &&
+                   IsPixel(756, 7, 255, 255, 255) &&
+                   IsPixel(764, 19, 75, 75, 74) &&
+                   IsPixel(764, 25, 81, 63, 64);
+        }
+
+        private void SayMarketMoveStage(string text, ref string lastStage)
+        {
+            if (lastStage == text)
+                return;
+
+            lastStage = text;
+            SayPumpkinText(text);
+        }
+
+        private void PumpkinStepDelay()
+        {
+            int waitedMs = 0;
+            while (waitedMs < PumpkinStepDelayMs)
+            {
+                EnsurePumpkinFullSequenceActive();
+                int sleepMs = Math.Min(100, PumpkinStepDelayMs - waitedMs);
+                Thread.Sleep(sleepMs);
+                waitedMs += sleepMs;
+            }
+        }
+
+        private bool IsPixel(int x, int y, int r, int g, int b)
+        {
+            Color color = GetColorAt(x, y);
+            return color.R == r && color.G == g && color.B == b;
+        }
+
+        private void PressAltNumber(int number)
+        {
+            User32.API.keybd_event(0xA4, 0, 0, 0);
+            Thread.Sleep(60);
+            PressKey(0x30 + number);
+            Thread.Sleep(60);
+            User32.API.keybd_event(0xA4, 0, 2, 0);
+        }
+
+        private void PressKey(int keyCode)
+        {
+            PressKey(keyCode, 50);
+        }
+
+        private void PressKey(int keyCode, int pressMs)
+        {
+            User32.API.keybd_event((byte)keyCode, 0, 0, 0);
+            Thread.Sleep(pressMs);
+            User32.API.keybd_event((byte)keyCode, 0, 2, 0);
         }
 
 
@@ -2877,8 +6891,20 @@ namespace Biden.Func
             }
         }
 
+
+        public static bool isGwanryung()
+        {
+            bool res = false;
+
+
+            return res;
+        }
+
+
         public static int getMapNumber()
         {   
+            SyncSelectedMapFromViewModel();
+
             int res = 0;
             int mapType = 0;
 
@@ -2891,7 +6917,7 @@ namespace Biden.Func
             int mapTitleY3 = 0;
 
             //관령흉가, 선녀, 산적
-            if (SelectedMap == "관령흉가" || SelectedMap == "선녀")
+            if (IsGwallyeongHauntedHouseMap(SelectedMap) || SelectedMap == "선녀")
             {
                 mapType = 0;
                 mapTitleX1 = 802;
@@ -3152,7 +7178,18 @@ namespace Biden.Func
                 }
                 else
                 {
-                    if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
+                    //Console.WriteLine($"if (titleR3 == {titleR3} && titleG3 == {titleG3} && titleB3 == {titleB3})");
+                    //Console.WriteLine($"if (titleR4 == {titleR4} && titleG4 == {titleG4} && titleB4 == {titleB4})");
+                    //Console.WriteLine($"if (titleR5 == {titleR5} && titleG5 == {titleG5} && titleB5 == {titleB5})");
+
+                    //XY(1185,329)	RGB(139,147,71)
+                    if (titleR3 == 18 && titleG3 == 19 && titleB3 == 17 &&
+                        titleR4 == 6 && titleG4 == 3 && titleB4 == 6 &&
+                        titleR5 == 18 && titleG5 == 19 && titleB5 == 17)
+                    {
+                        res = 0;
+                    }
+                    else if (titleR1 == 6 && titleG1 == 3 && titleB1 == 6 && titleR2 == 18 && titleG2 == 19 && titleB2 == 17)
                     {
                         res = 1;
                     }
@@ -3396,7 +7433,7 @@ namespace Biden.Func
             SK.sendkeyEsc(5);
 
             //돌려
-            for(int i = 0; i< 6; i++)
+            for(int i = 0; i< 4; i++)
             {
                 User32.API.keybd_event((byte)magic7, 0, 0, 0);
                 Thread.Sleep(50);
@@ -3537,7 +7574,7 @@ namespace Biden.Func
 
                 if (movingOpt)
                 {
-                    string resumeMove = GetDirectionFromCache(resumeKey);
+                    string resumeMove = GetMoveDirectionForCurrentMode(resumeMapNo, resumeXY, resumeKey);
                     UpdateMove(resumeKey, resumeMove);
                 }
 
@@ -3577,7 +7614,7 @@ namespace Biden.Func
 
                 if (movingOpt)
                 {
-                    string resumeMove = GetDirectionFromCache(resumeKey);
+                    string resumeMove = GetMoveDirectionForCurrentMode(resumeMapNo, resumeXY, resumeKey);
                     UpdateMove(resumeKey, resumeMove);
                 }
 
@@ -3587,6 +7624,38 @@ namespace Biden.Func
         }
 
 
+
+
+        private class AutoExploreNode
+        {
+            public string Key { get; set; }
+            public bool Visited { get; set; }
+            public System.DateTime LastVisitedAt { get; set; }
+            public Dictionary<string, AutoExploreEdge> Edges { get; set; }
+        }
+
+        private class AutoExploreEdge
+        {
+            public string Direction { get; set; }
+            public string To { get; set; }
+            public string Type { get; set; }
+            public int SuccessCount { get; set; }
+            public int FailCount { get; set; }
+            public int ConsecutiveFailCount { get; set; }
+            public int MonsterScore { get; set; }
+            public int PortalScore { get; set; }
+            public int ChooseCount { get; set; }
+            public bool Blocked { get; set; }
+            public System.DateTime LastFailedAt { get; set; }
+            public System.DateTime LastSucceededAt { get; set; }
+            public System.DateTime LastChosenAt { get; set; }
+        }
+
+        private class AutoExploreDirectionScore
+        {
+            public string Direction { get; set; }
+            public int Score { get; set; }
+        }
 
 
         public partial class YourClass
@@ -3963,14 +8032,47 @@ namespace Biden.Func
             int res1 = getMapNumber();
             string res2 = getMapXY();
             string key = "" + res1 + ":" + res2;
+            string routePath = GetRouteConfigPathForMapNo(res1);
 
-            bool result1 = DeleteStringKeyValue(moveConfigPath, key);
+            bool result1 = DeleteStringKeyValue(routePath, key);
 
 
-            synth.Rate = 4;
+            synth.Rate = FastSayRate;
             SayText(res1 + "굴  " + res2.Replace(" ", "").Replace("(", "").Replace(")", "").Replace(",", " ") + " 삭제");
-            synth.Rate = 3;
+            synth.Rate = SayRate;
 
+        }
+
+        public void SaveDownRouteKey()
+        {
+            int res1 = getMapNumber();
+            string res2 = getMapXY();
+            string key = "" + res1 + ":" + res2;
+
+            string tempDirection = "";
+
+            if (!string.IsNullOrEmpty(lastManualMove))
+            {
+                tempDirection = lastManualMove;
+            }
+            else if (!string.IsNullOrEmpty(lastMove))
+            {
+                tempDirection = lastMove;
+            }
+            else
+            {
+                return;
+            }
+
+            string routePath = res1 == GwallyeongCastleMapNo
+                ? castleConfigPath
+                : GetDownConfigPathForSelectedMap();
+
+            SaveStringKeyValue(routePath, key, tempDirection);
+
+            synth.Rate = FastSayRate;
+            SayText(res1 + "굴 " + tempDirection + "쪽 하행 Save");
+            synth.Rate = SayRate;
         }
 
 
@@ -4007,14 +8109,34 @@ namespace Biden.Func
                 directionDic = new Dictionary<string, string>();
             }
 
-            directionDic[key] = tempDirection;
-            SaveStringKeyValue(moveConfigPath, key, tempDirection);
+            string routePath = GetRouteConfigPathForMapNo(res1);
 
-
-            if (File.Exists(moveConfigPath))
+            if (res1 == GwallyeongCastleMapNo)
             {
-                moveConfigLastWriteTime = File.GetLastWriteTime(moveConfigPath);
+                if (castleDirectionDic == null)
+                    castleDirectionDic = new Dictionary<string, string>();
+
+                castleDirectionDic[key] = tempDirection;
             }
+            else
+            {
+                directionDic[key] = tempDirection;
+            }
+
+            SaveStringKeyValue(routePath, key, tempDirection);
+
+
+            if (res1 == GwallyeongCastleMapNo && File.Exists(routePath))
+            {
+                castleConfigLastWriteTime = File.GetLastWriteTime(routePath);
+            }
+            else if (File.Exists(routePath))
+            {
+                moveConfigLoadedPath = routePath;
+                moveConfigLastWriteTime = File.GetLastWriteTime(routePath);
+            }
+
+            RefreshActiveManualRouteAfterF4Save();
 
             //Console.WriteLine("SAVE OK : " + key + " -> " + tempDirection);
 
@@ -4023,16 +8145,31 @@ namespace Biden.Func
 
             //Console.WriteLine(tempStr);
 
-            synth.Rate = 4;
+            synth.Rate = FastSayRate;
             SayText(tempStr);
-            synth.Rate = 3;
+            synth.Rate = SayRate;
             // 저장 즉시 현재 메모리 기준으로도 반영
             curMove = tempDirection;
+        }
+
+        private string GetRouteConfigPathForMapNo(int mapNo)
+        {
+            if (mapNo == GwallyeongCastleMapNo)
+                return castleConfigPath;
+
+            if (mapNo == GwallyeongHauntedEntranceMapNo)
+                return moveConfigPath;
+
+            return moveConfigPath;
         }
 
 
         static void SaveDirectionDic(string filePath, Dictionary<string, string> directionDic)
         {
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+
             string json = JsonConvert.SerializeObject(directionDic, Formatting.Indented);
             File.WriteAllText(filePath, json);
         }
@@ -4169,6 +8306,10 @@ namespace Biden.Func
 
             dict[key] = value;
 
+            string directoryPath = Path.GetDirectoryName(filePath);
+            if (!string.IsNullOrEmpty(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+
             string updatedJson = JsonConvert.SerializeObject(dict, Formatting.Indented);
             File.WriteAllText(filePath, updatedJson);
         }
@@ -4231,6 +8372,12 @@ namespace Biden.Func
             {
                 User32.API.keybd_event((byte)magic4, 0, 2, 0);
             }
+        }
+
+        private void ReleasePickup()
+        {
+            User32.API.keybd_event(0xBC, 0, 2, 0);
+            pickupKeyPressed = false;
         }
         private void ReleaseChumChum()
         {

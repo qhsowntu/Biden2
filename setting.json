@@ -1,0 +1,37 @@
+{
+  "threadPurpose": "baram macro debugging and small scoped code changes",
+  "tokenSavingMode": true,
+  "responseStyle": {
+    "language": "ko",
+    "defaultLength": "short",
+    "avoidLongBackground": true,
+    "avoidRepeatingOldContext": true,
+    "summarizeToolOutput": true
+  },
+  "workRules": {
+    "primaryFile": "Biden/Func/Macro.cs",
+    "preferSmallPatches": true,
+    "explainOnlyCurrentIssue": true,
+    "includeBuildResultOnly": true,
+    "doNotPasteLargeDiffs": true,
+    "ignorePaths": [
+      ".vs",
+      "Biden/.vs",
+      "Biden/bin",
+      "Biden/obj",
+      "packages"
+    ],
+    "preferSourceDirs": [
+      "Biden/Func",
+      "Biden/Model",
+      "Biden/ViewModel",
+      "Biden/View"
+    ]
+  },
+  "finalAnswerFormat": {
+    "includeChangedFiles": true,
+    "includeCause": true,
+    "includeBuildStatus": true,
+    "maxBullets": 5
+  }
+}
