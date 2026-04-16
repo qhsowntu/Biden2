@@ -12,7 +12,7 @@
   "UseThreeHellEvolution": false,
   "ThreeHellEvolutionDelay": 1,
   "UseHeal": true,
-  "SelectedHealHpThreshold": "85%",
+  "SelectedHealHpThreshold": "5%",
   "UseProtectArmor": true,
   "UseCurseOption": true,
   "UseBuffCombo": true,
@@ -51,7 +51,7 @@
   "SegmentedMovePressMs": 20,
   "SegmentedMoveDelayMs": 0,
   "BasicSegmentedMoveDelayMs": 0,
-  "LoopSegmentedMoveDelayMs": 900,
+  "LoopSegmentedMoveDelayMs": 400,
   "UseSegmentedMoveOnlyInLoop": false,
   "UseOneTileDeviationRoute": false,
   "MoveDelay": 2000

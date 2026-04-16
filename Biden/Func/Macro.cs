@@ -334,6 +334,11 @@ namespace Biden.Func
         private bool hauntedHouse10UpperRouteExitRetryPending = false;
         private int hauntedHouse10UpperRouteLoopIndex = 0;
         private bool hauntedHouse10UpperRouteCompleted = false;
+        private System.DateTime hauntedHouse10UpperRouteExitStuckSince = System.DateTime.MinValue;
+        private bool hauntedHouse10UpperRouteForcedExitPending = false;
+        private bool hauntedHouse10UpperRouteReturnStartPending = false;
+        private bool hauntedHouse10ClockwiseStartArmed = false;
+        private System.DateTime hauntedHouse10ClockwiseStartStuckSince = System.DateTime.MinValue;
         private System.DateTime lastKeyChangeTime = System.DateTime.MinValue;
 
         // 값은 상황에 따라 조금씩 조절 가능
@@ -2154,6 +2159,7 @@ namespace Biden.Func
                         LoadAutoExploreRoute(moveConfigPath);
                         autoExploreUsingReturnRoute = false;
                         autoExploreReturnRouteResumeAfterEnd = false;
+                        ResetHauntedHouse10UpperRouteForMainRoute();
                     }
 
                     string castleDir = GetCastleDirectionFromCache(currentKey);
@@ -2177,6 +2183,7 @@ namespace Biden.Func
                         LoadAutoExploreRoute(moveConfigPath);
                         autoExploreUsingReturnRoute = false;
                         autoExploreReturnRouteResumeAfterEnd = false;
+                        ResetHauntedHouse10UpperRouteForMainRoute();
                     }
 
                     string entranceDir = GetConfigOnlyAutoExploreDirection(currentKey);
@@ -2430,21 +2437,41 @@ namespace Biden.Func
 
             pressMs = Math.Max(pressMs, 180);
 
+            if (IsHauntedHouse10ExitRetryPoint(key))
+                pressMs = Math.Max(pressMs, 320);
+
             if (autoExploreSamePointFailCount > 0)
                 pressMs = Math.Max(pressMs, Math.Min(320, 220 + (autoExploreSamePointFailCount * 40)));
 
             return pressMs;
         }
 
-        private bool IsHauntedHouse10StallPoint(string key)
+        private bool IsHauntedHouse10ExitRetryPoint(string key)
         {
-            if (hauntedHouse10UpperRoutePhase != 3 && hauntedHouse10UpperRoutePhase != 4)
+            if (hauntedHouse10UpperRoutePhase != 4 || !hauntedHouse10UpperRouteExitRetryPending)
                 return false;
 
             if (!TryParseMoveKey(key, out int mapNo, out int x, out int y))
                 return false;
 
-            return mapNo == 10 && y == 14 && (x == 14 || x == 15);
+            return mapNo == 10 && IsHauntedHouse10ExitLanePoint(x, y);
+        }
+
+        private bool IsHauntedHouse10StallPoint(string key)
+        {
+            if (!TryParseMoveKey(key, out int mapNo, out int x, out int y))
+                return false;
+
+            if (hauntedHouse10UpperRoutePhase == 3 || hauntedHouse10UpperRoutePhase == 4)
+                return mapNo == 10 && IsHauntedHouse10ExitLanePoint(x, y);
+
+            if (hauntedHouse10UpperRoutePhase == 2 ||
+                hauntedHouse10UpperRoutePhase == 6)
+            {
+                return mapNo == 10 && x == 16 && y == 14;
+            }
+
+            return false;
         }
 
         private void ResetHauntedHouse5UpperRoute()
@@ -3165,12 +3192,31 @@ namespace Biden.Func
             if (autoExploreUsingReturnRoute || mapNo != 10)
             {
                 ResetHauntedHouse10UpperRoute();
+                ClearHauntedHouse10ClockwiseStartMemory();
                 hauntedHouse10UpperRouteCompleted = false;
                 return false;
             }
 
             if (!TryParseMoveKey(currentKey, out _, out int x, out int y))
                 return false;
+
+            if (x == 13 && y == 14 && ShouldStartHauntedHouse10ClockwiseLoopFromExit())
+            {
+                StartHauntedHouse10ClockwiseLoopFromExit(out direction);
+                return true;
+            }
+
+            if (TryRecoverHauntedHouse10ClockwiseStart(x, y, out direction))
+                return true;
+
+            if (ShouldForceHauntedHouse10ExitAfterBounce(x, y))
+            {
+                hauntedHouse10UpperRoutePhase = 4;
+                hauntedHouse10UpperRouteExitRetryPending = true;
+                hauntedHouse10UpperRouteForcedExitPending = true;
+                direction = "서";
+                return true;
+            }
 
             if (hauntedHouse10UpperRoutePhase == 0)
             {
@@ -3184,6 +3230,7 @@ namespace Biden.Func
                 hauntedHouse10UpperRouteBounceCount = 0;
                 hauntedHouse10UpperRouteReachedEast = false;
                 hauntedHouse10UpperRouteLoopIndex = 0;
+                ClearHauntedHouse10ClockwiseStartMemory();
                 SayRouteChangeText("10굴 상행 특수 경로 시작");
             }
 
@@ -3204,6 +3251,8 @@ namespace Biden.Func
             {
                 if (x == 14 && y == 14)
                 {
+                    hauntedHouse10ClockwiseStartArmed = true;
+                    hauntedHouse10ClockwiseStartStuckSince = System.DateTime.MinValue;
                     hauntedHouse10UpperRoutePhase = 3;
                     direction = "동";
                     return true;
@@ -3242,6 +3291,12 @@ namespace Biden.Func
                     return true;
                 }
 
+                if (x == 16 && y == 14 && hauntedHouse10UpperRouteReachedEast)
+                {
+                    direction = "서";
+                    return true;
+                }
+
                 ResetHauntedHouse10UpperRoute();
                 return false;
             }
@@ -3250,16 +3305,12 @@ namespace Biden.Func
             {
                 if (x == 13 && y == 14)
                 {
-                    hauntedHouse10UpperRouteExitRetryPending = false;
-                    hauntedHouse10UpperRoutePhase = 5;
-                    hauntedHouse10UpperRouteLoopIndex = 0;
-                    direction = GetHauntedHouse10ClockwiseLoopDirection(x, y);
+                    StartHauntedHouse10ClockwiseLoopFromExit(out direction);
                     return true;
                 }
 
                 if (x == 14 && y == 14 && hauntedHouse10UpperRouteExitRetryPending)
                 {
-                    hauntedHouse10UpperRouteExitRetryPending = false;
                     direction = "서";
                     return true;
                 }
@@ -3273,6 +3324,7 @@ namespace Biden.Func
                 if (x == 13 && y == 14 && hauntedHouse10UpperRouteLoopIndex >= 10)
                 {
                     hauntedHouse10UpperRoutePhase = 6;
+                    hauntedHouse10UpperRouteReturnStartPending = true;
                     direction = "동";
                     return true;
                 }
@@ -3283,6 +3335,7 @@ namespace Biden.Func
                     hauntedHouse10UpperRouteLoopIndex >= 10)
                 {
                     hauntedHouse10UpperRoutePhase = 6;
+                    hauntedHouse10UpperRouteReturnStartPending = true;
                     direction = "동";
                     return true;
                 }
@@ -3294,27 +3347,15 @@ namespace Biden.Func
             {
                 if (x == 16 && y == 14)
                 {
-                    hauntedHouse10UpperRoutePhase = 7;
+                    StartReverseAutoExploreRouteFromUpperRoute();
+                    hauntedHouse10UpperRouteReturnStartPending = false;
+                    ResetHauntedHouse10UpperRoute();
+                    SayRouteChangeText("10굴 하행 시작");
                     direction = "북";
                     return true;
                 }
 
                 direction = GetDirectionTowardPoint(x, y, 16, 14);
-                return !string.IsNullOrEmpty(direction);
-            }
-
-            if (hauntedHouse10UpperRoutePhase == 7)
-            {
-                if (x == 16 && y == 9)
-                {
-                    StartReverseAutoExploreRouteFromUpperRoute();
-                    ResetHauntedHouse10UpperRoute();
-                    SayRouteChangeText("10굴 하행 시작");
-                    direction = GetConfigOnlyAutoExploreDirection(currentKey);
-                    return !string.IsNullOrEmpty(direction);
-                }
-
-                direction = GetDirectionTowardPoint(x, y, 16, 9);
                 return !string.IsNullOrEmpty(direction);
             }
 
@@ -3356,6 +3397,18 @@ namespace Biden.Func
                 return GetDirectionTowardPoint(x, y, currentX, currentY);
 
             return GetDirectionTowardPoint(x, y, nextX, nextY);
+        }
+
+        private void StartHauntedHouse10ClockwiseLoopFromExit(out string direction)
+        {
+            hauntedHouse10UpperRouteExitRetryPending = false;
+            hauntedHouse10UpperRouteForcedExitPending = false;
+            hauntedHouse10UpperRouteExitStuckSince = System.DateTime.MinValue;
+            hauntedHouse10UpperRouteReturnStartPending = false;
+            ClearHauntedHouse10ClockwiseStartMemory();
+            hauntedHouse10UpperRoutePhase = 5;
+            hauntedHouse10UpperRouteLoopIndex = 0;
+            direction = GetHauntedHouse10ClockwiseLoopDirection(13, 14);
         }
 
         private void StartReverseAutoExploreRouteFromUpperRoute()
@@ -3405,6 +3458,120 @@ namespace Biden.Func
             hauntedHouse10UpperRouteReachedEast = false;
             hauntedHouse10UpperRouteExitRetryPending = false;
             hauntedHouse10UpperRouteLoopIndex = 0;
+            hauntedHouse10UpperRouteExitStuckSince = System.DateTime.MinValue;
+            hauntedHouse10UpperRouteForcedExitPending = false;
+        }
+
+        private void ResetHauntedHouse10UpperRouteForMainRoute()
+        {
+            ResetHauntedHouse10UpperRoute();
+            hauntedHouse10UpperRouteCompleted = false;
+            hauntedHouse10UpperRouteReturnStartPending = false;
+            ClearHauntedHouse10ClockwiseStartMemory();
+        }
+
+        private bool ShouldForceHauntedHouse10ExitAfterBounce(int x, int y)
+        {
+            if (!IsHauntedHouse10ExitLanePoint(x, y))
+            {
+                hauntedHouse10UpperRouteExitStuckSince = System.DateTime.MinValue;
+                return false;
+            }
+
+            bool exitWindow =
+                hauntedHouse10UpperRoutePhase == 4 ||
+                (hauntedHouse10UpperRoutePhase == 3 &&
+                 x == 16 &&
+                 hauntedHouse10UpperRouteReachedEast) ||
+                (hauntedHouse10UpperRoutePhase == 3 &&
+                 hauntedHouse10UpperRouteReachedEast &&
+                 hauntedHouse10UpperRouteBounceCount >= HauntedHouseSpecialBounceTarget - 1);
+
+            if (!exitWindow)
+            {
+                hauntedHouse10UpperRouteExitStuckSince = System.DateTime.MinValue;
+                return false;
+            }
+
+            System.DateTime now = System.DateTime.Now;
+            if (hauntedHouse10UpperRouteExitStuckSince == System.DateTime.MinValue)
+            {
+                hauntedHouse10UpperRouteExitStuckSince = now;
+                return false;
+            }
+
+            return (now - hauntedHouse10UpperRouteExitStuckSince).TotalMilliseconds >= 2000;
+        }
+
+        private bool TryRecoverHauntedHouse10ClockwiseStart(int x, int y, out string direction)
+        {
+            direction = "";
+
+            if (!hauntedHouse10ClockwiseStartArmed)
+                return false;
+
+            if (hauntedHouse10UpperRoutePhase == 5 || hauntedHouse10UpperRoutePhase == 6)
+                return false;
+
+            if (y != 14 || x < 13 || x > 16)
+                return false;
+
+            if (x == 13)
+            {
+                StartHauntedHouse10ClockwiseLoopFromExit(out direction);
+                return true;
+            }
+
+            hauntedHouse10UpperRoutePhase = 4;
+            hauntedHouse10UpperRouteExitRetryPending = true;
+            hauntedHouse10UpperRouteForcedExitPending = true;
+            hauntedHouse10UpperRouteExitStuckSince = System.DateTime.MinValue;
+            direction = "서";
+            return true;
+        }
+
+        private bool ShouldStartHauntedHouse10ClockwiseLoopFromExit()
+        {
+            if (hauntedHouse10UpperRouteForcedExitPending)
+                return true;
+
+            if (hauntedHouse10UpperRoutePhase == 4)
+                return true;
+
+            if (hauntedHouse10UpperRoutePhase == 3 &&
+                hauntedHouse10UpperRouteReachedEast &&
+                hauntedHouse10UpperRouteBounceCount >= HauntedHouseSpecialBounceTarget - 1)
+            {
+                return true;
+            }
+
+            if (!hauntedHouse10ClockwiseStartArmed)
+                return false;
+
+            return ShouldStartHauntedHouse10ClockwiseLoopAfterIdle();
+        }
+
+        private bool ShouldStartHauntedHouse10ClockwiseLoopAfterIdle()
+        {
+            System.DateTime now = System.DateTime.Now;
+            if (hauntedHouse10ClockwiseStartStuckSince == System.DateTime.MinValue)
+            {
+                hauntedHouse10ClockwiseStartStuckSince = now;
+                return false;
+            }
+
+            return (now - hauntedHouse10ClockwiseStartStuckSince).TotalMilliseconds >= 3000;
+        }
+
+        private void ClearHauntedHouse10ClockwiseStartMemory()
+        {
+            hauntedHouse10ClockwiseStartArmed = false;
+            hauntedHouse10ClockwiseStartStuckSince = System.DateTime.MinValue;
+        }
+
+        private bool IsHauntedHouse10ExitLanePoint(int x, int y)
+        {
+            return y == 14 && (x == 14 || x == 15 || x == 16);
         }
 
         private string GetSpecialRouteDirectionWithDetour(string currentKey, string baseDir)
@@ -3745,6 +3912,7 @@ namespace Biden.Func
                 autoExploreUsingReturnRoute = false;
                 autoExploreReturnRouteResumeAfterEnd = false;
                 pumpkinReturnRouteResumePending = false;
+                ResetHauntedHouse10UpperRouteForMainRoute();
                 autoExploreReturnEndCandidateKey = "";
                 autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
                 SayRouteChangeText("복귀 경로 이탈 기본 경로 복구");
@@ -3773,6 +3941,7 @@ namespace Biden.Func
                 autoExploreUsingReturnRoute = false;
                 autoExploreReturnRouteResumeAfterEnd = false;
                 pumpkinReturnRouteResumePending = false;
+                ResetHauntedHouse10UpperRouteForMainRoute();
                 autoExploreReturnEndCandidateKey = "";
                 autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
                 SayRouteChangeText("5굴 9 13 상행 전환");
@@ -3780,9 +3949,7 @@ namespace Biden.Func
             }
 
             if (!autoExploreUsingReturnRoute &&
-                mapNo == AutoExploreReturnStartMapNo &&
-                x == AutoExploreReturnStartX &&
-                y == AutoExploreReturnStartY)
+                IsAutoExploreReturnStartPoint(mapNo, x, y))
             {
                 LoadAutoExploreRoute(downConfigPath);
                 autoExploreUsingReturnRoute = true;
@@ -3813,6 +3980,7 @@ namespace Biden.Func
                 autoExploreUsingReturnRoute = false;
                 autoExploreReturnRouteResumeAfterEnd = false;
                 pumpkinReturnRouteResumePending = false;
+                ResetHauntedHouse10UpperRouteForMainRoute();
                 autoExploreReturnEndCandidateKey = "";
                 autoExploreReturnEndCandidateSince = System.DateTime.MinValue;
                 SayRouteChangeText("기본 경로 복귀");
@@ -3826,6 +3994,39 @@ namespace Biden.Func
             }
 
             return false;
+        }
+
+        private bool IsAutoExploreReturnStartPoint(string key)
+        {
+            if (!TryParseMoveKey(key, out int mapNo, out int x, out int y))
+                return false;
+
+            return IsAutoExploreReturnStartPoint(mapNo, x, y);
+        }
+
+        private bool IsAutoExploreReturnStartPoint(int mapNo, int x, int y)
+        {
+            if (mapNo != AutoExploreReturnStartMapNo)
+                return false;
+
+            if (!hauntedHouse10UpperRouteReturnStartPending)
+                return false;
+
+            if (x == AutoExploreReturnStartX && y == AutoExploreReturnStartY)
+                return true;
+
+            return x == 16 && y == 14;
+        }
+
+        private bool IsHauntedHouse10PendingReturnStartPoint(string key)
+        {
+            if (!hauntedHouse10UpperRouteReturnStartPending)
+                return false;
+
+            if (!TryParseMoveKey(key, out int mapNo, out int x, out int y))
+                return false;
+
+            return mapNo == AutoExploreReturnStartMapNo && x == 16 && y == 14;
         }
 
         private void LoadAutoExploreRoute(string path)
@@ -3922,6 +4123,18 @@ namespace Biden.Func
 
         private string ChooseAutoExploreDirection(string currentKey, AutoExploreNode node)
         {
+            if (autoExploreUsingReturnRoute && IsHauntedHouse10PendingReturnStartPoint(currentKey))
+            {
+                if (TryGetManualRouteDirection(currentKey, out string pendingManualDir))
+                {
+                    hauntedHouse10UpperRouteReturnStartPending = false;
+                    return pendingManualDir;
+                }
+
+                hauntedHouse10UpperRouteReturnStartPending = false;
+                return "북";
+            }
+
             int routeDistance = GetDistanceFromManualRoute(currentKey);
 
             if (routeDistance > 0)
@@ -5572,7 +5785,7 @@ namespace Biden.Func
 
         private int GetSegmentedMoveDelayMs()
         {
-            return useSegmentedMoveOnlyInLoop && IsHauntedHouseClockwiseLoopActive()
+            return IsHauntedHouseClockwiseLoopActive()
                 ? loopSegmentedMoveDelayMs
                 : basicSegmentedMoveDelayMs;
         }
@@ -5601,7 +5814,8 @@ namespace Biden.Func
                    hauntedHouse9UpperRoutePhase == 2 ||
                    hauntedHouse10UpperRoutePhase == 2 ||
                    hauntedHouse10UpperRoutePhase == 3 ||
-                   hauntedHouse10UpperRoutePhase == 4;
+                   hauntedHouse10UpperRoutePhase == 4 ||
+                   hauntedHouse10UpperRoutePhase == 6;
         }
 
 

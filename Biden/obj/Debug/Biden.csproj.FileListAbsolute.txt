@@ -1367,4 +1367,5 @@ C:\Users\김양수\Downloads\baram_common_2026_04_15_3\baram_common_2026_04_02\B
 C:\Users\김양수\Downloads\baram_common_2026_04_15_3\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.CoreCompileInputs.cache
 C:\Users\김양수\Downloads\baram_common_2026_04_15_3\baram_common_2026_04_02\Biden\obj\Debug\Biden.exe
 C:\Users\김양수\Downloads\baram_common_2026_04_15_3\baram_common_2026_04_02\Biden\obj\Debug\Biden.pdb
+C:\Users\김양수\Downloads\baram_common_2026_04_15_3\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.AssemblyReference.cache
 C:\Users\김양수\Downloads\baram_common_2026_04_15_3\baram_common_2026_04_02\Biden\obj\Debug\Biden.csproj.CopyComplete
